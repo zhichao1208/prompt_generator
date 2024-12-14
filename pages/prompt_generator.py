@@ -250,13 +250,74 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
-            st.text_area(
-                "Model Evaluation",
-                placeholder="Example:\n- Compare performance across models (GPT-4, Claude)\n- Adjust prompts based on model strengths\n- Optimize for model-specific features",
-                help="Tips:\n- Consider model specializations\n- Adapt to model capabilities\n- Use model-specific techniques\n- Balance performance and cost",
-                key=f"{version}_model_eval",
-                height=150
+            
+            # Model Selection
+            models_to_evaluate = st.multiselect(
+                "Select Models to Evaluate",
+                options=[
+                    "GPT-4 Turbo",
+                    "GPT-4",
+                    "Claude 3 Opus",
+                    "Claude 3 Sonnet",
+                    "Claude 3 Haiku",
+                    "GPT-3.5 Turbo",
+                    "Gemini Pro",
+                    "Mixtral",
+                    "LLaMA 2"
+                ],
+                default=["GPT-4 Turbo", "Claude 3 Opus"],
+                key=f"{version}_model_selection",
+                help="Select the models you want to evaluate for this prompt"
             )
+            
+            # Model-specific settings
+            if models_to_evaluate:
+                st.markdown("##### Model Settings")
+                for model in models_to_evaluate:
+                    with st.expander(f"{model} Settings"):
+                        # Temperature
+                        st.slider(
+                            "Temperature",
+                            min_value=0.0,
+                            max_value=1.0,
+                            value=0.7,
+                            step=0.1,
+                            key=f"{version}_{model}_temp",
+                            help="Controls randomness in the output"
+                        )
+                        
+                        # Max tokens
+                        st.number_input(
+                            "Max Tokens",
+                            min_value=1,
+                            max_value=4096,
+                            value=2048,
+                            step=1,
+                            key=f"{version}_{model}_max_tokens",
+                            help="Maximum number of tokens to generate"
+                        )
+                        
+                        # Top P
+                        st.slider(
+                            "Top P",
+                            min_value=0.0,
+                            max_value=1.0,
+                            value=0.9,
+                            step=0.1,
+                            key=f"{version}_{model}_top_p",
+                            help="Controls diversity via nucleus sampling"
+                        )
+                        
+                        # Frequency Penalty
+                        st.slider(
+                            "Frequency Penalty",
+                            min_value=-2.0,
+                            max_value=2.0,
+                            value=0.0,
+                            step=0.1,
+                            key=f"{version}_{model}_freq_penalty",
+                            help="Adjusts likelihood based on frequency"
+                        )
             
             # Dynamic Prompt Optimization
             st.markdown("<div class='section-label'>Dynamic Prompt Optimization</div>", unsafe_allow_html=True)
