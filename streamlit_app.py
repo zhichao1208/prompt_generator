@@ -58,26 +58,60 @@ col1, col2, col3 = st.columns(3)
 # Style for icons and headers
 icon_style = """
 <style>
-    .solution-icon {
-        font-size: 24px;
+    .solution-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 24px;
+        margin: 10px 0;
+        text-align: center;
+    }
+    .solution-code {
+        font-family: 'SF Mono', monospace;
+        font-size: 14px;
         color: #1D6AE5;
-        margin-bottom: 10px;
+        background: rgba(29, 106, 229, 0.1);
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+    .solution-icon {
+        font-size: 32px;
+        color: #1D6AE5;
+        margin: 20px 0;
         text-align: center;
     }
     .solution-header {
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 600;
-        margin: 15px 0;
+        margin: 16px 0;
         text-align: center;
+        color: #1E1E1E;
     }
     .feature-row {
-        padding: 20px 0;
+        padding: 24px 0;
         border-bottom: 1px solid #f0f0f0;
+        text-align: center;
     }
     .feature-icon {
-        font-size: 20px;
+        font-size: 24px;
         color: #666;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
+    }
+    .feature-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin: 8px 0;
+    }
+    .feature-value {
+        font-size: 15px;
+        color: #666;
+        margin: 4px 0;
+    }
+    .select-button {
+        margin-top: 20px;
+        width: 100%;
     }
 </style>
 """
@@ -85,100 +119,109 @@ st.markdown(icon_style, unsafe_allow_html=True)
 
 # Option 1
 with col1:
+    st.markdown('<div class="solution-card">', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">ALPHA-S1</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">🔄</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown("**Processing Speed**")
-    st.markdown("1.5s average response")
+    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">1.5s average response</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown("**Model**")
-    st.markdown("claude-3.5-sonnet")
+    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">claude-3.5-sonnet</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown("**Cost**")
-    st.markdown("Low - $0.01/1k tokens")
+    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">Low - $0.01/1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown("**Accuracy**")
-    st.markdown("93% precision rate")
+    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">93% precision rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 2
 with col2:
+    st.markdown('<div class="solution-card">', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">BETA-H2</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">📊</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown("**Processing Speed**")
-    st.markdown("1.8s average response")
+    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">1.8s average response</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown("**Model**")
-    st.markdown("gpt-4-turbo")
+    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">gpt-4-turbo</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown("**Cost**")
-    st.markdown("High - $0.03/1k tokens")
+    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">High - $0.03/1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown("**Accuracy**")
-    st.markdown("97% precision rate")
+    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">97% precision rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 3
 with col3:
+    st.markdown('<div class="solution-card">', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">GAMMA-P3</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">⚡</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown("**Processing Speed**")
-    st.markdown("1.2s average response")
+    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">1.2s average response</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown("**Model**")
-    st.markdown("claude-3.5-haiku")
+    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">claude-3.5-haiku</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown("**Cost**")
-    st.markdown("Moderate - $0.02/1k tokens")
+    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">Moderate - $0.02/1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown("**Accuracy**")
-    st.markdown("90% precision rate")
+    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-value">90% precision rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Selection buttons at the bottom
 st.write("---")
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.button("Select Sequential Flow", key="select_sequential", type="primary")
+    st.button("Select ALPHA-S1", key="select_sequential", type="primary")
 with col2:
-    st.button("Select Hierarchical Flow", key="select_hierarchical", type="primary")
+    st.button("Select BETA-H2", key="select_hierarchical", type="primary")
 with col3:
-    st.button("Select Parallel Flow", key="select_parallel", type="primary")
+    st.button("Select GAMMA-P3", key="select_parallel", type="primary")
 
 # Highlighted Changes Section
 st.write("---")
