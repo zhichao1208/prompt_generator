@@ -139,6 +139,52 @@ icon_style = """
         margin: 8px 0 0 0;
         padding: 0;
     }
+    .preferences-section {
+        margin: 32px 0;
+        padding: 24px;
+        background: #f8f9fa;
+        border-radius: 12px;
+    }
+    .preferences-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #666;
+        margin: 0 0 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .preference-item {
+        margin: 12px 0;
+    }
+    .preference-label {
+        font-size: 14px;
+        color: #666;
+        margin: 0 0 4px 0;
+    }
+    .preference-value {
+        font-size: 16px;
+        color: #1E1E1E;
+        font-weight: 500;
+    }
+    .preference-match {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+    .match-perfect {
+        background: #dcfce7;
+        color: #166534;
+    }
+    .match-partial {
+        background: #fef9c3;
+        color: #854d0e;
+    }
+    .match-alternative {
+        background: #f3f4f6;
+        color: #4b5563;
+    }
 </style>
 """
 st.markdown(icon_style, unsafe_allow_html=True)
@@ -280,6 +326,15 @@ with col1:
     
     st.markdown('</div>', unsafe_allow_html=True)
     
+    # Add preferences section before evaluation results
+    preferences_html = render_preferences_section(
+        "claude-3.5-sonnet",
+        "Low Cost ($0.01/1k tokens)",
+        "JSON + Email Template",
+        "Sequential"
+    )
+    st.markdown(preferences_html, unsafe_allow_html=True)
+    
     # Evaluation Results Section
     st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
     st.markdown('<div class="evaluation-title">EVALUATION RESULTS</div>', unsafe_allow_html=True)
@@ -354,6 +409,15 @@ with col2:
     
     st.markdown('</div>', unsafe_allow_html=True)
     
+    # Add preferences section before evaluation results
+    preferences_html = render_preferences_section(
+        "gpt-4-turbo",
+        "High Cost ($0.03/1k tokens)",
+        "Email Template Only",
+        "Hierarchical"
+    )
+    st.markdown(preferences_html, unsafe_allow_html=True)
+    
     # Evaluation Results Section
     st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
     st.markdown('<div class="evaluation-title">EVALUATION RESULTS</div>', unsafe_allow_html=True)
@@ -425,6 +489,15 @@ with col3:
     st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">• Complex task handling<br>• Multi-model collaboration<br>• Highest accuracy needs</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Add preferences section before evaluation results
+    preferences_html = render_preferences_section(
+        "claude-3.5-haiku",
+        "Moderate Cost ($0.02/1k tokens)",
+        "Email + Data Validation",
+        "Parallel"
+    )
+    st.markdown(preferences_html, unsafe_allow_html=True)
     
     # Evaluation Results Section
     st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
