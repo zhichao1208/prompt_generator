@@ -265,6 +265,15 @@ Error Logging:
         
         # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
+        
+        # Add format selection
+        output_format = st.selectbox(
+            "Select Output Format",
+            options=["JSON", "Email", "Markdown", "Text", "Other"],
+            key=f"{version}_output_format",
+            help="Select the desired output format for the response"
+        )
+        
         default_output = """{
   "Reasoning": [
     "Reasoning statements documenting decision-making processes and resolving ambiguities."
