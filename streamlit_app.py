@@ -467,25 +467,3 @@ with col2:
     st.button(f"Select {codenames['hierarchical']}", key="select_hierarchical", type="primary")
 with col3:
     st.button(f"Select {codenames['parallel']}", key="select_parallel", type="primary")
-
-# Highlighted Changes Section
-st.write("---")
-st.header("Highlighted Changes")
-with st.expander("Changes Based on Your Preferences"):
-    st.markdown("- **Prompt Type:** Adjusted to include Chain-of-Thought (CoT) for logical reasoning tasks.")
-    st.markdown("- **Language Model:** Replaced Claude with GPT-4 for better accuracy in hierarchical tasks.")
-    st.markdown("- **Cost Impact:** Token usage increased by 20%.")
-    st.markdown("Do you accept these changes?")
-    if st.button("Accept Changes"):
-        st.success("Changes accepted and applied to the selected option.")
-
-# Version History Section
-st.write("---")
-st.header("Version History")
-with st.expander("Review Previous Versions"):
-    st.markdown("**Version 1** (Created: 2024-12-14 10:00 AM): Sequential flow with Claude.")
-    st.markdown("**Version 2** (Created: 2024-12-14 10:15 AM): Hierarchical flow with GPT-4.")
-    st.markdown("**Version 3** (Created: 2024-12-14 10:30 AM): Parallel flow with Few-Shot prompts.")
-    version_select = st.selectbox("Select a Version to Review", ["Version 1", "Version 2", "Version 3"])
-    if st.button("Restore Version"):
-        st.success(f"{version_select} restored successfully!")
