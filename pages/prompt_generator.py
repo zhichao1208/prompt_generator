@@ -131,14 +131,18 @@ st.title("Prompt Generator")
 # Function to render prompt card
 def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
+        # Add state management for favorites
+if 'favorites' not in st.session_state:
+    st.session_state.favorites = set()
+
         # Header section with title and buttons
         st.markdown(f"""
             <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
                 <h3 style='margin: 0;'>{version}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>📥 Import</div>
-                    <div class='icon-button'>🔍 Search</div>
+                    <div class='icon-button'>📥</div>
+                    <div class='icon-button'>🔍</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
