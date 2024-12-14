@@ -335,8 +335,25 @@ Error Logging:
             # Reasoning Details
             st.text_area(
                 "Reasoning Details",
-                placeholder="Describe how to implement the selected reasoning method...\n\nExample:\nIf using CoT:\n- Break down the problem into steps\n- Show intermediate reasoning\n- Validate each step\n- Connect conclusions",
-                help="Tips:\n- Explain implementation details\n- Include specific steps\n- Consider edge cases\n- Add validation points",
+                value="""Implementation Details for Chain-of-Thought:
+
+1. Initial Data Scan
+   - Identify all potential data fields in email and attachments
+   - Mark ambiguous or duplicate information
+   
+2. Field Extraction
+   - Apply validation rules for each field type
+   - Handle special cases (dates, email addresses, product codes)
+   
+3. Data Normalization
+   - Convert dates to YYYY-MM-DD format
+   - Clean product codes by removing special characters
+   - Validate email format
+   
+4. Cross-validation
+   - Compare data between email body and attachments
+   - Resolve conflicts using priority rules
+   - Document reasoning for choices made""" if version == "Solution A" else "",
                 key=f"{version}_reasoning_details",
                 height=150
             )
@@ -361,8 +378,27 @@ Error Logging:
             # Planning Details
             st.text_area(
                 "Planning Details",
-                placeholder="Describe how to implement the selected planning method...\n\nExample:\nIf using Least-to-Most:\n- Identify smallest solvable subtasks\n- Define task dependencies\n- Create execution sequence\n- Add validation checkpoints",
-                help="Tips:\n- Break down complex tasks\n- Define clear dependencies\n- Include progress tracking\n- Add error handling",
+                value="""Implementation of Least-to-Most Decomposition:
+
+1. Field-level Tasks
+   - Identify required fields (order_number, dates, emails, etc.)
+   - Define validation rules for each field
+   - Create field-specific extraction functions
+
+2. Document-level Tasks
+   - Parse email body structure
+   - Extract attachment content
+   - Create document traversal strategy
+
+3. Integration Tasks
+   - Combine data from multiple sources
+   - Apply business rules and constraints
+   - Generate final output structure
+
+4. Validation Tasks
+   - Verify data completeness
+   - Check format compliance
+   - Validate business rules""" if version == "Solution A" else "",
                 key=f"{version}_planning_details",
                 height=150
             )
@@ -460,16 +496,67 @@ Error Logging:
             # Default examples data
             default_examples = [
                 {
-                    "input": 'PDF contains "Order Date: 2024-12-15" and "Customer: John Doe"',
-                    "output": '{"order_date": "2024-12-15", "customer_name": "John Doe"}'
+                    "input": """Email Content:
+Subject: Order Confirmation #12345
+From: john.smith@company.com
+Date: 2024-03-15
+
+Dear TechHeroes,
+Please process my order #TH-2024-12345.
+Shipping Address: 123 Main St, Boston, MA 02108""",
+                    "output": """{
+  "order_number": "TH202412345",
+  "buyer_email": "john.smith@company.com",
+  "order_date": "2024-03-15",
+  "shipping_address": {
+    "street": "123 Main St",
+    "city": "Boston",
+    "state": "MA",
+    "zip": "02108"
+  }
+}"""
                 },
                 {
-                    "input": 'Email body: "Shipment #12345 will arrive on March 1st, 2024"',
-                    "output": '{"shipment_id": "12345", "delivery_date": "2024-03-01"}'
+                    "input": """Attachment: invoice.pdf
+Order: #TH-2024-56789
+Customer: Jane Doe (jane.doe@email.com)
+Products:
+- 2x TH-PRD-001 ($99.99 each)
+- 1x TH-PRD-002 ($149.99)""",
+                    "output": """{
+  "order_number": "TH202456789",
+  "buyer_email": "jane.doe@email.com",
+  "products": [
+    {
+      "code": "THPRD001",
+      "quantity": 2,
+      "price": 99.99
+    },
+    {
+      "code": "THPRD002",
+      "quantity": 1,
+      "price": 149.99
+    }
+  ]
+}"""
                 },
                 {
-                    "input": 'Invoice shows: Total Amount: $299.99, Due Date: 2024-04-30',
-                    "output": '{"amount": 299.99, "due_date": "2024-04-30"}'
+                    "input": """Email Content:
+From: support@vendor.com
+Subject: Updated Order Details
+
+Updated delivery for order #TH-2024-78901
+New delivery date: April 1st, 2024
+Contact: Mark Wilson (mark.w@customer.com)""",
+                    "output": """{
+  "error": "Invalid sender email",
+  "details": "Email must be from individual address, not support@vendor.com",
+  "order_data": {
+    "order_number": "TH202478901",
+    "delivery_date": "2024-04-01",
+    "contact_email": "mark.w@customer.com"
+  }
+}"""
                 }
             ]
             
@@ -525,19 +612,42 @@ Error Logging:
             # Default edge cases
             default_edge_cases = [
                 {
-                    "case": "Missing or Invalid Date",
-                    "input": 'PDF contains "Order Date: Invalid" or date field is empty',
-                    "handling": "Return error message: {'error': 'Invalid or missing date format', 'field': 'order_date'}"
+                    "case": "Invalid Email Format",
+                    "input": """From: sales@company.com
+Order: #TH-2024-99999
+Customer: Alice Johnson""",
+                    "handling": """Return error:
+{
+  "error": "Invalid email format",
+  "details": "Generic email address not allowed (sales@company.com)",
+  "required": "Individual email address (e.g., firstname.lastname@company.com)"
+}"""
                 },
                 {
-                    "case": "Multiple Dates in Document",
-                    "input": 'Document contains multiple dates: "Order: 2024-01-01, Delivery: 2024-02-01"',
-                    "handling": "Extract context-specific date based on field labels, return all dates with labels"
+                    "case": "Multiple Order Numbers",
+                    "input": """Reference: #TH-2024-11111
+Original Order: #TH-2024-22222
+Updated Order: #TH-2024-33333""",
+                    "handling": """Extract all order numbers and prioritize:
+{
+  "current_order": "TH202433333",
+  "original_order": "TH202422222",
+  "reference_order": "TH202411111",
+  "note": "Using most recent order number as primary reference"
+}"""
                 },
                 {
-                    "case": "Inconsistent Data Format",
-                    "input": 'Mixed date formats: "01/15/2024" and "2024-01-16"',
-                    "handling": "Normalize all dates to ISO format (YYYY-MM-DD) before processing"
+                    "case": "Inconsistent Date Formats",
+                    "input": """Order Date: 03/15/2024
+Delivery: 2024-04-01
+Expected: 1st May 2024""",
+                    "handling": """Normalize all dates to ISO format:
+{
+  "order_date": "2024-03-15",
+  "delivery_date": "2024-04-01",
+  "expected_date": "2024-05-01",
+  "note": "All dates normalized to YYYY-MM-DD format"
+}"""
                 }
             ]
             
