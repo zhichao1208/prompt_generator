@@ -196,46 +196,46 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Enhancements Section
         with st.expander("Enhancements"):
-            # Rich Context Integration
-            st.markdown("<div class='section-label'>Rich Context Integration</div>", unsafe_allow_html=True)
+            # Reasoning
+            st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
             st.text_area(
-                "Rich Context Integration",
-                placeholder="Example:\n- Tailor summaries based on user's industry background\n- Adapt to user's technical expertise level\n- Incorporate relevant domain terminology\n- Reference similar past cases",
-                help="Tips:\n- Customize content based on user profile\n- Adapt to user preferences\n- Include domain knowledge\n- Support multiple data formats",
-                key=f"{version}_rich_context",
-                height=150,
-                label_visibility="collapsed"
-            )
-            
-            # Reasoning Generation
-            st.markdown("<div class='section-label'>Reasoning Generation</div>", unsafe_allow_html=True)
-            st.text_area(
-                "Reasoning Generation",
-                placeholder="Example:\n- Break down complex tasks into steps\n- Explain decision points and trade-offs\n- Show alternative approaches considered\n- Highlight key assumptions made",
-                help="Tips:\n- Show step-by-step logic\n- Make decisions transparent\n- Allow manual adjustments\n- Explain key reasoning",
+                "Reasoning",
+                placeholder="Example:\n- Chain-of-Thought (CoT): Break down complex reasoning into clear steps\n- Tree-of-Thought (ToT): Explore multiple reasoning paths\n- Buffer of Thoughts (BoT): Store and retrieve intermediate results\n- ReAct: Combine reasoning with actions",
+                help="Tips:\n- Use CoT for step-by-step problem solving\n- Apply ToT for exploring multiple solutions\n- Implement BoT for complex calculations\n- Include ReAct for interactive tasks",
                 key=f"{version}_reasoning",
                 height=150,
                 label_visibility="collapsed"
             )
             
-            # Actionable Outputs
-            st.markdown("<div class='section-label'>Actionable Outputs</div>", unsafe_allow_html=True)
+            # Planning and Task Decomposition
+            st.markdown("<div class='section-label'>Planning and Task Decomposition</div>", unsafe_allow_html=True)
             st.text_area(
-                "Actionable Outputs",
-                placeholder="Example:\n- Prioritized list of next steps\n- Clear success metrics for each action\n- Timeline recommendations\n- Required resources or dependencies",
-                help="Tips:\n- Provide clear recommendations\n- Include priority levels\n- Define success metrics\n- Suggest next steps",
-                key=f"{version}_actionable",
+                "Planning",
+                placeholder="Example:\n- Least-to-Most Decomposition: Break complex tasks into subtasks\n- Plan-and-Solve Strategy: Define solution path before execution\n- Progressive Task Refinement: Iteratively improve solutions\n- Dependency Management: Handle task prerequisites",
+                help="Tips:\n- Use Least-to-Most for complex problems\n- Apply Plan-and-Solve for multi-step tasks\n- Consider task dependencies\n- Include progress tracking",
+                key=f"{version}_planning",
                 height=150,
                 label_visibility="collapsed"
             )
             
-            # Edge Case Handling
-            st.markdown("<div class='section-label'>Edge Case Handling</div>", unsafe_allow_html=True)
+            # Multi-Model Evaluation
+            st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             st.text_area(
-                "Edge Case Handling",
-                placeholder="Example:\n- Handle missing or invalid data gracefully\n- Provide fallback options for each step\n- Validate inputs against business rules\n- Monitor and log edge cases",
-                help="Tips:\n- Implement error detection\n- Create fallback strategies\n- Add validation checks\n- Handle unexpected inputs",
-                key=f"{version}_edge_case",
+                "Model Evaluation",
+                placeholder="Example:\n- Compare performance across models (GPT-4, Claude)\n- Adjust prompts based on model strengths\n- Use Program-of-Thought for mathematical tasks\n- Optimize for model-specific features",
+                help="Tips:\n- Consider model specializations\n- Adapt to model capabilities\n- Use model-specific techniques\n- Balance performance and cost",
+                key=f"{version}_model_eval",
+                height=150,
+                label_visibility="collapsed"
+            )
+            
+            # Dynamic Prompt Optimization
+            st.markdown("<div class='section-label'>Dynamic Prompt Optimization</div>", unsafe_allow_html=True)
+            st.text_area(
+                "Optimization",
+                placeholder="Example:\n- Self-Generated In-Context Learning\n- Active-Prompt for representative examples\n- Dynamic few-shot selection\n- Continuous prompt refinement",
+                help="Tips:\n- Generate relevant examples\n- Select representative cases\n- Optimize for few-shot learning\n- Implement continuous improvement",
+                key=f"{version}_optimization",
                 height=150,
                 label_visibility="collapsed"
             )
