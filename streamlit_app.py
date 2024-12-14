@@ -264,9 +264,32 @@ with col1:
 with col2:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">MATRIX-CORE</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
+    
+    # Solution Content Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Parallel data extraction and email generation, final result merging</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Data Module: "Extract all contact information from the webpage"<br>Email Module: "Using the extracted data, generate a professional email"<br>Rules: Flexible data consistency requirements<br>Format: Email template only</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">• Quick task processing<br>• Independent module operation<br>• High flexibility requirements</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Evaluation Results Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="metric-large">1.8<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
@@ -281,26 +304,51 @@ with col2:
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-highlight">$0.03</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight highlight-red">$0.03</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">per 1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-highlight">97%</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight highlight-green">97%</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 3
 with col3:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">NOVA-SYNC</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
+    
+    # Solution Content Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Claude for data extraction, GPT-4 for email generation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="metric-large">1.2<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Claude: "Extract contact information from the webpage"<br>GPT-4: "Generate an email based on the extracted contact information"<br>Rules: Relaxed rules, partial data allowed<br>Format: Email template with optional data validation</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">• Complex task handling<br>• Multi-model collaboration<br>• Highest accuracy needs</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Evaluation Results Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="metric-large highlight-green">1.2<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
@@ -322,6 +370,8 @@ with col3:
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-highlight">90%</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Selection buttons at the bottom
