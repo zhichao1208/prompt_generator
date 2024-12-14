@@ -171,26 +171,40 @@ for tab in [tab1, tab2, tab3]:
             # Enhancements Section
             with st.expander("Enhancements"):
                 st.markdown("##### Rich Context Integration")
-                st.markdown("- Tailored summaries and recommendations")
-                st.markdown("- Dynamic adaptation to preferences")
-                st.markdown("- Domain-specific knowledge integration")
+                st.text_area(
+                    "Rich Context Integration",
+                    placeholder="Example:\n- Tailor summaries based on user's industry background\n- Adapt to user's technical expertise level\n- Incorporate relevant domain terminology\n- Reference similar past cases",
+                    help="Tips:\n- Customize content based on user profile\n- Adapt to user preferences\n- Include domain knowledge\n- Support multiple data formats",
+                    key=f"{tab._key}_rich_context",
+                    height=150
+                )
                 
                 st.markdown("##### Reasoning Generation")
-                reasoning = st.text_area(
-                    "Reasoning",
-                    placeholder="System-generated reasoning (editable)",
-                    key=f"{tab._key}_reasoning"
+                st.text_area(
+                    "Reasoning Generation",
+                    placeholder="Example:\n- Break down complex tasks into steps\n- Explain decision points and trade-offs\n- Show alternative approaches considered\n- Highlight key assumptions made",
+                    help="Tips:\n- Show step-by-step logic\n- Make decisions transparent\n- Allow manual adjustments\n- Explain key reasoning",
+                    key=f"{tab._key}_reasoning",
+                    height=150
                 )
                 
                 st.markdown("##### Actionable Outputs")
-                st.markdown("- Clear recommendations")
-                st.markdown("- Prioritized actions")
-                st.markdown("- Success criteria")
+                st.text_area(
+                    "Actionable Outputs",
+                    placeholder="Example:\n- Prioritized list of next steps\n- Clear success metrics for each action\n- Timeline recommendations\n- Required resources or dependencies",
+                    help="Tips:\n- Provide clear recommendations\n- Include priority levels\n- Define success metrics\n- Suggest next steps",
+                    key=f"{tab._key}_actionable",
+                    height=150
+                )
                 
                 st.markdown("##### Edge Case Handling")
-                st.markdown("- Error detection")
-                st.markdown("- Fallback strategies")
-                st.markdown("- Validation checks")
+                st.text_area(
+                    "Edge Case Handling",
+                    placeholder="Example:\n- Handle missing or invalid data gracefully\n- Provide fallback options for each step\n- Validate inputs against business rules\n- Monitor and log edge cases",
+                    help="Tips:\n- Implement error detection\n- Create fallback strategies\n- Add validation checks\n- Handle unexpected inputs",
+                    key=f"{tab._key}_edge_case",
+                    height=150
+                )
             
         with col2:
             # Evaluation Metrics
