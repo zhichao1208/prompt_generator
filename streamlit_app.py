@@ -239,7 +239,6 @@ with col3:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">NOVA-SYNC</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
-    st.markdown('<div class="header-icon">⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
