@@ -77,6 +77,33 @@ icon_style = """
         margin: 0;
         width: 100%;
     }
+    .solution-section {
+        margin: 32px 0;
+        padding: 0;
+    }
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #666;
+        margin: 0 0 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .content-block {
+        margin: 16px 0;
+    }
+    .content-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin: 0 0 8px 0;
+    }
+    .content-text {
+        font-size: 15px;
+        color: #666;
+        margin: 0 0 8px 0;
+        line-height: 1.5;
+    }
 </style>
 """
 st.markdown(icon_style, unsafe_allow_html=True)
@@ -109,7 +136,7 @@ with st.sidebar:
 
     # Advanced Settings in an expander
     with st.expander("Advanced Settings", expanded=False):
-        context_description = st.text_area("Additional Context", placeholder="Please provide any additional context or examples that might be helpful for the task.")
+        context_description = st.text_area("Context and Examples", placeholder="Please provide any additional context or examples that might be helpful for the task.")
         planning_features = st.checkbox("Enable Planning Features", value=True)        
         collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
         execution_flow = st.radio("Preferred Execution Flow", ["Recommended", "Sequential", "Hierarchical", "Consensual"])
@@ -180,9 +207,32 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">QUANTUM-FLOW</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
+    
+    # Solution Content Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Web Data Extraction → Data Validation → Email Generation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Role: "Web Data Extraction and Email Generation Specialist"<br>Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Strict rules for consistent output<br>Format: JSON data and professional email template</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">• High precision requirements<br>• Clear process flow<br>• Error minimization</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Evaluation Results Section
+    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="metric-large">1.5<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
@@ -206,6 +256,8 @@ with col1:
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-highlight">93%</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 2
