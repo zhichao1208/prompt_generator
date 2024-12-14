@@ -137,8 +137,8 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 <h3 style='margin: 0;'>{version}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>📥</div>
-                    <div class='icon-button'>🔍</div>
+                    <div class='icon-button'>📥 Import</div>
+                    <div class='icon-button'>🔍 Search</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -151,8 +151,10 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
+        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ""
         st.text_area(
             "Define the role",
+            value=default_role,
             key=f"{version}_role",
             height=100,
             label_visibility="collapsed"
@@ -160,37 +162,145 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
+        default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
+
+Data
+Email Content:
+{Email}
+Attachments:
+{Attachments}""" if version == "Solution A" else ""
         st.text_area(
             "Define the task",
+            value=default_task,
             key=f"{version}_task",
-            height=100,
-            label_visibility="collapsed"
-        )
-        
-        # Context Section
-        st.markdown("<div class='section-label'>Context</div>", unsafe_allow_html=True)
-        st.text_area(
-            "In-prompt context",
-            key=f"{version}_context",
-            height=100,
+            height=150,
             label_visibility="collapsed"
         )
         
         # Rules Section
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
+        default_rules = """General Rules
+Accuracy First:
+- Extract only explicitly stated information.
+- Do not infer or generate information that is not directly present in the email or attachments.
+
+Missing Data Handling:
+- For missing fields, use "unknown" as the value.
+
+Email Address Validation:
+- The buyer_email_address must belong to an individual (e.g., john.doe@example.com) and not a generic address (e.g., info@ or order@).
+
+Article Code Processing:
+- Extract only the seller's (TechHeroes) product_n_article_code.
+- Remove any special characters (., -, ) and output as a continuous alphanumeric string.
+- If multiple product codes exist, ensure they are presented as a comma-separated list.
+
+Output Format Consistency:
+- Follow the predefined JSON structure for outputs without deviation.
+
+Advanced Constraints
+Reasoning for Ambiguities:
+- If multiple possible values exist for a field, justify the selected value in the Reasoning section.
+
+Contextual Priority:
+- Prioritize data found in the email body over data in attachments.
+- If duplicate information exists, retain the most recent and complete entry.
+
+Time Zone Standardization:
+- Normalize all dates to the YYYY-MM-DD format.
+
+Error Logging:
+- Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ""
         st.text_area(
             "Define rules",
+            value=default_rules,
             key=f"{version}_rules",
-            height=100,
+            height=300,
+            label_visibility="collapsed"
+        )
+        
+        # Planning Section
+        st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
+        default_planning = """To ensure accuracy and completeness, the task is divided into the following steps:
+
+1. Identify Relevant Fields:
+   - Extract required fields (order_number, buyer_email_address, etc.) from the email body.
+   - Cross-verify with attachment data for completeness.
+
+2. Normalize Data:
+   - Format dates and product codes according to the constraints.
+
+3. Validate Outputs:
+   - Ensure all extracted fields meet the rules.
+
+4. Reasoning Generation:
+   - For ambiguous data points, document the logic behind decisions.""" if version == "Solution A" else ""
+        st.text_area(
+            "Define planning",
+            value=default_planning,
+            key=f"{version}_planning",
+            height=200,
+            label_visibility="collapsed"
+        )
+        
+        # Reasoning Section
+        st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
+        default_reasoning = """1. The buyer_email_address was validated to ensure it belongs to an individual and not a generic email.
+2. The order_date was normalized to YYYY-MM-DD from the email's header section.
+3. Ambiguity in product codes was resolved by extracting only TechHeroes' product identifiers from the attachment and removing invalid characters.
+4. Missing delivery instructions were logged as "unknown" for manual follow-up.
+5. Duplicate entries for order_number were detected in the email and attachment, and the most recent version was retained.
+6. All extracted fields were cross-validated between the email body and attachments for consistency.
+7. Time zones were unified across all date fields.
+8. Errors in attachment parsing (e.g., corrupted files) were flagged for review.
+9. Special characters in product codes were removed as per the constraints.
+10. The final output format strictly adhered to the JSON structure.""" if version == "Solution A" else ""
+        st.text_area(
+            "Define reasoning",
+            value=default_reasoning,
+            key=f"{version}_reasoning",
+            height=250,
             label_visibility="collapsed"
         )
         
         # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
+        default_output = """{
+  "Reasoning": [
+    "Reasoning statements documenting decision-making processes and resolving ambiguities."
+  ],
+  "Buyer": {
+    "buyer_company_name": "string",
+    "buyer_person_name": "string",
+    "buyer_email_address": "string"
+  },
+  "Order": {
+    "order_number": "string",
+    "order_date": "YYYY-MM-DD",
+    "delivery_address_street": "string",
+    "delivery_address_city": "string",
+    "delivery_address_postal_code": "string",
+    "delivery_address_country": "string",
+    "delivery_additional_details": "string"
+  },
+  "Product": [
+    {
+      "product_1_position": 1,
+      "product_1_article_code": "string",
+      "product_1_quantity": "integer"
+    },
+    {
+      "product_n_position": "integer",
+      "product_n_article_code": "string",
+      "product_n_quantity": "integer"
+    }
+  ]
+}""" if version == "Solution A" else ""
         st.text_area(
             "Define output format",
+            value=default_output,
             key=f"{version}_output",
-            height=100,
+            height=300,
             label_visibility="collapsed"
         )
         
@@ -537,7 +647,7 @@ render_prompt_card(col3, "Solution C")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
-eval_tab1, eval_tab2, eval_tab3, eval_tab4 = st.tabs(["Test", "Evaluate", "Validate", "Train"])
+eval_tab1, eval_tab2, eval_tab3, eval_tab4 = st.tabs(["Test", "Evaluate", "Validate", "Suggestions"])
 
 with eval_tab1:
     st.subheader("Test Results")
