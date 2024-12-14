@@ -131,9 +131,9 @@ st.title("Prompt Generator")
 # Function to render prompt card
 def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
-        # Header section with title and buttons (floating)
+        # Header section with title and buttons (non-floating)
         st.markdown(f"""
-            <div class='solution-header'>
+            <div class='solution-card'>
                 <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
                     <h3 style='margin: 0;'>{version}</h3>
                     <div style='display: flex; gap: 8px;'>
@@ -142,7 +142,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                         <div class='icon-button'>🔍 Search</div>
                     </div>
                 </div>
-                <div style='color: #666;'>Version 1.0 (2024-12-14)</div>
+                <div style='color: #666; margin-bottom: 20px;'>Version 1.0 (2024-12-14)</div>
             </div>
         """, unsafe_allow_html=True)
         
@@ -739,68 +739,52 @@ Expected: 1st May 2024""",
                     st.button("➖ Remove Edge Case", key=f"{version}_remove_edge_case",
                              on_click=remove_edge_case, args=(version,))
 
-# Add custom CSS for floating header and text display
+# Update CSS styles
 st.markdown("""
 <style>
-    /* Floating header styles */
-    .solution-header {
-        position: sticky;
-        top: 0;
+    /* Card styles */
+    .solution-card {
         background: white;
-        padding: 10px 0;
-        z-index: 100;
-        border-bottom: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        margin-bottom: 20px;
     }
     
     /* Text display styles */
     .text-display {
-        padding: 8px 12px;
-        border: 1px solid transparent;
+        padding: 12px;
+        border: 1px solid #eee;
         border-radius: 4px;
         cursor: pointer;
         font-size: 0.9em;
-        line-height: 1.5;
+        line-height: 1.6;
         color: #1f1f1f;
         background: #f8f9fa;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         transition: all 0.2s;
     }
     
     .text-display:hover {
         border-color: #ddd;
         background: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
-    .text-display.active {
-        border-color: #0d6efd;
-        background: #fff;
-    }
-    
-    /* Existing styles */
+    /* Section styles */
     .section-label {
         color: #666;
         font-size: 0.9em;
         font-weight: 500;
-        margin-bottom: 5px;
-        margin-top: 15px;
+        margin: 20px 0 10px 0;
     }
     
-    .stTextArea textarea {
-        font-size: 0.9em;
-        border-radius: 4px;
-    }
-    
-    .stExpander {
-        border: none;
-        box-shadow: none;
-        background-color: transparent;
-    }
-    
+    /* Button styles */
     .icon-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 4px 12px;
+        padding: 6px 12px;
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: pointer;
@@ -811,6 +795,7 @@ st.markdown("""
     
     .icon-button:hover {
         background: #e9ecef;
+        border-color: #ccc;
     }
     
     .favorite {
@@ -821,36 +806,21 @@ st.markdown("""
         color: #ffd700;
         background: #fff4e6;
     }
-</style>
-
-<script>
-    function handleTextClick(key) {
-        // Update the session state via Streamlit's event system
-        const event = new CustomEvent('streamlit:setComponentValue', {
-            detail: {
-                key: key,
-                value: true
-            }
-        });
-        window.dispatchEvent(event);
-        // Force a rerun to show the text area
-        window.streamlitRerun();
+    
+    /* Text area styles */
+    .stTextArea textarea {
+        font-size: 0.9em;
+        line-height: 1.6;
+        padding: 12px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
     }
     
-    // Initialize click handlers for text displays
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.text-display').forEach(display => {
-            display.style.cursor = 'pointer';
-        });
-    });
-    
-    // Favorite button toggle
-    document.querySelectorAll('.favorite').forEach(button => {
-        button.addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    });
-</script>
+    .stTextArea textarea:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
+    }
+</style>
 """, unsafe_allow_html=True)
 
 # Create three columns with equal width
