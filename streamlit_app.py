@@ -107,11 +107,15 @@ icon_style = """
 <style>
     .solution-card {
         background: #f8f9fa;
-        border-radius: 16px;
-        padding: 32px;
-        margin: 16px 0;
+        border-radius: 20px;
+        padding: 48px 32px;
+        margin: 24px 16px;
         text-align: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        min-height: 720px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
     }
     .solution-code {
         font-family: 'SF Mono', monospace;
@@ -119,70 +123,75 @@ icon_style = """
         font-weight: 600;
         color: #1D6AE5;
         background: rgba(29, 106, 229, 0.1);
-        padding: 6px 16px;
+        padding: 8px 20px;
         border-radius: 24px;
         display: inline-block;
-        margin: 0 0 24px 0;
+        margin: 0 0 32px 0;
         letter-spacing: 0.5px;
+        position: relative;
+        top: -8px;
     }
     .solution-icon {
-        font-size: 48px;
+        font-size: 64px;
         color: #1D6AE5;
-        margin: 24px auto;
+        margin: 32px auto 40px;
         text-align: center;
         line-height: 1;
         display: block;
     }
     .solution-header {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 600;
-        margin: 20px 0 32px 0;
+        margin: 24px 0 40px 0;
         text-align: center;
         color: #1E1E1E;
         line-height: 1.3;
     }
     .feature-row {
-        padding: 28px 0;
+        padding: 32px 0;
         border-bottom: 1px solid #eaeaea;
         text-align: center;
         margin: 0 auto;
-        max-width: 280px;
+        max-width: 320px;
+        width: 100%;
     }
     .feature-row:last-child {
         border-bottom: none;
+        padding-bottom: 48px;
     }
     .feature-icon {
-        font-size: 28px;
+        font-size: 32px;
         color: #666;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         display: block;
     }
     .feature-label {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 600;
         color: #1E1E1E;
         margin: 0 0 12px 0;
         line-height: 1.4;
     }
     .feature-value {
-        font-size: 16px;
+        font-size: 17px;
         color: #666;
         margin: 0;
-        line-height: 1.5;
+        line-height: 1.6;
     }
     .select-button {
-        margin-top: 24px;
+        margin-top: 32px;
         width: 100%;
-        max-width: 280px;
+        max-width: 320px;
     }
     .stButton>button {
         width: 100%;
-        max-width: 280px;
+        max-width: 320px;
         margin: 0 auto;
         display: block;
-        padding: 12px 24px;
+        padding: 14px 28px;
         font-size: 16px;
         font-weight: 500;
+        border-radius: 8px;
     }
 </style>
 """
