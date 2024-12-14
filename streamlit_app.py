@@ -86,9 +86,17 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Navigation Section
+st.sidebar.title("Navigation")
+if st.sidebar.button("🔮 Prompt Generator", use_container_width=True):
+    st.switch_page("pages/prompt_generator.py")
+
+# Original sidebar content
+st.sidebar.header("User Settings")
+
 # Layout Setup
 st.title("Graph / Prompt Generator")
-st.subheader("It's not about to find BEST Prompts, but the RIGHT ones.")
+st.subheader("It's not about to generate BEST Prompts, but the RIGHT ones.")
 
 # Main Layout
 st.header("Solutions")
