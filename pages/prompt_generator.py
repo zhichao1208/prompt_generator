@@ -274,7 +274,10 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             if models_to_evaluate:
                 st.markdown("##### Model Settings")
                 for model in models_to_evaluate:
-                    with st.expander(f"{model} Settings"):
+                    st.markdown(f"**{model}**")
+                    cols = st.columns(2)
+                    
+                    with cols[0]:
                         # Temperature
                         st.slider(
                             "Temperature",
@@ -284,17 +287,6 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                             step=0.1,
                             key=f"{version}_{model}_temp",
                             help="Controls randomness in the output"
-                        )
-                        
-                        # Max tokens
-                        st.number_input(
-                            "Max Tokens",
-                            min_value=1,
-                            max_value=4096,
-                            value=2048,
-                            step=1,
-                            key=f"{version}_{model}_max_tokens",
-                            help="Maximum number of tokens to generate"
                         )
                         
                         # Top P
@@ -307,6 +299,18 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                             key=f"{version}_{model}_top_p",
                             help="Controls diversity via nucleus sampling"
                         )
+                    
+                    with cols[1]:
+                        # Max tokens
+                        st.number_input(
+                            "Max Tokens",
+                            min_value=1,
+                            max_value=4096,
+                            value=2048,
+                            step=1,
+                            key=f"{version}_{model}_max_tokens",
+                            help="Maximum number of tokens to generate"
+                        )
                         
                         # Frequency Penalty
                         st.slider(
@@ -318,8 +322,10 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                             key=f"{version}_{model}_freq_penalty",
                             help="Adjusts likelihood based on frequency"
                         )
+                    
+                    st.markdown("---")
             
-            # Dynamic Prompt Optimization
+            # Dynamic Prompt Optimization add 3 examples and edge cases
             st.markdown("<div class='section-label'>Dynamic Prompt Optimization</div>", unsafe_allow_html=True)
             st.text_area(
                 "Optimization",
