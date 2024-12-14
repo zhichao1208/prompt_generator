@@ -109,7 +109,6 @@ with st.sidebar:
 
     # Advanced Settings in an expander
     with st.expander("Advanced Settings", expanded=False):
-        st.subheader("Context and Examples")
         context_description = st.text_area("Additional Context", placeholder="Please provide any additional context or examples that might be helpful for the task.")
         planning_features = st.checkbox("Enable Planning Features", value=True)        
         collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
