@@ -131,10 +131,6 @@ st.title("Prompt Generator")
 # Function to render prompt card
 def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
-        # Add state management for favorites
-if 'favorites' not in st.session_state:
-    st.session_state.favorites = set()
-
         # Header section with title and buttons
         st.markdown(f"""
             <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
@@ -309,26 +305,6 @@ col1, col2, col3 = st.columns(3)
 render_prompt_card(col1, "Solution A")
 render_prompt_card(col2, "Solution B")
 render_prompt_card(col3, "Solution C")
-
-# Add state management for favorites
-if 'favorites' not in st.session_state:
-    st.session_state.favorites = set()
-
-# Add click handlers for buttons
-for version in ['Solution A', 'Solution B', 'Solution C']:
-    col_buttons = st.columns(3)
-    with col_buttons[0]:
-        if st.button('⭐', key=f'fav_{version}', help="Add to favorites"):
-            if version in st.session_state.favorites:
-                st.session_state.favorites.remove(version)
-            else:
-                st.session_state.favorites.add(version)
-    with col_buttons[1]:
-        if st.button('📥 Import', key=f'import_{version}', help="Import from prompt library"):
-            st.info(f"Opening prompt library for {version}...")
-    with col_buttons[2]:
-        if st.button('🔍 Search', key=f'search_{version}', help="Search in favorites"):
-            st.info(f"Opening favorites for {version}...")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
