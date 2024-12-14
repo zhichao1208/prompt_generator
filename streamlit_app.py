@@ -20,10 +20,9 @@ with st.sidebar:
     st.subheader("Preferences")
     model_options = {
         "Recommended": ["Recommended"],
-        "Claude": ["Claude", "Claude 2", "Claude Instant"],
-        "GPT-4": ["GPT-4", "GPT-4 Turbo", "GPT-4 Vision"],
-        "PaLM": ["PaLM", "PaLM 2", "PaLM Chat"],
-        "Llama2": ["Llama2 7B", "Llama2 13B", "Llama2 70B"]
+        "Claude": ["claude-3-5-sonnet-202410", "claude-3-opus", "claude-3.5-haiku", "claude-3.5-sonnet"],
+        "GPT": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo-2024-04-09", "gpt-4o", "gpt-4o-mini"],
+        "Other": ["cursor-small", "gemini-exp-1206", "o1-mini", "o1-preview"]
     }
     
     model_preference = []
@@ -41,7 +40,7 @@ with st.sidebar:
     with st.expander("Advanced Settings", expanded=False):
         planning_features = st.checkbox("Enable Planning Features", value=True)        
         collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
-        execution_flow = st.radio("Preferred Execution Flow", ["Sequential", "Hierarchical", "Consensual"])
+        execution_flow = st.radio("Preferred Execution Flow", ["Recommended","Sequential", "Hierarchical", "Consensual"])
         testing_goal = st.radio("Priority Goals", ["Recommended", "Accuracy", "Speed", "Flexibility"])
 
     # Generate button
@@ -52,17 +51,9 @@ with st.sidebar:
 st.write("---")
 st.header("Chat Module")
 
-# Chat Module
-with st.expander("Task Input and Dynamic Feedback", expanded=True):
-    st.text_area("Chat History", value="System: Welcome! Please describe your task and preferences.", height=200)
-
-    user_input = st.text_input("Your Input", placeholder="Enter additional requirements or adjustments...")
-    if st.button("Submit Task"):
-        st.success("Task submitted successfully! Generating options in the Composer Module...")
-
-# Composer Module
+# Solutions
 st.write("---")
-st.header("Composer Module")
+st.header("Solutions")
 
 # Layout Columns
 col1, col2, col3 = st.columns([1, 1, 1])
