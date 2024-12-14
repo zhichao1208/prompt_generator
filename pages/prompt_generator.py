@@ -161,14 +161,16 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 <div class='text-display' onclick="handleTextClick('{role_edit_key}')">{default_role}</div>
             """, unsafe_allow_html=True)
         else:
-            st.text_area(
+            edited_text = st.text_area(
                 "Define the role",
                 value=default_role,
                 key=f"{version}_role",
                 height=100,
                 label_visibility="collapsed"
             )
-            
+            if edited_text != default_role:
+                st.session_state[role_edit_key] = False
+                
         # Task Section with text display
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
         default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
@@ -190,13 +192,15 @@ Attachments:
                 <div class='text-display' onclick="handleTextClick('{task_edit_key}')">{default_task}</div>
             """, unsafe_allow_html=True)
         else:
-            st.text_area(
+            edited_text = st.text_area(
                 "Define the task",
                 value=default_task,
                 key=f"{version}_task",
                 height=150,
                 label_visibility="collapsed"
             )
+            if edited_text != default_task:
+                st.session_state[task_edit_key] = False
         
         # Rules Section with text display
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
@@ -829,6 +833,8 @@ st.markdown("""
             }
         });
         window.dispatchEvent(event);
+        // Force a rerun to show the text area
+        window.streamlitRerun();
     }
     
     // Initialize click handlers for text displays
