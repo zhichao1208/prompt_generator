@@ -137,8 +137,8 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 <h3 style='margin: 0;'>{version}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>导入</div>
-                    <div class='icon-button'>搜索</div>
+                    <div class='icon-button'>📥 Import</div>
+                    <div class='icon-button'>🔍 Search</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -320,10 +320,10 @@ for version in ['Solution A', 'Solution B', 'Solution C']:
             else:
                 st.session_state.favorites.add(version)
     with col_buttons[1]:
-        if st.button('导入', key=f'import_{version}', help="Import from prompt library"):
+        if st.button('📥 Import', key=f'import_{version}', help="Import from prompt library"):
             st.info(f"Opening prompt library for {version}...")
     with col_buttons[2]:
-        if st.button('搜索', key=f'search_{version}', help="Search in favorites"):
+        if st.button('🔍 Search', key=f'search_{version}', help="Search in favorites"):
             st.info(f"Opening favorites for {version}...")
 
 # Bottom Section: Evaluation & Analysis
