@@ -131,47 +131,36 @@ st.title("Prompt Generator")
 # Function to render prompt card
 def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
-        # Header section with title and buttons (non-floating)
+        # Header section with title and buttons
         st.markdown(f"""
-            <div class='solution-card'>
-                <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
-                    <h3 style='margin: 0;'>{version}</h3>
-                    <div style='display: flex; gap: 8px;'>
-                        <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                        <div class='icon-button'>📥 Import</div>
-                        <div class='icon-button'>🔍 Search</div>
-                    </div>
+            <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
+                <h3 style='margin: 0;'>{version}</h3>
+                <div style='display: flex; gap: 8px;'>
+                    <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
+                    <div class='icon-button'>📥 Import</div>
+                    <div class='icon-button'>🔍 Search</div>
                 </div>
-                <div style='color: #666; margin-bottom: 20px;'>Version 1.0 (2024-12-14)</div>
             </div>
         """, unsafe_allow_html=True)
         
-        # Role Section with text display
+        # Version info
+        st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
+        
+        # Prompt Structure
+        st.markdown("<h4 style='margin-top: 20px;'>Prompt Structure</h4>", unsafe_allow_html=True)
+        
+        # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
         default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ""
+        st.text_area(
+            "Define the role",
+            value=default_role,
+            key=f"{version}_role",
+            height=100,
+            label_visibility="collapsed"
+        )
         
-        # Create a unique key for the visibility state
-        role_edit_key = f"{version}_role_edit"
-        if role_edit_key not in st.session_state:
-            st.session_state[role_edit_key] = False
-            
-        # Display either text or text_area based on state
-        if not st.session_state[role_edit_key]:
-            st.markdown(f"""
-                <div class='text-display' onclick="handleTextClick('{role_edit_key}')">{default_role}</div>
-            """, unsafe_allow_html=True)
-        else:
-            edited_text = st.text_area(
-                "Define the role",
-                value=default_role,
-                key=f"{version}_role",
-                height=100,
-                label_visibility="collapsed"
-            )
-            if edited_text != default_role:
-                st.session_state[role_edit_key] = False
-                
-        # Task Section with text display
+        # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
         default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
 
@@ -180,29 +169,15 @@ Email Content:
 {Email}
 Attachments:
 {Attachments}""" if version == "Solution A" else ""
+        st.text_area(
+            "Define the task",
+            value=default_task,
+            key=f"{version}_task",
+            height=150,
+            label_visibility="collapsed"
+        )
         
-        # Create a unique key for the visibility state
-        task_edit_key = f"{version}_task_edit"
-        if task_edit_key not in st.session_state:
-            st.session_state[task_edit_key] = False
-            
-        # Display either text or text_area based on state
-        if not st.session_state[task_edit_key]:
-            st.markdown(f"""
-                <div class='text-display' onclick="handleTextClick('{task_edit_key}')">{default_task}</div>
-            """, unsafe_allow_html=True)
-        else:
-            edited_text = st.text_area(
-                "Define the task",
-                value=default_task,
-                key=f"{version}_task",
-                height=150,
-                label_visibility="collapsed"
-            )
-            if edited_text != default_task:
-                st.session_state[task_edit_key] = False
-        
-        # Rules Section with text display
+        # Rules Section
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
         default_rules = """General Rules
 Accuracy First:
@@ -236,19 +211,15 @@ Time Zone Standardization:
 
 Error Logging:
 - Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_rules}</div>
-        """, unsafe_allow_html=True)
         st.text_area(
             "Define rules",
             value=default_rules,
             key=f"{version}_rules",
             height=300,
-            label_visibility="collapsed",
-            style="display: none;"
+            label_visibility="collapsed"
         )
         
-        # Planning Section with text display
+        # Planning Section
         st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
         default_planning = """To ensure accuracy and completeness, the task is divided into the following steps:
 
@@ -264,19 +235,15 @@ Error Logging:
 
 4. Reasoning Generation:
    - For ambiguous data points, document the logic behind decisions.""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_planning}</div>
-        """, unsafe_allow_html=True)
         st.text_area(
             "Define planning",
             value=default_planning,
             key=f"{version}_planning",
             height=200,
-            label_visibility="collapsed",
-            style="display: none;"
+            label_visibility="collapsed"
         )
         
-        # Reasoning Section with text display
+        # Reasoning Section
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
         default_reasoning = """1. The buyer_email_address was validated to ensure it belongs to an individual and not a generic email.
 2. The order_date was normalized to YYYY-MM-DD from the email's header section.
@@ -288,19 +255,15 @@ Error Logging:
 8. Errors in attachment parsing (e.g., corrupted files) were flagged for review.
 9. Special characters in product codes were removed as per the constraints.
 10. The final output format strictly adhered to the JSON structure.""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_reasoning}</div>
-        """, unsafe_allow_html=True)
         st.text_area(
             "Define reasoning",
             value=default_reasoning,
             key=f"{version}_reasoning",
             height=250,
-            label_visibility="collapsed",
-            style="display: none;"
+            label_visibility="collapsed"
         )
         
-        # Output Format Section with text display
+        # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
         
         # Add format selection
@@ -342,16 +305,12 @@ Error Logging:
     }
   ]
 }""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_output}</div>
-        """, unsafe_allow_html=True)
         st.text_area(
             "Define output format",
             value=default_output,
             key=f"{version}_output",
             height=300,
-            label_visibility="collapsed",
-            style="display: none;"
+            label_visibility="collapsed"
         )
         
         # Enhancements Section
@@ -739,52 +698,30 @@ Expected: 1st May 2024""",
                     st.button("➖ Remove Edge Case", key=f"{version}_remove_edge_case",
                              on_click=remove_edge_case, args=(version,))
 
-# Update CSS styles
+# Add custom CSS
 st.markdown("""
 <style>
-    /* Card styles */
-    .solution-card {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #eee;
-        margin-bottom: 20px;
-    }
-    
-    /* Text display styles */
-    .text-display {
-        padding: 12px;
-        border: 1px solid #eee;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-        line-height: 1.6;
-        color: #1f1f1f;
-        background: #f8f9fa;
-        margin-bottom: 15px;
-        transition: all 0.2s;
-    }
-    
-    .text-display:hover {
-        border-color: #ddd;
-        background: #fff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    
-    /* Section styles */
     .section-label {
         color: #666;
         font-size: 0.9em;
         font-weight: 500;
-        margin: 20px 0 10px 0;
+        margin-bottom: 5px;
+        margin-top: 15px;
     }
-    
-    /* Button styles */
+    .stTextArea textarea {
+        font-size: 0.9em;
+        border-radius: 4px;
+    }
+    .stExpander {
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
     .icon-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 6px 12px;
+        padding: 4px 12px;
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: pointer;
@@ -795,7 +732,6 @@ st.markdown("""
     
     .icon-button:hover {
         background: #e9ecef;
-        border-color: #ccc;
     }
     
     .favorite {
@@ -807,19 +743,16 @@ st.markdown("""
         background: #fff4e6;
     }
     
-    /* Text area styles */
-    .stTextArea textarea {
-        font-size: 0.9em;
-        line-height: 1.6;
-        padding: 12px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-    }
-    
-    .stTextArea textarea:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
-    }
+    /* Add JavaScript for favorite button toggle */
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.favorite').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 </style>
 """, unsafe_allow_html=True)
 
