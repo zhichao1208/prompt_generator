@@ -94,27 +94,21 @@ def get_solution_codenames(task_description):
 # 在 Solutions 部分之前添加代号获取
 codenames = get_solution_codenames(task_description)
 
-# Main Layout
-# Solutions
-st.write("---")
-st.header("Solutions")
-
-# Modern Comparison Layout
-col1, col2, col3 = st.columns(3)
-
 # Style for icons and headers
 icon_style = """
 <style>
     .solution-card {
         background: #f8f9fa;
         border-radius: 20px;
-        padding: 48px 32px;
+        padding: 32px;
         margin: 24px 16px;
         text-align: center;
         box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        min-height: 720px;
+        min-height: 600px;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         position: relative;
     }
     .solution-code {
@@ -126,69 +120,72 @@ icon_style = """
         padding: 8px 20px;
         border-radius: 24px;
         display: inline-block;
-        margin: 0 0 32px 0;
+        margin: 0;
         letter-spacing: 0.5px;
-        position: relative;
-        top: -8px;
     }
     .solution-icon {
-        font-size: 64px;
+        font-size: 56px;
         color: #1D6AE5;
-        margin: 32px auto 40px;
+        margin: 24px auto;
         text-align: center;
         line-height: 1;
         display: block;
     }
     .solution-header {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 600;
-        margin: 24px 0 40px 0;
+        margin: 16px 0 32px 0;
         text-align: center;
         color: #1E1E1E;
         line-height: 1.3;
     }
+    .feature-container {
+        width: 100%;
+        max-width: 320px;
+    }
     .feature-row {
-        padding: 32px 0;
+        padding: 24px 0;
         border-bottom: 1px solid #eaeaea;
         text-align: center;
         margin: 0 auto;
-        max-width: 320px;
-        width: 100%;
     }
     .feature-row:last-child {
         border-bottom: none;
-        padding-bottom: 48px;
     }
     .feature-icon {
-        font-size: 32px;
+        font-size: 28px;
         color: #666;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         display: block;
     }
     .feature-label {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         color: #1E1E1E;
-        margin: 0 0 12px 0;
+        margin: 0 0 8px 0;
         line-height: 1.4;
     }
     .feature-value {
-        font-size: 17px;
+        font-size: 16px;
         color: #666;
         margin: 0;
-        line-height: 1.6;
+        line-height: 1.5;
     }
     .select-button {
-        margin-top: 32px;
+        margin-top: 24px;
         width: 100%;
         max-width: 320px;
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
     }
     .stButton>button {
         width: 100%;
         max-width: 320px;
         margin: 0 auto;
         display: block;
-        padding: 14px 28px;
+        padding: 12px 24px;
         font-size: 16px;
         font-weight: 500;
         border-radius: 8px;
@@ -197,13 +194,19 @@ icon_style = """
 """
 st.markdown(icon_style, unsafe_allow_html=True)
 
+# Main Layout
+st.header("Solutions")
+
+# Create columns with specific ratios for better spacing
+col1, col2, col3 = st.columns([1, 1, 1])
+
 # Option 1
 with col1:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown(f'<div class="solution-code">{codenames["sequential"]}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">QUANTUM-FLOW</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">🔄</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
@@ -232,10 +235,10 @@ with col1:
 # Option 2
 with col2:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown(f'<div class="solution-code">{codenames["hierarchical"]}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">MATRIX-CORE</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">📊</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
@@ -264,10 +267,10 @@ with col2:
 # Option 3
 with col3:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown(f'<div class="solution-code">{codenames["parallel"]}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-code">NOVA-SYNC</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">⚡</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
