@@ -378,6 +378,10 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Output Format</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Email template with optional data validation</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
     st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">• Complex task handling<br>• Multi-model collaboration<br>• Highest accuracy needs</div>', unsafe_allow_html=True)
