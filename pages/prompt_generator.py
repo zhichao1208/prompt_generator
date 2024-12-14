@@ -198,11 +198,23 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         with st.expander("Enhancements"):
             # Reasoning
             st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-            st.text_area(
+            st.selectbox(
                 "Reasoning",
-                placeholder="Example:\n- Chain-of-Thought (CoT): Break down complex reasoning into clear steps\n- Tree-of-Thought (ToT): Explore multiple reasoning paths\n- Buffer of Thoughts (BoT): Store and retrieve intermediate results\n- ReAct: Combine reasoning with actions",
+                options=[
+                    "Chain-of-Thought (CoT): Break down complex reasoning into clear steps",
+                    "Tree-of-Thought (ToT): Explore multiple reasoning paths", 
+                    "Buffer of Thoughts (BoT): Store and retrieve intermediate results",
+                    "ReAct: Combine reasoning with actions",
+                    "Use Program-of-Thought for mathematical tasks"
+                ],
                 help="Tips:\n- Use CoT for step-by-step problem solving\n- Apply ToT for exploring multiple solutions\n- Implement BoT for complex calculations\n- Include ReAct for interactive tasks",
                 key=f"{version}_reasoning",
+                label_visibility="collapsed"
+            )
+            st.text_area(
+                placeholder="Example:\n- Least-to-Most Decomposition: Break complex tasks into subtasks\n- Plan-and-Solve Strategy: Define solution path before execution\n- Progressive Task Refinement: Iteratively improve solutions\n- Dependency Management: Handle task prerequisites",
+                help="Tips:\n- Use Least-to-Most for complex problems\n- Apply Plan-and-Solve for multi-step tasks\n- Consider task dependencies\n- Include progress tracking",
+                key=f"{version}_planning",
                 height=150,
                 label_visibility="collapsed"
             )
@@ -222,7 +234,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             st.text_area(
                 "Model Evaluation",
-                placeholder="Example:\n- Compare performance across models (GPT-4, Claude)\n- Adjust prompts based on model strengths\n- Use Program-of-Thought for mathematical tasks\n- Optimize for model-specific features",
+                placeholder="Example:\n- Compare performance across models (GPT-4, Claude)\n- Adjust prompts based on model strengths\n- Optimize for model-specific features",
                 help="Tips:\n- Consider model specializations\n- Adapt to model capabilities\n- Use model-specific techniques\n- Balance performance and cost",
                 key=f"{version}_model_eval",
                 height=150,
