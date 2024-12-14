@@ -214,13 +214,28 @@ with col1:
     st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Structure</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">Web Data Extraction → Data Validation → Email Generation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Role</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">Role: "Web Data Extraction and Email Generation Specialist"<br>Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Strict rules for consistent output<br>Format: JSON data and professional email template</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Task</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Strict rules for consistent output<br>Format: JSON data and professional email template</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Rules</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Strict rules for consistent output<br>Format: JSON data and professional email template</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Output Format</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">JSON data and professional email template</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
@@ -271,15 +286,30 @@ with col2:
     st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
-    st.markdown('<div class="content-text">Parallel data extraction and email generation, final result merging</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Web Data Extraction → Data Validation → Email Generation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
-    st.markdown('<div class="content-text">Data Module: "Extract all contact information from the webpage"<br>Email Module: "Using the extracted data, generate a professional email"<br>Rules: Flexible data consistency requirements<br>Format: Email template only</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Role</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Role: "Web Data Extraction and Email Generation Specialist"<br>Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Flexible data consistency requirements<br>Format: Email template only</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
-    
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Task</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Flexible data consistency requirements<br>Format: Email template only</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Rules</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Flexible data consistency requirements<br>Format: Email template only</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Output Format</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Email template only</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
     st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">• Quick task processing<br>• Independent module operation<br>• High flexibility requirements</div>', unsafe_allow_html=True)
@@ -328,20 +358,29 @@ with col3:
     st.markdown('<div class="section-title">Solution Details</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Team Structure</div>', unsafe_allow_html=True)
-    st.markdown('<div class="content-text">Claude for data extraction, GPT-4 for email generation</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Structure</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Web Data Extraction → Data Validation → Email Generation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
-    st.markdown('<div class="content-title">Prompt Module</div>', unsafe_allow_html=True)
-    st.markdown('<div class="content-text">Claude: "Extract contact information from the webpage"<br>GPT-4: "Generate an email based on the extracted contact information"<br>Rules: Relaxed rules, partial data allowed<br>Format: Email template with optional data validation</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Role</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Role: "Web Data Extraction and Email Generation Specialist"<br>Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Relaxed rules, partial data allowed<br>Format: Email template with optional data validation</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Task</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Task: "Extract names, emails, and company names, then generate an email"<br>Rules: Relaxed rules, partial data allowed<br>Format: Email template with optional data validation</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
+    st.markdown('<div class="content-title">Rules</div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-text">Relaxed rules, partial data allowed<br>Format: Email template with optional data validation</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="content-block">', unsafe_allow_html=True)
     st.markdown('<div class="content-block">', unsafe_allow_html=True)
     st.markdown('<div class="content-title">Recommended For</div>', unsafe_allow_html=True)
     st.markdown('<div class="content-text">• Complex task handling<br>• Multi-model collaboration<br>• Highest accuracy needs</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Evaluation Results Section
