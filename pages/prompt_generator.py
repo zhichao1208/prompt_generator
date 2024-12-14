@@ -69,11 +69,52 @@ with st.sidebar:
     
     # Few-Shot Examples (Optional)
     with st.expander("Few-Shot Examples (Optional)"):
-        few_shot = st.text_area(
-            "Input-Output Examples",
-            placeholder='Input: PDF contains "Order Date: 2024-12-15"\nOutput: {"order_date": "2024-12-15"}',
-            help="Provide input-output examples to help system understand task requirements"
-        )
+        st.markdown("Add examples to help the system understand your requirements better")
+        
+        # Container for all examples
+        examples_container = st.container()
+        
+        # State for tracking number of examples
+        if 'num_examples' not in st.session_state:
+            st.session_state.num_examples = 1
+        
+        # Function to add new example
+        def add_example():
+            st.session_state.num_examples += 1
+        
+        # Function to remove last example
+        def remove_example():
+            if st.session_state.num_examples > 1:
+                st.session_state.num_examples -= 1
+        
+        # Display existing examples
+        for i in range(st.session_state.num_examples):
+            with examples_container:
+                st.markdown(f"**Example {i+1}**")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.text_area(
+                        "Input",
+                        placeholder='PDF contains "Order Date: 2024-12-15"',
+                        key=f"example_input_{i}",
+                        height=100
+                    )
+                with col2:
+                    st.text_area(
+                        "Output",
+                        placeholder='{"order_date": "2024-12-15"}',
+                        key=f"example_output_{i}",
+                        height=100
+                    )
+                st.markdown("---")
+        
+        # Add/Remove example buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            st.button("➕ Add Example", on_click=add_example)
+        with col2:
+            if st.session_state.num_examples > 1:
+                st.button("➖ Remove Example", on_click=remove_example)
     
     # Action Buttons
     col1, col2 = st.columns(2)
