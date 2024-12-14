@@ -104,6 +104,41 @@ icon_style = """
         margin: 0 0 8px 0;
         line-height: 1.5;
     }
+    .evaluation-section {
+        margin: 48px 0 0 0;
+        padding: 0;
+        text-align: left;
+    }
+    .evaluation-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #666;
+        margin: 0 0 32px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .metric-wrapper {
+        margin: 32px 0;
+    }
+    .metric-large {
+        font-size: 56px;
+        font-weight: 700;
+        color: #1E1E1E;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+    }
+    .metric-unit {
+        font-size: 40px;
+        font-weight: 600;
+        margin-left: 4px;
+    }
+    .metric-label {
+        font-size: 16px;
+        color: #666;
+        margin: 8px 0 0 0;
+        padding: 0;
+    }
 </style>
 """
 st.markdown(icon_style, unsafe_allow_html=True)
@@ -246,11 +281,13 @@ with col1:
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Evaluation Results Section
-    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-title">EVALUATION RESULTS</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="metric-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="metric-large">1.5<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-label">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
@@ -318,11 +355,13 @@ with col2:
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Evaluation Results Section
-    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-title">EVALUATION RESULTS</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="metric-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="metric-large">1.8<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-label">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
@@ -388,11 +427,13 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Evaluation Results Section
-    st.markdown('<div class="solution-section">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Evaluation Results</div>', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-section">', unsafe_allow_html=True)
+    st.markdown('<div class="evaluation-title">EVALUATION RESULTS</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="metric-wrapper">', unsafe_allow_html=True)
     st.markdown('<div class="metric-large highlight-green">1.2<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-label">Average Response Time</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
