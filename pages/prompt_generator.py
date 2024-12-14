@@ -21,7 +21,7 @@ with st.sidebar:
     
     # Task Type
     st.subheader("Task Type")
-    task_type = st.selectbox(
+    task_type = st.radio(
         "Select Task Type",
         options=["Recommended", "Data Extraction", "Decision Support", "Content Generation", "Data Analysis"],
         help="Select task type, the system will optimize generation strategy accordingly"
@@ -47,7 +47,7 @@ with st.sidebar:
     
     # Tone and Context
     st.subheader("Tone and Context")
-    tone = st.selectbox(
+    tone = st.radio(
         "Communication Tone",
         options=["Professional", "Friendly", "Formal", "Casual"],
         help="Choose the tone style for output content"
@@ -92,6 +92,17 @@ tab1, tab2, tab3, tab4 = st.tabs(["Solution 1", "Solution 2", "Solution 3", "Sea
 # Solution Tabs Content
 for tab in [tab1, tab2, tab3]:
     with tab:
+        # Version and Favorite Section
+        col_version, col_favorite = st.columns([3, 1])
+        with col_version:
+            st.markdown("**Version:** 1.0 (2024-12-14)")
+            with st.expander("Version History"):
+                st.markdown("- v1.0 (2024-12-14): Initial version")
+                st.markdown("- v0.9 (2024-12-13): Draft version")
+        with col_favorite:
+            st.button("⭐", key=f"{tab._key}_favorite")
+        
+        # Main Content
         col1, col2 = st.columns([2, 1])
         with col1:
             st.subheader("Prompt Structure")
@@ -115,27 +126,65 @@ for tab in [tab1, tab2, tab3]:
             # Output Format Section
             st.markdown("##### Output Format")
             st.text_area("Define output format", key=f"{tab._key}_output", height=100)
+
+            # Enhancements Section
+            with st.expander("Enhancements"):
+                st.markdown("##### Rich Context Integration")
+                st.markdown("- Tailored summaries and recommendations")
+                st.markdown("- Dynamic adaptation to preferences")
+                st.markdown("- Domain-specific knowledge integration")
+                
+                st.markdown("##### Reasoning Generation")
+                reasoning = st.text_area(
+                    "Reasoning",
+                    placeholder="System-generated reasoning (editable)",
+                    key=f"{tab._key}_reasoning"
+                )
+                
+                st.markdown("##### Actionable Outputs")
+                st.markdown("- Clear recommendations")
+                st.markdown("- Prioritized actions")
+                st.markdown("- Success criteria")
+                
+                st.markdown("##### Edge Case Handling")
+                st.markdown("- Error detection")
+                st.markdown("- Fallback strategies")
+                st.markdown("- Validation checks")
             
         with col2:
-            st.subheader("Version Info")
-            st.markdown("**Version:** 1.0")
-            st.markdown("**Created:** 2024-12-14")
-            
-            # Version History
-            with st.expander("Version History"):
-                st.markdown("- v1.0 (2024-12-14): Initial version")
-                st.markdown("- v0.9 (2024-12-13): Draft version")
+            # Evaluation Metrics
+            st.subheader("Quick Metrics")
+            metrics_col1, metrics_col2 = st.columns(2)
+            with metrics_col1:
+                st.metric("Accuracy", "95%", "+2%")
+                st.metric("Latency", "1.5s", "-0.3s")
+            with metrics_col2:
+                st.metric("Tokens", "1,200", "-100")
+                st.metric("Logic", "High", "+1")
 
 # Search Tab Content
 with tab4:
     st.subheader("Search Templates")
     search_query = st.text_input("Search for templates", placeholder="e.g., Email Onboarding Prompt")
     
-    st.subheader("Saved Templates")
-    with st.expander("My Templates"):
-        st.markdown("- Template 1: Email Generation")
-        st.markdown("- Template 2: Data Extraction")
-        st.markdown("- Template 3: Decision Support")
+    col_search, col_filters = st.columns([2, 1])
+    with col_search:
+        st.markdown("#### Search Results")
+        for i in range(3):
+            with st.container():
+                st.markdown(f"**Template {i+1}**")
+                st.markdown("Compatibility: High")
+                col_preview, col_apply = st.columns([1, 1])
+                with col_preview:
+                    st.button("Preview", key=f"preview_{i}")
+                with col_apply:
+                    st.button("Apply", key=f"apply_{i}")
+                st.markdown("---")
+    
+    with col_filters:
+        st.markdown("#### Filters")
+        st.multiselect("Sources", ["PromptBase", "Internal", "Community"])
+        st.slider("Minimum Compatibility", 0, 100, 80)
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
@@ -158,16 +207,31 @@ with eval_tab2:
         st.metric("Latency", "1.5s", "-0.3s")
     with col4:
         st.metric("Coherence", "High", "+1")
+    
+    # Visualization
+    st.markdown("#### Performance Charts")
+    chart_col1, chart_col2 = st.columns(2)
+    with chart_col1:
+        st.markdown("Bar Chart placeholder")
+    with chart_col2:
+        st.markdown("Radar Chart placeholder")
 
 with eval_tab3:
     st.subheader("Validation Report")
     if st.button("Run Validation"):
         st.info("Validating prompt...")
-        # Add validation results display here
+        st.markdown("#### Validation Results")
+        st.markdown("- Rule Compliance Rate: 95%")
+        st.markdown("- Error List:")
+        st.markdown("  - No critical errors found")
+        st.markdown("  - 2 minor warnings")
 
 with eval_tab4:
     st.subheader("Training Data")
     st.file_uploader("Upload training data", type=["csv", "json"])
     if st.button("Start Training"):
         st.info("Training in progress...")
-        # Add training progress display here 
+        with st.expander("Training Progress"):
+            st.markdown("- Step 1: Data validation ✓")
+            st.markdown("- Step 2: Model fine-tuning...")
+            st.progress(0.45)
