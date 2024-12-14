@@ -10,7 +10,7 @@ st.set_page_config(
 
 # Layout Setup
 st.title("Graph / Prompt Generator")
-st.subheader("It's not about to find BEST Prompt, it's about to find the RIGHT one.")
+st.subheader("It's not about to find BEST Prompts, but the RIGHT ones.")
 
 # Main Layout
 st.header("Solutions")
