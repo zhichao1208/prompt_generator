@@ -224,11 +224,27 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             
             # Planning and Task Decomposition
             st.markdown("<div class='section-label'>Planning and Task Decomposition</div>", unsafe_allow_html=True)
+            
+            # Planning Method Selection
+            planning_method = st.selectbox(
+                "Select Planning Method",
+                options=[
+                    "Least-to-Most Decomposition",
+                    "Plan-and-Solve Strategy",
+                    "Progressive Task Refinement",
+                    "Dependency-Based Planning",
+                    "Hierarchical Task Planning"
+                ],
+                key=f"{version}_planning_method",
+                help="Select the planning method that best fits your task complexity"
+            )
+            
+            # Planning Details
             st.text_area(
-                "Planning",
-                placeholder="Example:\n- Least-to-Most Decomposition: Break complex tasks into subtasks\n- Plan-and-Solve Strategy: Define solution path before execution\n- Progressive Task Refinement: Iteratively improve solutions\n- Dependency Management: Handle task prerequisites",
-                help="Tips:\n- Use Least-to-Most for complex problems\n- Apply Plan-and-Solve for multi-step tasks\n- Consider task dependencies\n- Include progress tracking",
-                key=f"{version}_planning",
+                "Planning Details",
+                placeholder="Describe how to implement the selected planning method...\n\nExample:\nIf using Least-to-Most:\n- Identify smallest solvable subtasks\n- Define task dependencies\n- Create execution sequence\n- Add validation checkpoints",
+                help="Tips:\n- Break down complex tasks\n- Define clear dependencies\n- Include progress tracking\n- Add error handling",
+                key=f"{version}_planning_details",
                 height=150
             )
             
