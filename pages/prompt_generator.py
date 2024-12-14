@@ -198,25 +198,28 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         with st.expander("Enhancements"):
             # Reasoning
             st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-            st.selectbox(
-                "Reasoning",
+            
+            # Reasoning Method Selection
+            reasoning_method = st.selectbox(
+                "Select Reasoning Method",
                 options=[
-                    "Chain-of-Thought (CoT): Break down complex reasoning into clear steps",
-                    "Tree-of-Thought (ToT): Explore multiple reasoning paths", 
-                    "Buffer of Thoughts (BoT): Store and retrieve intermediate results",
-                    "ReAct: Combine reasoning with actions",
-                    "Use Program-of-Thought for mathematical tasks"
+                    "Chain-of-Thought (CoT)",
+                    "Tree-of-Thought (ToT)",
+                    "Buffer of Thoughts (BoT)",
+                    "ReAct",
+                    "Program-of-Thought"
                 ],
-                help="Tips:\n- Use CoT for step-by-step problem solving\n- Apply ToT for exploring multiple solutions\n- Implement BoT for complex calculations\n- Include ReAct for interactive tasks",
-                key=f"{version}_reasoning",
-                label_visibility="collapsed"
+                key=f"{version}_reasoning_method",
+                help="Select the reasoning method that best fits your task"
             )
+            
+            # Reasoning Details
             st.text_area(
-                placeholder="Example:\n- Least-to-Most Decomposition: Break complex tasks into subtasks\n- Plan-and-Solve Strategy: Define solution path before execution\n- Progressive Task Refinement: Iteratively improve solutions\n- Dependency Management: Handle task prerequisites",
-                help="Tips:\n- Use Least-to-Most for complex problems\n- Apply Plan-and-Solve for multi-step tasks\n- Consider task dependencies\n- Include progress tracking",
-                key=f"{version}_planning",
-                height=150,
-                label_visibility="collapsed"
+                "Reasoning Details",
+                placeholder="Describe how to implement the selected reasoning method...\n\nExample:\nIf using CoT:\n- Break down the problem into steps\n- Show intermediate reasoning\n- Validate each step\n- Connect conclusions",
+                help="Tips:\n- Explain implementation details\n- Include specific steps\n- Consider edge cases\n- Add validation points",
+                key=f"{version}_reasoning_details",
+                height=150
             )
             
             # Planning and Task Decomposition
@@ -226,8 +229,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 placeholder="Example:\n- Least-to-Most Decomposition: Break complex tasks into subtasks\n- Plan-and-Solve Strategy: Define solution path before execution\n- Progressive Task Refinement: Iteratively improve solutions\n- Dependency Management: Handle task prerequisites",
                 help="Tips:\n- Use Least-to-Most for complex problems\n- Apply Plan-and-Solve for multi-step tasks\n- Consider task dependencies\n- Include progress tracking",
                 key=f"{version}_planning",
-                height=150,
-                label_visibility="collapsed"
+                height=150
             )
             
             # Multi-Model Evaluation
@@ -237,8 +239,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 placeholder="Example:\n- Compare performance across models (GPT-4, Claude)\n- Adjust prompts based on model strengths\n- Optimize for model-specific features",
                 help="Tips:\n- Consider model specializations\n- Adapt to model capabilities\n- Use model-specific techniques\n- Balance performance and cost",
                 key=f"{version}_model_eval",
-                height=150,
-                label_visibility="collapsed"
+                height=150
             )
             
             # Dynamic Prompt Optimization
@@ -248,8 +249,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 placeholder="Example:\n- Self-Generated In-Context Learning\n- Active-Prompt for representative examples\n- Dynamic few-shot selection\n- Continuous prompt refinement",
                 help="Tips:\n- Generate relevant examples\n- Select representative cases\n- Optimize for few-shot learning\n- Implement continuous improvement",
                 key=f"{version}_optimization",
-                height=150,
-                label_visibility="collapsed"
+                height=150
             )
 
 # Add custom CSS
