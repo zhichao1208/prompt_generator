@@ -17,6 +17,17 @@ st.header("Solutions")
 # Style for icons and headers
 icon_style = """
 <style>
+    .solution-header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 32px;
+    }
+    .header-icon {
+        font-size: 32px;
+        color: #1D6AE5;
+    }
     .solution-card {
         padding: 20px;
         margin: 0;
@@ -195,15 +206,16 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">QUANTUM-FLOW</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
+    st.markdown('<div class="header-icon">🔄</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    # Speed Metric
     st.markdown('<div class="metric-large">1.5<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
-    # Model
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="metric-icon">🎯</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-highlight">claude-3.5-sonnet</div>', unsafe_allow_html=True)
@@ -212,7 +224,6 @@ with col1:
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
-    # Cost
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="metric-icon">💰</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-highlight">$0.01</div>', unsafe_allow_html=True)
@@ -221,7 +232,6 @@ with col1:
     
     st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
-    # Accuracy
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
     st.markdown('<div class="metric-icon">📊</div>', unsafe_allow_html=True)
     st.markdown('<div class="feature-highlight">93%</div>', unsafe_allow_html=True)
@@ -232,64 +242,72 @@ with col1:
 with col2:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">MATRIX-CORE</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
+    st.markdown('<div class="header-icon">📊</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">1.8s average response</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">gpt-4-turbo</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-large">1.8<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">High - $0.03/1k tokens</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">gpt-4-turbo</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Base Model</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">97% precision rate</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">$0.03</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">per 1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">97%</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 3
 with col3:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">NOVA-SYNC</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-header-wrapper">', unsafe_allow_html=True)
+    st.markdown('<div class="header-icon">⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">1.2s average response</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">claude-3.5-haiku</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-large">1.2<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">Moderate - $0.02/1k tokens</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">claude-3.5-haiku</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Base Model</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">90% precision rate</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">$0.02</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">per 1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">90%</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Selection buttons at the bottom
