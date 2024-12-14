@@ -10,7 +10,101 @@ st.set_page_config(
 
 # Layout Setup
 st.title("Graph Generator Interface")
-st.sidebar.header("User Settings")
+
+# Main Layout
+st.header("Solutions")
+
+# Style for icons and headers
+icon_style = """
+<style>
+    .solution-card {
+        padding: 20px;
+        margin: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    .solution-code {
+        font-family: 'SF Mono', monospace;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1D6AE5;
+        background: rgba(29, 106, 229, 0.1);
+        padding: 8px 20px;
+        border-radius: 24px;
+        display: inline-block;
+        margin-bottom: 24px;
+        letter-spacing: 0.5px;
+    }
+    .solution-icon {
+        font-size: 48px;
+        color: #1D6AE5;
+        margin: 20px auto;
+        text-align: center;
+        line-height: 1;
+        display: block;
+    }
+    .solution-header {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 16px 0 24px 0;
+        text-align: center;
+        color: #1E1E1E;
+        line-height: 1.3;
+    }
+    .feature-container {
+        width: 100%;
+        max-width: 320px;
+    }
+    .feature-row {
+        padding: 16px 0;
+        border-bottom: 1px solid #eaeaea;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .feature-row:last-child {
+        border-bottom: none;
+        padding-bottom: 24px;
+    }
+    .feature-icon {
+        font-size: 24px;
+        color: #666;
+        margin-bottom: 12px;
+        display: block;
+    }
+    .feature-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin: 0 0 8px 0;
+        line-height: 1.4;
+    }
+    .feature-value {
+        font-size: 15px;
+        color: #666;
+        margin: 0;
+        line-height: 1.5;
+    }
+    .select-button {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 320px;
+    }
+    .stButton>button {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        display: block;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 8px;
+    }
+</style>
+"""
+st.markdown(icon_style, unsafe_allow_html=True)
 
 # Sidebar: User Input
 with st.sidebar:
@@ -93,107 +187,6 @@ def get_solution_codenames(task_description):
 
 # Get codenames before Solutions section
 codenames = get_solution_codenames(task_description)
-
-# Style for icons and headers
-icon_style = """
-<style>
-    .solution-card {
-        padding: 32px;
-        margin: 24px 16px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        position: relative;
-        min-height: 600px;
-    }
-    .solution-code {
-        font-family: 'SF Mono', monospace;
-        font-size: 16px;
-        font-weight: 600;
-        color: #1D6AE5;
-        background: rgba(29, 106, 229, 0.1);
-        padding: 8px 20px;
-        border-radius: 24px;
-        display: inline-block;
-        margin: 0;
-        letter-spacing: 0.5px;
-    }
-    .solution-icon {
-        font-size: 56px;
-        color: #1D6AE5;
-        margin: 24px auto;
-        text-align: center;
-        line-height: 1;
-        display: block;
-    }
-    .solution-header {
-        font-size: 28px;
-        font-weight: 600;
-        margin: 16px 0 32px 0;
-        text-align: center;
-        color: #1E1E1E;
-        line-height: 1.3;
-    }
-    .feature-container {
-        width: 100%;
-        max-width: 320px;
-        background: white;
-    }
-    .feature-row {
-        padding: 24px 0;
-        border-bottom: 1px solid #eaeaea;
-        text-align: center;
-        margin: 0 auto;
-    }
-    .feature-row:last-child {
-        border-bottom: none;
-    }
-    .feature-icon {
-        font-size: 28px;
-        color: #666;
-        margin-bottom: 16px;
-        display: block;
-    }
-    .feature-label {
-        font-size: 18px;
-        font-weight: 600;
-        color: #1E1E1E;
-        margin: 0 0 8px 0;
-        line-height: 1.4;
-    }
-    .feature-value {
-        font-size: 16px;
-        color: #666;
-        margin: 0;
-        line-height: 1.5;
-    }
-    .select-button {
-        margin-top: 24px;
-        width: 100%;
-        max-width: 320px;
-        position: absolute;
-        bottom: 32px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    .stButton>button {
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        display: block;
-        padding: 12px 24px;
-        font-size: 16px;
-        font-weight: 500;
-        border-radius: 8px;
-    }
-</style>
-"""
-st.markdown(icon_style, unsafe_allow_html=True)
-
-# Main Layout
-st.header("Solutions")
 
 # Create columns with specific ratios for better spacing
 col1, col2, col3 = st.columns([1, 1, 1])
