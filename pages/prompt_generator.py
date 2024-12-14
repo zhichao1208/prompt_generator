@@ -131,15 +131,20 @@ st.title("Prompt Generator")
 # Function to render prompt card
 def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
-        # Version selector (centered)
-        st.markdown(f"<div style='text-align: center; margin-bottom: 20px;'><h3>{version}</h3></div>", unsafe_allow_html=True)
+        # Header section with title and buttons
+        st.markdown(f"""
+            <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
+                <h3 style='margin: 0;'>{version}</h3>
+                <div style='display: flex; gap: 8px;'>
+                    <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
+                    <div class='icon-button'>导入</div>
+                    <div class='icon-button'>搜索</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         
-        # Version and Favorite Section
-        col_version, col_favorite = st.columns([4, 1])
-        with col_version:
-            st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
-        with col_favorite:
-            st.button("⭐", key=f"favorite_{version}")
+        # Version info
+        st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
         # Prompt Structure
         st.markdown("<h4 style='margin-top: 20px;'>Prompt Structure</h4>", unsafe_allow_html=True)
@@ -254,6 +259,42 @@ st.markdown("""
         box-shadow: none;
         background-color: transparent;
     }
+    .icon-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        background: #f8f9fa;
+        font-size: 0.9em;
+        transition: all 0.2s;
+    }
+    
+    .icon-button:hover {
+        background: #e9ecef;
+    }
+    
+    .favorite {
+        color: #666;
+    }
+    
+    .favorite.active {
+        color: #ffd700;
+        background: #fff4e6;
+    }
+    
+    /* Add JavaScript for favorite button toggle */
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.favorite').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 </style>
 """, unsafe_allow_html=True)
 
@@ -264,6 +305,26 @@ col1, col2, col3 = st.columns(3)
 render_prompt_card(col1, "Solution A")
 render_prompt_card(col2, "Solution B")
 render_prompt_card(col3, "Solution C")
+
+# Add state management for favorites
+if 'favorites' not in st.session_state:
+    st.session_state.favorites = set()
+
+# Add click handlers for buttons
+for version in ['Solution A', 'Solution B', 'Solution C']:
+    col_buttons = st.columns(3)
+    with col_buttons[0]:
+        if st.button('⭐', key=f'fav_{version}', help="Add to favorites"):
+            if version in st.session_state.favorites:
+                st.session_state.favorites.remove(version)
+            else:
+                st.session_state.favorites.add(version)
+    with col_buttons[1]:
+        if st.button('导入', key=f'import_{version}', help="Import from prompt library"):
+            st.info(f"Opening prompt library for {version}...")
+    with col_buttons[2]:
+        if st.button('搜索', key=f'search_{version}', help="Search in favorites"):
+            st.info(f"Opening favorites for {version}...")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
