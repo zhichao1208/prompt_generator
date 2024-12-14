@@ -86,6 +86,9 @@ with st.sidebar:
     st.subheader("Task Input")
     task_description = st.text_area("Task Description", placeholder="Describe your task here (e.g., Extract data from webpage and generate emails)")
 
+    st.subheader("Context and Examples")
+    context_description = st.text_area("Additional Context", placeholder="Please provide any additional context or examples that might be helpful for the task.")
+
     st.subheader("Preferences")
     model_options = {
         "Recommended": ["Recommended"],
@@ -104,21 +107,21 @@ with st.sidebar:
                 model_preference.extend(selected_versions)
 
     cost_preference = st.selectbox("Cost Expectation", options=["Low", "Moderate", "Highest Quality"])
-
+    
     output_preference = st.selectbox("Output Format", options=["Recommended", "Json", "Text", "Email", "Tabular Report"])
 
-    st.subheader("Context and Examples")
-    context_description = st.text_area("Context and Examples", placeholder="Please provide any additional context or examples that might be helpful for the task.")
+    # Advanced Settings in an expander
+    with st.expander("Advanced Settings", expanded=False):
+        planning_features = st.checkbox("Enable Planning Features", value=True)        
+        collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
+        execution_flow = st.radio("Preferred Execution Flow", ["Recommended", "Sequential", "Hierarchical", "Consensual"])
+        testing_goal = st.radio("Priority Goals", ["Recommended", "Accuracy", "Speed", "Flexibility"])
+        rule_strictness = st.radio("Rule Strictness", ["Recommended", "Strict", "Relaxed"])
 
-    planning_features = st.checkbox("Enable Planning Features", value=True)        
-    collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
-    execution_flow = st.radio("Preferred Execution Flow", ["Recommended","Sequential", "Hierarchical", "Consensual"])
-    testing_goal = st.radio("Priority Goals", ["Recommended", "Accuracy", "Speed", "Flexibility"])
-    rule_strictness = st.radio("Rule Strictness", ["Recommended", "Strict", "Relaxed"])
     with st.expander("Safety and Compliance Settings", expanded=False):
         safety_features = st.checkbox("Enable Safety Features", value=True)        
         compliance_features = st.checkbox("Enable Compliance Features", value=True)
-        safety_level = st.radio("Safety Level", ["Recommended","High", "Medium", "Low"])
+        safety_level = st.radio("Safety Level", ["Recommended", "High", "Medium", "Low"])
         compliance_level = st.radio("Compliance Level", ["Recommended", "High", "Medium", "Low"])
 
     # Generate button
