@@ -1,46 +1,46 @@
-# Prompt Generator 产品文档
+# Prompt Generator Product Documentation
 
-## 产品目标
+## Product Goals
 
-为用户提供一个高效的 Prompt 生成、优化、对比和评估工具，支持用户灵活定义任务需求，生成多版本 Prompt 并自动评估和分析，帮助用户选择最佳解决方案。
+Provide users with an efficient prompt generation, optimization, comparison, and evaluation tool that supports flexible task requirement definition, generates multiple prompt versions, and automatically evaluates and analyzes them to help users select the best solution.
 
 ---
 
-## 界面布局与功能模块
+## Interface Layout and Functional Modules
 
-### 1. 左侧用户输入区
+### 1. Left Sidebar: User Input Section
 
-**位置**：界面左侧，占约 25% 的宽度。
+**Position**: Left side of the interface, occupying approximately 25% of the width.
 
-**功能模块**：
+**Functional Modules**:
 
-1. **任务描述输入**：
-   - 输入框，供用户描述任务需求，也可以输入用户的 Prompt。
-   - Placeholder：`请输入任务描述，例如“从订单 PDF 提取日期和买家邮箱”，或直接输入您的 Prompt 进行优化。`
-   - 支持实时内容验证（检查是否遗漏关键信息）。
+1. **Task Description Input**:
+   - Input field for users to describe task requirements or input their prompt.
+   - Placeholder: `Enter task description, e.g., "Extract date and buyer email from order PDF", or input your prompt for optimization.`
+   - Supports real-time content validation (checking for missing key information).
 
-2. **任务类型选择**（默认为自动选择）：
-   - 下拉菜单，供用户选择任务类型：
-     - 数据提取
-     - 决策支持
-     - 文案生成
-     - 数据分析
+2. **Task Type Selection** (default is auto-select):
+   - Dropdown menu for selecting task type:
+     - Data Extraction
+     - Decision Support
+     - Content Generation
+     - Data Analysis
 
-3. **语言模型选择**：
-   - 下拉菜单：选择合适的语言模型（例如 Claude、GPT-4、PaLM）。
-   - 默认推荐：根据任务类型和用户偏好自动推荐。
+3. **Language Model Selection**:
+   - Dropdown menu: Select appropriate language model (e.g., Claude, GPT-4, PaLM).
+   - Default recommendation: Automatically recommended based on task type and user preferences.
 
-4. **语气和情景**：
-   - 下拉菜单：选择语气（商务、友好、正式等）。
-   - 场景补充输入框：输入场景描述（如“客户支持场景”）。
+4. **Tone and Context**:
+   - Dropdown menu: Select tone (Business, Friendly, Formal, etc.).
+   - Scene input field: Input scene description (e.g., "Customer Support Scenario").
 
-5. **上下文输入**：
-   - 输入框，提供任务上下文背景信息（例如“PDF 包含订单和客户信息”）。
-   - Placeholder：`描述上下文背景，帮助优化生成效果...`
+5. **Context Input**:
+   - Input field for task context background information (e.g., "PDF contains order and customer information").
+   - Placeholder: `Describe background context to help optimize generation...`
 
-6. **数据输入（可选）**：
-   - 数据框，用户可粘贴或上传相关数据（支持 JSON 或 CSV）。
-   - 示例：
+6. **Data Input (Optional)**:
+   - Data field where users can paste or upload related data (supports JSON or CSV).
+   - Example:
      ```json
      {
        "order_date": "2024-12-15",
@@ -49,120 +49,145 @@
      }
      ```
 
-7. **Few-Shot 示例（可选）**：
-   - 输入框，用户可提供输入和输出示例。
-   - 示例：
+7. **Few-Shot Examples (Optional)**:
+   - Input field for providing input and output examples.
+   - Example:
      ```plaintext
-     输入：PDF 包含 "订单日期：2024-12-15"
-     输出：{"order_date": "2024-12-15"}
+     Input: PDF contains "Order Date: 2024-12-15"
+     Output: {"order_date": "2024-12-15"}
      ```
 
-**操作按钮**：
-- **生成按钮**：
-  - 文案：`生成 Prompt`
-  - 功能：根据输入内容生成 3 个 Prompt 备选方案。
-- **改写按钮**：
-  - 文案：`优化 Prompt`
-  - 功能：对用户提供的初始 Prompt 进行优化。
+**Action Buttons**:
+- **Generate Button**:
+  - Text: `Generate Prompt`
+  - Function: Generates 3 prompt alternatives based on input content.
+- **Optimize Button**:
+  - Text: `Optimize Prompt`
+  - Function: Optimizes the user's initial prompt.
 
 ---
 
-### 2. 右侧 Prompt 对比和添加区
+### 2. Right Side: Prompt Comparison and Addition Section
 
-**位置**：界面右上方，占约 50% 的宽度。
+**Position**: Upper right of the interface, occupying approximately 50% of the width.
 
-**功能模块**：
+**Functional Modules**:
 
-#### **前三列功能模块**
-1. **Prompt 命名**
-   - 自动代号，从电影、音乐或神话中生成代码。
-   - **版本管理**：
-     - 显示版本号和时间戳。
-     - 点击 Prompt 名称旁的下拉框，显示版本历史列表，支持查看和回滚。
-   - **收藏功能**：
-     - 在 Prompt 名称旁显示星形图标，支持收藏标记。
+#### **First Three Columns Functionality**
+**Interactive Features**:
+   - **Text Editing**: Supports direct modification by clicking on each section of the prompt.
 
-2. **Prompt 备选方案展示**：
-   - 每个 Prompt 按以下分区结构化呈现：
-     - **Role**：定义任务角色。
-     - **Task**：描述任务目标。
-     - **In-Prompt Context**：显示补充的上下文信息。
-     - **Rules & Constraints**：显示任务规则和限制条件。
-     - **Output Format**：定义输出结构。
-   - 提供 3 列展示每个备选 Prompt，右侧第 4 列用于用户搜索或添加 Prompt。
+1. **Prompt Naming**
+   - Automatic code names generated from movies, music, or mythology.
+   - **Version Management**:
+     - Displays version number and timestamp.
+     - Click dropdown next to prompt name to show version history list, supporting view and rollback.
+   - **Favorite Function**:
+     - Star icon next to prompt name for favorite marking.
 
-3. **互动功能**：
-   - **文字编辑**：支持点击 Prompt 中的每个分区进行直接修改。
-   - **推理生成**：系统自动生成 Reasoning 部分，用户可手动调整。
+2. **Prompt Alternative Display**:
+   - Each prompt is presented with the following structured sections:
+     - **Role**: Defines task role.
+     - **Task**: Describes task objective.
+     - **In-Prompt Context**: Shows supplementary context information.
+     - **Rules & Constraints**: Shows task rules and limitations.
+     - **Output Format**: Defines output structure.
 
-#### **第四列：搜索或添加**
-1. **搜索现成模板**：
-   - 搜索框，用户可输入关键词（如“Email Onboarding Prompt”）。
-   - 从内置模板库或外部平台加载搜索结果。
-   - 搜索结果包括 Prompt 名称、适配性、来源（如 PromptBase）。
-   - 支持“预览”或“应用”。
-2. **添加收藏**：
-   - 点击“添加收藏”按钮，打开收藏夹弹窗。
-   - 从收藏夹选择 Prompt，添加到对比区域。
+ 3. **Enhancements**:
+   1. **Rich Context Integration**:
+      - Tailor summaries and recommendations to user goals and data
+      - Dynamically adapt to user preferences and historical interactions
+      - Incorporate domain-specific knowledge and best practices
+      - Support for multiple data sources and formats
 
----
+   2. **Reasoning Generation**:
+      - System automatically generates Reasoning section
+      - User can manually adjust and refine reasoning
+      - Transparent decision-making process
+      - Step-by-step explanation of prompt logic
 
-### 3. 右侧下部评估分析区
+   3. **Actionable Outputs**:
+      - Clear and implementable recommendations
+      - Prioritized action items
+      - Measurable success criteria
+      - Follow-up suggestions and next steps
 
-**位置**：界面右下方，占约 50% 的宽度。
+   4. **Edge Case Handling**:
+      - Robust error detection and prevention
+      - Graceful handling of unexpected inputs
+      - Fallback strategies for incomplete data
+      - Comprehensive validation checks
 
-**功能模块**：
+#### **Fourth Column: Search or Add**
+- Provides 3 columns to display each alternative prompt, with the 4th column on the right for user search or prompt addition.
 
-#### **评估与分析**
-1. **Test**：
-   - 功能：运行 Prompt，生成实际任务输出。
-   - 显示生成的输出结果，用于验证 Prompt 表现。
-
-2. **Evaluate**：
-   - 显示 Prompt 的多维度评估结果，包括：
-     - 准确性（Accuracy）
-     - 效率（Token 使用量）
-     - 响应时间（Latency）
-     - 逻辑性（Reasoning Coherence）
-   - 评估结果以图表（如柱状图、雷达图）形式展示。
-
-3. **Validate**：
-   - 功能：验证 Prompt 输出是否符合规则。
-   - 显示验证报告，包括规则符合率、错误列表。
-
-4. **Train**：
-   - 功能：用户上传历史任务数据，用于训练和优化 Prompt。
-   - 显示训练后的改进点和指标变化。
-
-#### **对比分析**
-- **Compare Prompts**：
-  - 显示所有 Prompt 的评估结果。
-  - 支持多维度对比（准确性、逻辑性等）。
-  - 生成对比报告，推荐最优 Prompt。
-- 示例对比表：
-  | Prompt      | 准确性 | Token 使用量 | 响应时间 | 逻辑性 | 综合评分 |
-  | ----------- | --- | --------- | ---- | --- | ---- |
-  | Prompt_001  | 93% | 1100      | 1.5s | 高   | 8.7  |
-  | Prompt_002  | 95% | 1200      | 1.8s | 高   | 9.2  |
-  | Prompt_003  | 90% | 1050      | 1.6s | 中   | 8.5  |
+1. **Search Existing Templates**:
+   - Search box where users can input keywords (e.g., "Email Onboarding Prompt").
+   - Load search results from built-in template library or external platforms.
+   - Search results include prompt name, compatibility, source (e.g., PromptBase).
+   - Support "Preview" or "Apply".
+2. **Add Favorites**:
+   - Click "Add Favorite" button to open favorites popup.
+   - Select prompt from favorites to add to comparison area.
 
 ---
 
-## 界面设计亮点
+### 3. Bottom Right: Evaluation and Analysis Section
 
-1. **模块化布局**：
-   - 左侧输入区、右侧对比与添加区、下部评估区，功能分区清晰。
+**Position**: Lower right of the interface, occupying approximately 50% of the width.
 
-2. **实时交互**：
-   - 支持 Prompt 结构化分区编辑，实时生成 Reasoning 和分析结果。
+**Functional Modules**:
 
-3. **动态扩展**：
-   - 搜索功能集成外部平台（如 PromptBase）。
-   - 收藏管理和版本回滚确保 Prompt 的可用性和可控性。
+#### **Evaluation and Analysis**
+1. **Test**:
+   - Function: Run prompt to generate actual task output.
+   - Display generated output results for prompt performance verification.
 
-4. **可视化分析**：
-   - 图表形式展示评估结果，方便用户理解和对比。
+2. **Evaluate**:
+   - Display multi-dimensional evaluation results for prompt, including:
+     - Accuracy
+     - Efficiency (Token Usage)
+     - Latency
+     - Reasoning Coherence
+   - Evaluation results shown in chart form (e.g., bar charts, radar charts).
+
+3. **Validate**:
+   - Function: Verify if prompt output complies with rules.
+   - Display validation report, including rule compliance rate and error list.
+
+4. **Train**:
+   - Function: Users upload historical task data for training and optimizing prompt.
+   - Display improvement points and metric changes after training.
+
+#### **Comparison Analysis**
+- **Compare Prompts**:
+  - Display evaluation results for all prompts.
+  - Support multi-dimensional comparison (accuracy, logic, etc.).
+  - Generate comparison report, recommend optimal prompt.
+- Example comparison table:
+  | Prompt      | Accuracy | Token Usage | Latency | Logic | Overall Score |
+  | ----------- | -------- | ----------- | ------- | ----- | ------------- |
+  | Prompt_001  | 93%      | 1100        | 1.5s    | High  | 8.7          |
+  | Prompt_002  | 95%      | 1200        | 1.8s    | High  | 9.2          |
+  | Prompt_003  | 90%      | 1050        | 1.6s    | Med   | 8.5          |
 
 ---
 
-此文档为 Prompt Generator 的核心功能设计提供详细布局和交互逻辑支持。如果需要更细化的实现或调整，请随时提出！
+## Interface Design Highlights
+
+1. **Modular Layout**:
+   - Left input section, right comparison and addition section, bottom evaluation section, clear functional zoning.
+
+2. **Real-time Interaction**:
+   - Supports structured section editing of prompts, real-time generation of reasoning and analysis results.
+
+3. **Dynamic Extension**:
+   - Search function integrates external platforms (e.g., PromptBase).
+   - Favorite management and version rollback ensure prompt usability and controllability.
+
+4. **Visual Analysis**:
+   - Evaluation results displayed in chart form for easy user understanding and comparison.
+
+---
+
+This document provides detailed layout and interaction logic support for Prompt Generator's core functionality. If more detailed implementation or adjustments are needed, please feel free to ask!

@@ -15,8 +15,8 @@ with st.sidebar:
     st.subheader("Task Description")
     task_description = st.text_area(
         "Task Description",
-        placeholder="请输入任务描述，例如"从订单 PDF 提取日期和买家邮箱"，或直接输入您的 Prompt 进行优化。",
-        help="描述您需要完成的具体任务"
+        placeholder="Enter task description, e.g., 'Extract date and buyer email from order PDF', or input your prompt for optimization.",
+        help="Describe the specific task you need to complete"
     )
     
     # Task Type
@@ -24,7 +24,7 @@ with st.sidebar:
     task_type = st.selectbox(
         "Select Task Type",
         options=["Recommended", "Data Extraction", "Decision Support", "Content Generation", "Data Analysis"],
-        help="选择任务类型，系统会根据类型优化生成策略"
+        help="Select task type, the system will optimize generation strategy accordingly"
     )
     
     # Language Model
@@ -50,13 +50,13 @@ with st.sidebar:
     tone = st.selectbox(
         "Communication Tone",
         options=["Professional", "Friendly", "Formal", "Casual"],
-        help="选择输出内容的语气风格"
+        help="Choose the tone style for output content"
     )
     
     context = st.text_area(
         "Context Information",
-        placeholder="描述上下文背景，帮助优化生成效果...",
-        help="提供任务相关的背景信息"
+        placeholder="Describe background context to help optimize generation...",
+        help="Provide task-related background information"
     )
     
     # Data Input (Optional)
@@ -64,23 +64,23 @@ with st.sidebar:
         data_input = st.text_area(
             "Sample Data",
             placeholder='{\n  "order_date": "2024-12-15",\n  "buyer_name": "John Doe",\n  "buyer_email": "john.doe@example.com"\n}',
-            help="粘贴或上传相关数据（支持 JSON 或 CSV）"
+            help="Paste or upload related data (supports JSON or CSV)"
         )
     
     # Few-Shot Examples (Optional)
     with st.expander("Few-Shot Examples (Optional)"):
         few_shot = st.text_area(
             "Input-Output Examples",
-            placeholder='输入：PDF 包含 "订单日期：2024-12-15"\n输出：{"order_date": "2024-12-15"}',
-            help="提供输入输出示例，帮助系统理解任务需求"
+            placeholder='Input: PDF contains "Order Date: 2024-12-15"\nOutput: {"order_date": "2024-12-15"}',
+            help="Provide input-output examples to help system understand task requirements"
         )
     
     # Action Buttons
     col1, col2 = st.columns(2)
     with col1:
-        generate_button = st.button("生成 Prompt", type="primary")
+        generate_button = st.button("Generate Prompt", type="primary")
     with col2:
-        optimize_button = st.button("优化 Prompt")
+        optimize_button = st.button("Optimize Prompt")
 
 # Main Content Area
 st.title("Prompt Generator")
