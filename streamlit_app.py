@@ -48,15 +48,25 @@ with st.sidebar:
         st.success("Generating prompts based on your preferences...")
 
 # Main Layout
-st.write("---")
-st.header("Chat Module")
-
 # Solutions
 st.write("---")
 st.header("Solutions")
 
-# Layout Columns
-col1, col2, col3 = st.columns([1, 1, 1])
+# Structured Comparison Table
+st.subheader("Compare Options")
+comparison_data = {
+    "Feature": ["Flow Type", "Models Used", "Prompt Type", "Cost", "Expected Accuracy", "Execution Time"],
+    "Option 1": ["Sequential", "Claude", "Zero-Shot", "Low", "93%", "1.5s"],
+    "Option 2": ["Hierarchical", "GPT-4", "CoT", "High", "97%", "1.8s"],
+    "Option 3": ["Parallel", "Claude + PaLM", "Few-Shot", "Moderate", "90%", "1.2s"]
+}
+
+st.table(comparison_data)
+
+# Option Selection
+st.write("---")
+st.subheader("Select an Option")
+col1, col2, col3 = st.columns(3)
 
 # Option 1
 with col1:
