@@ -9,7 +9,8 @@ st.set_page_config(
 )
 
 # Layout Setup
-st.title("Graph Generator Interface")
+st.title("Graph / Prompt Generator")
+st.subheader("It's not about to find BEST Prompt, it's about to find the RIGHT one.")
 
 # Main Layout
 st.header("Solutions")
@@ -540,3 +541,48 @@ with col2:
     st.button(f"Select {codenames['hierarchical']}", key="select_hierarchical", type="primary")
 with col3:
     st.button(f"Select {codenames['parallel']}", key="select_parallel", type="primary")
+
+# Add this function definition before the main layout code
+def render_preferences_section(selected_model, cost_pref, output_pref, flow_pref):
+    """Renders the preferences section with match indicators"""
+    return f"""
+    <div class="preferences-section">
+        <div class="preferences-title">MATCHES YOUR PREFERENCES</div>
+        <div class="preference-item">
+            <div class="preference-label">Selected Model</div>
+            <div class="preference-value">{selected_model}
+                <span class="preference-match match-perfect">Perfect Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Cost Expectation</div>
+            <div class="preference-value">{cost_pref}
+                <span class="preference-match match-partial">Good Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Output Format</div>
+            <div class="preference-value">{output_pref}
+                <span class="preference-match match-perfect">Perfect Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Execution Flow</div>
+            <div class="preference-value">{flow_pref}
+                <span class="preference-match match-alternative">Alternative Available</span>
+            </div>
+        </div>
+    </div>
+    """
+
+# Add this function to determine match type based on user preferences
+def get_match_type(user_pref, solution_value, options):
+    """Determines the type of match between user preference and solution value"""
+    if not user_pref or user_pref == "Recommended":
+        return "match-alternative", "Recommended Option"
+    elif user_pref == solution_value:
+        return "match-perfect", "Perfect Match"
+    elif solution_value in options:
+        return "match-partial", "Good Match"
+    else:
+        return "match-alternative", "Alternative Available"
