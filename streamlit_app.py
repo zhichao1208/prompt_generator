@@ -26,6 +26,24 @@ icon_style = """
         align-items: center;
         position: relative;
     }
+    .metric-large {
+        font-size: 48px;
+        font-weight: 700;
+        color: #1E1E1E;
+        line-height: 1.1;
+        margin: 16px 0 8px 0;
+    }
+    .metric-unit {
+        font-size: 32px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin-left: 4px;
+    }
+    .metric-icon {
+        font-size: 40px;
+        display: block;
+        margin: 16px 0;
+    }
     .solution-code {
         font-family: 'SF Mono', monospace;
         font-size: 16px;
@@ -38,18 +56,10 @@ icon_style = """
         margin-bottom: 24px;
         letter-spacing: 0.5px;
     }
-    .solution-icon {
-        font-size: 48px;
-        color: #1D6AE5;
-        margin: 20px auto;
-        text-align: center;
-        line-height: 1;
-        display: block;
-    }
     .solution-header {
         font-size: 24px;
         font-weight: 600;
-        margin: 16px 0 24px 0;
+        margin: 16px 0 32px 0;
         text-align: center;
         color: #1E1E1E;
         line-height: 1.3;
@@ -59,27 +69,21 @@ icon_style = """
         max-width: 320px;
     }
     .feature-row {
-        padding: 16px 0;
-        border-bottom: 1px solid #eaeaea;
+        padding: 24px 0;
         text-align: center;
         margin: 0 auto;
     }
-    .feature-row:last-child {
-        border-bottom: none;
-        padding-bottom: 24px;
-    }
-    .feature-icon {
-        font-size: 24px;
-        color: #666;
-        margin-bottom: 12px;
-        display: block;
+    .feature-row-divider {
+        height: 1px;
+        background: #eaeaea;
+        margin: 0 auto;
+        width: 80%;
     }
     .feature-label {
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 600;
         color: #1E1E1E;
-        margin: 0 0 8px 0;
-        line-height: 1.4;
+        margin: 16px 0 8px 0;
     }
     .feature-value {
         font-size: 15px;
@@ -87,20 +91,16 @@ icon_style = """
         margin: 0;
         line-height: 1.5;
     }
-    .select-button {
-        margin-top: 20px;
-        width: 100%;
-        max-width: 320px;
+    .feature-highlight {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin: 8px 0;
     }
-    .stButton>button {
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        display: block;
-        padding: 12px 24px;
-        font-size: 16px;
-        font-weight: 500;
-        border-radius: 8px;
+    .feature-subtext {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
     }
 </style>
 """
@@ -196,31 +196,36 @@ with col1:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
     st.markdown('<div class="solution-code">QUANTUM-FLOW</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
-    st.markdown('<div class="solution-icon">🔄</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-container">', unsafe_allow_html=True)
+    
+    # Speed Metric
+    st.markdown('<div class="metric-large">1.5<span class="metric-unit">s</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Average Response Time</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
+    # Model
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Processing Speed</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">1.5s average response</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">claude-3.5-sonnet</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Base Model</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
+    
+    # Cost
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Model</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">claude-3.5-sonnet</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">$0.01</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">per 1k tokens</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Cost</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">Low - $0.01/1k tokens</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-row-divider"></div>', unsafe_allow_html=True)
     
+    # Accuracy
     st.markdown('<div class="feature-row">', unsafe_allow_html=True)
-    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-label">Accuracy</div>', unsafe_allow_html=True)
-    st.markdown('<div class="feature-value">93% precision rate</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="metric-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-highlight">93%</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-subtext">Precision Rate</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 2
