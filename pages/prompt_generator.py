@@ -149,18 +149,26 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Role Section with text display
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
         default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_role}</div>
-        """, unsafe_allow_html=True)
-        st.text_area(
-            "Define the role",
-            value=default_role,
-            key=f"{version}_role",
-            height=100,
-            label_visibility="collapsed",
-            style="display: none;"
-        )
         
+        # Create a unique key for the visibility state
+        role_edit_key = f"{version}_role_edit"
+        if role_edit_key not in st.session_state:
+            st.session_state[role_edit_key] = False
+            
+        # Display either text or text_area based on state
+        if not st.session_state[role_edit_key]:
+            st.markdown(f"""
+                <div class='text-display' onclick="handleTextClick('{role_edit_key}')">{default_role}</div>
+            """, unsafe_allow_html=True)
+        else:
+            st.text_area(
+                "Define the role",
+                value=default_role,
+                key=f"{version}_role",
+                height=100,
+                label_visibility="collapsed"
+            )
+            
         # Task Section with text display
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
         default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
@@ -170,17 +178,25 @@ Email Content:
 {Email}
 Attachments:
 {Attachments}""" if version == "Solution A" else ""
-        st.markdown(f"""
-            <div class='text-display'>{default_task}</div>
-        """, unsafe_allow_html=True)
-        st.text_area(
-            "Define the task",
-            value=default_task,
-            key=f"{version}_task",
-            height=150,
-            label_visibility="collapsed",
-            style="display: none;"
-        )
+        
+        # Create a unique key for the visibility state
+        task_edit_key = f"{version}_task_edit"
+        if task_edit_key not in st.session_state:
+            st.session_state[task_edit_key] = False
+            
+        # Display either text or text_area based on state
+        if not st.session_state[task_edit_key]:
+            st.markdown(f"""
+                <div class='text-display' onclick="handleTextClick('{task_edit_key}')">{default_task}</div>
+            """, unsafe_allow_html=True)
+        else:
+            st.text_area(
+                "Define the task",
+                value=default_task,
+                key=f"{version}_task",
+                height=150,
+                label_visibility="collapsed"
+            )
         
         # Rules Section with text display
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
@@ -804,29 +820,23 @@ st.markdown("""
 </style>
 
 <script>
-    // JavaScript for text display click handling
-    function initTextDisplays() {
-        document.querySelectorAll('.text-display').forEach(display => {
-            display.addEventListener('click', function() {
-                const textArea = this.nextElementSibling;
-                this.style.display = 'none';
-                textArea.style.display = 'block';
-                textArea.focus();
-            });
+    function handleTextClick(key) {
+        // Update the session state via Streamlit's event system
+        const event = new CustomEvent('streamlit:setComponentValue', {
+            detail: {
+                key: key,
+                value: true
+            }
         });
-        
-        document.querySelectorAll('.stTextArea textarea').forEach(textArea => {
-            textArea.addEventListener('blur', function() {
-                const display = this.previousElementSibling;
-                this.style.display = 'none';
-                display.style.display = 'block';
-                display.textContent = this.value;
-            });
-        });
+        window.dispatchEvent(event);
     }
     
-    // Initialize when DOM is loaded
-    document.addEventListener('DOMContentLoaded', initTextDisplays);
+    // Initialize click handlers for text displays
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.text-display').forEach(display => {
+            display.style.cursor = 'pointer';
+        });
+    });
     
     // Favorite button toggle
     document.querySelectorAll('.favorite').forEach(button => {
