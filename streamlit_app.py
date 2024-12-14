@@ -47,6 +47,53 @@ with st.sidebar:
     if st.button("Generate", type="primary"):
         st.success("Generating prompts based on your preferences...")
 
+# Add after the sidebar input section and before the Solutions section
+def get_solution_codenames(task_description):
+    # 根据任务描述中的关键词来选择主题和代号
+    task_lower = task_description.lower()
+    
+    # 数据处理/分析相关任务
+    if any(word in task_lower for word in ['data', 'analyze', 'process', 'extract']):
+        return {
+            'sequential': 'ATLAS-PRIME',  # Atlas - 承担数据重任的泰坦神
+            'hierarchical': 'ORACLE-NEXUS',  # Oracle - 智慧与预见的象征
+            'parallel': 'HYDRA-CORE'  # Hydra - 多头并行处理的象征
+        }
+    
+    # 创意/生成相关任务
+    elif any(word in task_lower for word in ['create', 'generate', 'design', 'write']):
+        return {
+            'sequential': 'MUSE-FLOW',  # 艺术缪斯
+            'hierarchical': 'GENESIS-PRIME',  # 创世神话
+            'parallel': 'AURORA-SYNC'  # 极光的多彩创意
+        }
+    
+    # AI/机器学习相关任务
+    elif any(word in task_lower for word in ['ai', 'predict', 'learn', 'model']):
+        return {
+            'sequential': 'CORTEX-ONE',  # 大脑皮层
+            'hierarchical': 'NEXUS-MIND',  # 思维枢纽
+            'parallel': 'NEURAL-STORM'  # 神经风暴
+        }
+    
+    # 通信/协作相关任务
+    elif any(word in task_lower for word in ['communicate', 'chat', 'message', 'email']):
+        return {
+            'sequential': 'HERMES-LINK',  # 传讯使者赫尔墨斯
+            'hierarchical': 'HIVE-MIND',  # 蜂巢思维
+            'parallel': 'ECHO-NET'  # 回声女神
+        }
+    
+    # 默认科幻风格代号
+    return {
+        'sequential': 'QUANTUM-FLOW',
+        'hierarchical': 'MATRIX-CORE',
+        'parallel': 'NOVA-SYNC'
+    }
+
+# 在 Solutions 部分之前添加代号获取
+codenames = get_solution_codenames(task_description)
+
 # Main Layout
 # Solutions
 st.write("---")
@@ -60,58 +107,82 @@ icon_style = """
 <style>
     .solution-card {
         background: #f8f9fa;
-        border-radius: 12px;
-        padding: 24px;
-        margin: 10px 0;
+        border-radius: 16px;
+        padding: 32px;
+        margin: 16px 0;
         text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .solution-code {
         font-family: 'SF Mono', monospace;
-        font-size: 14px;
-        color: #1D6AE5;
-        background: rgba(29, 106, 229, 0.1);
-        padding: 4px 12px;
-        border-radius: 20px;
-        display: inline-block;
-        margin-bottom: 16px;
-    }
-    .solution-icon {
-        font-size: 32px;
-        color: #1D6AE5;
-        margin: 20px 0;
-        text-align: center;
-    }
-    .solution-header {
-        font-size: 24px;
-        font-weight: 600;
-        margin: 16px 0;
-        text-align: center;
-        color: #1E1E1E;
-    }
-    .feature-row {
-        padding: 24px 0;
-        border-bottom: 1px solid #f0f0f0;
-        text-align: center;
-    }
-    .feature-icon {
-        font-size: 24px;
-        color: #666;
-        margin-bottom: 12px;
-    }
-    .feature-label {
         font-size: 16px;
         font-weight: 600;
+        color: #1D6AE5;
+        background: rgba(29, 106, 229, 0.1);
+        padding: 6px 16px;
+        border-radius: 24px;
+        display: inline-block;
+        margin: 0 0 24px 0;
+        letter-spacing: 0.5px;
+    }
+    .solution-icon {
+        font-size: 48px;
+        color: #1D6AE5;
+        margin: 24px auto;
+        text-align: center;
+        line-height: 1;
+        display: block;
+    }
+    .solution-header {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 20px 0 32px 0;
+        text-align: center;
         color: #1E1E1E;
-        margin: 8px 0;
+        line-height: 1.3;
+    }
+    .feature-row {
+        padding: 28px 0;
+        border-bottom: 1px solid #eaeaea;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 280px;
+    }
+    .feature-row:last-child {
+        border-bottom: none;
+    }
+    .feature-icon {
+        font-size: 28px;
+        color: #666;
+        margin-bottom: 16px;
+        display: block;
+    }
+    .feature-label {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1E1E1E;
+        margin: 0 0 12px 0;
+        line-height: 1.4;
     }
     .feature-value {
-        font-size: 15px;
+        font-size: 16px;
         color: #666;
-        margin: 4px 0;
+        margin: 0;
+        line-height: 1.5;
     }
     .select-button {
-        margin-top: 20px;
+        margin-top: 24px;
         width: 100%;
+        max-width: 280px;
+    }
+    .stButton>button {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        display: block;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 500;
     }
 </style>
 """
@@ -120,7 +191,7 @@ st.markdown(icon_style, unsafe_allow_html=True)
 # Option 1
 with col1:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown('<div class="solution-code">ALPHA-S1</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="solution-code">{codenames["sequential"]}</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">🔄</div>', unsafe_allow_html=True)
     
@@ -152,7 +223,7 @@ with col1:
 # Option 2
 with col2:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown('<div class="solution-code">BETA-H2</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="solution-code">{codenames["hierarchical"]}</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">📊</div>', unsafe_allow_html=True)
     
@@ -184,7 +255,7 @@ with col2:
 # Option 3
 with col3:
     st.markdown('<div class="solution-card">', unsafe_allow_html=True)
-    st.markdown('<div class="solution-code">GAMMA-P3</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="solution-code">{codenames["parallel"]}</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
     st.markdown('<div class="solution-icon">⚡</div>', unsafe_allow_html=True)
     
@@ -217,11 +288,11 @@ with col3:
 st.write("---")
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.button("Select ALPHA-S1", key="select_sequential", type="primary")
+    st.button(f"Select {codenames['sequential']}", key="select_sequential", type="primary")
 with col2:
-    st.button("Select BETA-H2", key="select_hierarchical", type="primary")
+    st.button(f"Select {codenames['hierarchical']}", key="select_hierarchical", type="primary")
 with col3:
-    st.button("Select GAMMA-P3", key="select_parallel", type="primary")
+    st.button(f"Select {codenames['parallel']}", key="select_parallel", type="primary")
 
 # Highlighted Changes Section
 st.write("---")
