@@ -1,6 +1,84 @@
 import streamlit as st
 from datetime import datetime
 
+# Function definitions
+def render_preferences_section(selected_model, cost_pref, output_pref, flow_pref):
+    """Renders the preferences section with match indicators"""
+    return f"""
+    <div class="preferences-section">
+        <div class="preferences-title">MATCHES YOUR PREFERENCES</div>
+        <div class="preference-item">
+            <div class="preference-label">Selected Model</div>
+            <div class="preference-value">{selected_model}
+                <span class="preference-match match-perfect">Perfect Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Cost Expectation</div>
+            <div class="preference-value">{cost_pref}
+                <span class="preference-match match-partial">Good Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Output Format</div>
+            <div class="preference-value">{output_pref}
+                <span class="preference-match match-perfect">Perfect Match</span>
+            </div>
+        </div>
+        <div class="preference-item">
+            <div class="preference-label">Execution Flow</div>
+            <div class="preference-value">{flow_pref}
+                <span class="preference-match match-alternative">Alternative Available</span>
+            </div>
+        </div>
+    </div>
+    """
+
+def get_match_type(user_pref, solution_value, options):
+    """Determines the type of match between user preference and solution value"""
+    if not user_pref or user_pref == "Recommended":
+        return "match-alternative", "Recommended Option"
+    elif user_pref == solution_value:
+        return "match-perfect", "Perfect Match"
+    elif solution_value in options:
+        return "match-partial", "Good Match"
+    else:
+        return "match-alternative", "Alternative Available"
+
+def get_solution_codenames(task_description):
+    """Get solution codenames based on task description"""
+    task_lower = task_description.lower()
+    
+    if any(word in task_lower for word in ['data', 'analyze', 'process', 'extract']):
+        return {
+            'sequential': 'ATLAS-PRIME',
+            'hierarchical': 'ORACLE-NEXUS',
+            'parallel': 'HYDRA-CORE'
+        }
+    elif any(word in task_lower for word in ['create', 'generate', 'design', 'write']):
+        return {
+            'sequential': 'MUSE-FLOW',
+            'hierarchical': 'GENESIS-PRIME',
+            'parallel': 'AURORA-SYNC'
+        }
+    elif any(word in task_lower for word in ['ai', 'predict', 'learn', 'model']):
+        return {
+            'sequential': 'CORTEX-ONE',
+            'hierarchical': 'NEXUS-MIND',
+            'parallel': 'NEURAL-STORM'
+        }
+    elif any(word in task_lower for word in ['communicate', 'chat', 'message', 'email']):
+        return {
+            'sequential': 'HERMES-LINK',
+            'hierarchical': 'HIVE-MIND',
+            'parallel': 'ECHO-NET'
+        }
+    return {
+        'sequential': 'QUANTUM-FLOW',
+        'hierarchical': 'MATRIX-CORE',
+        'parallel': 'NOVA-SYNC'
+    }
+
 # Page Configuration
 st.set_page_config(
     page_title="Graph Generator Interface",
@@ -234,50 +312,6 @@ with st.sidebar:
     # Generate button
     if st.button("Generate", type="primary"):
         st.success("Generating prompts based on your preferences...")
-
-# Add after the sidebar input section and before the Solutions section
-def get_solution_codenames(task_description):
-    # Check keywords in task description to determine theme and codenames
-    task_lower = task_description.lower()
-    
-    # Data processing/analysis related tasks
-    if any(word in task_lower for word in ['data', 'analyze', 'process', 'extract']):
-        return {
-            'sequential': 'ATLAS-PRIME',  # Atlas - Titan who carries data
-            'hierarchical': 'ORACLE-NEXUS',  # Oracle - Symbol of wisdom
-            'parallel': 'HYDRA-CORE'  # Hydra - Symbol of parallel processing
-        }
-    
-    # Creative/generative tasks
-    elif any(word in task_lower for word in ['create', 'generate', 'design', 'write']):
-        return {
-            'sequential': 'MUSE-FLOW',  # Art muse
-            'hierarchical': 'GENESIS-PRIME',  # Creation myth
-            'parallel': 'AURORA-SYNC'  # Aurora's creative diversity
-        }
-    
-    # AI/Machine Learning tasks
-    elif any(word in task_lower for word in ['ai', 'predict', 'learn', 'model']):
-        return {
-            'sequential': 'CORTEX-ONE',  # Brain cortex
-            'hierarchical': 'NEXUS-MIND',  # Mind nexus
-            'parallel': 'NEURAL-STORM'  # Neural storm
-        }
-    
-    # Communication/Collaboration tasks
-    elif any(word in task_lower for word in ['communicate', 'chat', 'message', 'email']):
-        return {
-            'sequential': 'HERMES-LINK',  # Hermes - Messenger of gods
-            'hierarchical': 'HIVE-MIND',  # Hive mind
-            'parallel': 'ECHO-NET'  # Echo goddess
-        }
-    
-    # Default sci-fi style codenames
-    return {
-        'sequential': 'QUANTUM-FLOW',
-        'hierarchical': 'MATRIX-CORE',
-        'parallel': 'NOVA-SYNC'
-    }
 
 # Get codenames before Solutions section
 codenames = get_solution_codenames(task_description)
@@ -541,48 +575,3 @@ with col2:
     st.button(f"Select {codenames['hierarchical']}", key="select_hierarchical", type="primary")
 with col3:
     st.button(f"Select {codenames['parallel']}", key="select_parallel", type="primary")
-
-# Add this function definition before the main layout code
-def render_preferences_section(selected_model, cost_pref, output_pref, flow_pref):
-    """Renders the preferences section with match indicators"""
-    return f"""
-    <div class="preferences-section">
-        <div class="preferences-title">MATCHES YOUR PREFERENCES</div>
-        <div class="preference-item">
-            <div class="preference-label">Selected Model</div>
-            <div class="preference-value">{selected_model}
-                <span class="preference-match match-perfect">Perfect Match</span>
-            </div>
-        </div>
-        <div class="preference-item">
-            <div class="preference-label">Cost Expectation</div>
-            <div class="preference-value">{cost_pref}
-                <span class="preference-match match-partial">Good Match</span>
-            </div>
-        </div>
-        <div class="preference-item">
-            <div class="preference-label">Output Format</div>
-            <div class="preference-value">{output_pref}
-                <span class="preference-match match-perfect">Perfect Match</span>
-            </div>
-        </div>
-        <div class="preference-item">
-            <div class="preference-label">Execution Flow</div>
-            <div class="preference-value">{flow_pref}
-                <span class="preference-match match-alternative">Alternative Available</span>
-            </div>
-        </div>
-    </div>
-    """
-
-# Add this function to determine match type based on user preferences
-def get_match_type(user_pref, solution_value, options):
-    """Determines the type of match between user preference and solution value"""
-    if not user_pref or user_pref == "Recommended":
-        return "match-alternative", "Recommended Option"
-    elif user_pref == solution_value:
-        return "match-perfect", "Perfect Match"
-    elif solution_value in options:
-        return "match-partial", "Good Match"
-    else:
-        return "match-alternative", "Alternative Available"
