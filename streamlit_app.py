@@ -49,67 +49,64 @@ with st.sidebar:
 
 # Add after the sidebar input section and before the Solutions section
 def get_solution_codenames(task_description):
-    # 根据任务描述中的关键词来选择主题和代号
+    # Check keywords in task description to determine theme and codenames
     task_lower = task_description.lower()
     
-    # 数据处理/分析相关任务
+    # Data processing/analysis related tasks
     if any(word in task_lower for word in ['data', 'analyze', 'process', 'extract']):
         return {
-            'sequential': 'ATLAS-PRIME',  # Atlas - 承担数据重任的泰坦神
-            'hierarchical': 'ORACLE-NEXUS',  # Oracle - 智慧与预见的象征
-            'parallel': 'HYDRA-CORE'  # Hydra - 多头并行处理的象征
+            'sequential': 'ATLAS-PRIME',  # Atlas - Titan who carries data
+            'hierarchical': 'ORACLE-NEXUS',  # Oracle - Symbol of wisdom
+            'parallel': 'HYDRA-CORE'  # Hydra - Symbol of parallel processing
         }
     
-    # 创意/生成相关任务
+    # Creative/generative tasks
     elif any(word in task_lower for word in ['create', 'generate', 'design', 'write']):
         return {
-            'sequential': 'MUSE-FLOW',  # 艺术缪斯
-            'hierarchical': 'GENESIS-PRIME',  # 创世神话
-            'parallel': 'AURORA-SYNC'  # 极光的多彩创意
+            'sequential': 'MUSE-FLOW',  # Art muse
+            'hierarchical': 'GENESIS-PRIME',  # Creation myth
+            'parallel': 'AURORA-SYNC'  # Aurora's creative diversity
         }
     
-    # AI/机器学习相关任务
+    # AI/Machine Learning tasks
     elif any(word in task_lower for word in ['ai', 'predict', 'learn', 'model']):
         return {
-            'sequential': 'CORTEX-ONE',  # 大脑皮层
-            'hierarchical': 'NEXUS-MIND',  # 思维枢纽
-            'parallel': 'NEURAL-STORM'  # 神经风暴
+            'sequential': 'CORTEX-ONE',  # Brain cortex
+            'hierarchical': 'NEXUS-MIND',  # Mind nexus
+            'parallel': 'NEURAL-STORM'  # Neural storm
         }
     
-    # 通信/协作相关任务
+    # Communication/Collaboration tasks
     elif any(word in task_lower for word in ['communicate', 'chat', 'message', 'email']):
         return {
-            'sequential': 'HERMES-LINK',  # 传讯使者赫尔墨斯
-            'hierarchical': 'HIVE-MIND',  # 蜂巢思维
-            'parallel': 'ECHO-NET'  # 回声女神
+            'sequential': 'HERMES-LINK',  # Hermes - Messenger of gods
+            'hierarchical': 'HIVE-MIND',  # Hive mind
+            'parallel': 'ECHO-NET'  # Echo goddess
         }
     
-    # 默认科幻风格代号
+    # Default sci-fi style codenames
     return {
         'sequential': 'QUANTUM-FLOW',
         'hierarchical': 'MATRIX-CORE',
         'parallel': 'NOVA-SYNC'
     }
 
-# 在 Solutions 部分之前添加代号获取
+# Get codenames before Solutions section
 codenames = get_solution_codenames(task_description)
 
 # Style for icons and headers
 icon_style = """
 <style>
     .solution-card {
-        background: #f8f9fa;
-        border-radius: 20px;
         padding: 32px;
         margin: 24px 16px;
         text-align: center;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        min-height: 600px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         position: relative;
+        min-height: 600px;
     }
     .solution-code {
         font-family: 'SF Mono', monospace;
@@ -142,6 +139,7 @@ icon_style = """
     .feature-container {
         width: 100%;
         max-width: 320px;
+        background: white;
     }
     .feature-row {
         padding: 24px 0;
