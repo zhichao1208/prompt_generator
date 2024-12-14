@@ -325,15 +325,149 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                     
                     st.markdown("---")
             
-            # Dynamic Prompt Optimization add 3 examples and edge cases
+            # Dynamic Prompt Optimization
             st.markdown("<div class='section-label'>Dynamic Prompt Optimization</div>", unsafe_allow_html=True)
-            st.text_area(
-                "Optimization",
-                placeholder="Example:\n- Self-Generated In-Context Learning\n- Active-Prompt for representative examples\n- Dynamic few-shot selection\n- Continuous prompt refinement",
-                help="Tips:\n- Generate relevant examples\n- Select representative cases\n- Optimize for few-shot learning\n- Implement continuous improvement",
-                key=f"{version}_optimization",
-                height=150
-            )
+            
+            # Examples Section
+            st.markdown("##### Examples")
+            
+            # Container for examples
+            examples_container = st.container()
+            
+            # State for tracking number of examples
+            if f'{version}_num_examples' not in st.session_state:
+                st.session_state[f'{version}_num_examples'] = 3  # Default 3 examples
+            
+            # Default examples data
+            default_examples = [
+                {
+                    "input": 'PDF contains "Order Date: 2024-12-15" and "Customer: John Doe"',
+                    "output": '{"order_date": "2024-12-15", "customer_name": "John Doe"}'
+                },
+                {
+                    "input": 'Email body: "Shipment #12345 will arrive on March 1st, 2024"',
+                    "output": '{"shipment_id": "12345", "delivery_date": "2024-03-01"}'
+                },
+                {
+                    "input": 'Invoice shows: Total Amount: $299.99, Due Date: 2024-04-30',
+                    "output": '{"amount": 299.99, "due_date": "2024-04-30"}'
+                }
+            ]
+            
+            # Function to add new example
+            def add_example(version):
+                st.session_state[f'{version}_num_examples'] += 1
+            
+            # Function to remove last example
+            def remove_example(version):
+                if st.session_state[f'{version}_num_examples'] > 1:
+                    st.session_state[f'{version}_num_examples'] -= 1
+            
+            # Display examples
+            for i in range(st.session_state[f'{version}_num_examples']):
+                with examples_container:
+                    st.markdown(f"**Example {i+1}**")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        default_input = default_examples[i]["input"] if i < len(default_examples) else ""
+                        st.text_area(
+                            "Input",
+                            value=default_input,
+                            key=f"{version}_example_input_{i}",
+                            height=100
+                        )
+                    with col2:
+                        default_output = default_examples[i]["output"] if i < len(default_examples) else ""
+                        st.text_area(
+                            "Output",
+                            value=default_output,
+                            key=f"{version}_example_output_{i}",
+                            height=100
+                        )
+                    st.markdown("---")
+            
+            # Add/Remove example buttons
+            col1, col2 = st.columns(2)
+            with col1:
+                st.button("➕ Add Example", key=f"{version}_add_example", 
+                         on_click=add_example, args=(version,))
+            with col2:
+                if st.session_state[f'{version}_num_examples'] > 1:
+                    st.button("➖ Remove Example", key=f"{version}_remove_example",
+                             on_click=remove_example, args=(version,))
+            
+            # Edge Cases Section
+            st.markdown("##### Edge Cases")
+            
+            # State for tracking number of edge cases
+            if f'{version}_num_edge_cases' not in st.session_state:
+                st.session_state[f'{version}_num_edge_cases'] = 3  # Default 3 edge cases
+            
+            # Default edge cases
+            default_edge_cases = [
+                {
+                    "case": "Missing or Invalid Date",
+                    "input": 'PDF contains "Order Date: Invalid" or date field is empty',
+                    "handling": "Return error message: {'error': 'Invalid or missing date format', 'field': 'order_date'}"
+                },
+                {
+                    "case": "Multiple Dates in Document",
+                    "input": 'Document contains multiple dates: "Order: 2024-01-01, Delivery: 2024-02-01"',
+                    "handling": "Extract context-specific date based on field labels, return all dates with labels"
+                },
+                {
+                    "case": "Inconsistent Data Format",
+                    "input": 'Mixed date formats: "01/15/2024" and "2024-01-16"',
+                    "handling": "Normalize all dates to ISO format (YYYY-MM-DD) before processing"
+                }
+            ]
+            
+            # Function to add new edge case
+            def add_edge_case(version):
+                st.session_state[f'{version}_num_edge_cases'] += 1
+            
+            # Function to remove last edge case
+            def remove_edge_case(version):
+                if st.session_state[f'{version}_num_edge_cases'] > 1:
+                    st.session_state[f'{version}_num_edge_cases'] -= 1
+            
+            # Display edge cases
+            for i in range(st.session_state[f'{version}_num_edge_cases']):
+                with st.container():
+                    st.markdown(f"**Edge Case {i+1}**")
+                    default_case = default_edge_cases[i] if i < len(default_edge_cases) else {"case": "", "input": "", "handling": ""}
+                    
+                    # Case Description
+                    st.text_input("Case Description", 
+                                value=default_case["case"],
+                                key=f"{version}_edge_case_desc_{i}")
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.text_area(
+                            "Example Input",
+                            value=default_case["input"],
+                            key=f"{version}_edge_case_input_{i}",
+                            height=80
+                        )
+                    with col2:
+                        st.text_area(
+                            "Handling Strategy",
+                            value=default_case["handling"],
+                            key=f"{version}_edge_case_handling_{i}",
+                            height=80
+                        )
+                    st.markdown("---")
+            
+            # Add/Remove edge case buttons
+            col1, col2 = st.columns(2)
+            with col1:
+                st.button("➕ Add Edge Case", key=f"{version}_add_edge_case",
+                         on_click=add_edge_case, args=(version,))
+            with col2:
+                if st.session_state[f'{version}_num_edge_cases'] > 1:
+                    st.button("➖ Remove Edge Case", key=f"{version}_remove_edge_case",
+                             on_click=remove_edge_case, args=(version,))
 
 # Add custom CSS
 st.markdown("""
