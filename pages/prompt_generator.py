@@ -127,119 +127,99 @@ with st.sidebar:
 st.title("Prompt Generator")
 
 # Top Section: Prompt Comparison
-st.header("Prompt Solutions")
-tab1, tab2, tab3, tab4 = st.tabs(["Solution 1", "Solution 2", "Solution 3", "Search & Add"])
+st.markdown("<h1 style='text-align: center; margin-bottom: 40px;'>Prompt Solutions</h1>", unsafe_allow_html=True)
 
-# Solution Tabs Content
-for tab in [tab1, tab2, tab3]:
-    with tab:
-        # Version and Favorite Section
-        col_version, col_favorite = st.columns([3, 1])
-        with col_version:
-            st.markdown("**Version:** 1.0 (2024-12-14)")
-            with st.expander("Version History"):
-                st.markdown("- v1.0 (2024-12-14): Initial version")
-                st.markdown("- v0.9 (2024-12-13): Draft version")
-        with col_favorite:
-            st.button("⭐", key=f"{tab._key}_favorite")
+# Create three columns with equal width
+col1, col2, col3 = st.columns(3)
+
+# Function to render prompt card
+def render_prompt_card(col, version, model_name="claude-3-opus"):
+    with col:
+        # Version selector (centered)
+        st.markdown(f"<div style='text-align: center; margin-bottom: 20px;'><h3>{version}</h3></div>", unsafe_allow_html=True)
         
-        # Main Content
-        col1, col2 = st.columns([2, 1])
-        with col1:
-            st.subheader("Prompt Structure")
-            
-            # Role Section
-            st.markdown("##### Role")
-            st.text_area("Define the role", key=f"{tab._key}_role", height=100)
-            
-            # Task Section
-            st.markdown("##### Task")
-            st.text_area("Define the task", key=f"{tab._key}_task", height=100)
-            
-            # Context Section
-            st.markdown("##### Context")
-            st.text_area("In-prompt context", key=f"{tab._key}_context", height=100)
-            
-            # Rules Section
-            st.markdown("##### Rules & Constraints")
-            st.text_area("Define rules", key=f"{tab._key}_rules", height=100)
-            
-            # Output Format Section
-            st.markdown("##### Output Format")
-            st.text_area("Define output format", key=f"{tab._key}_output", height=100)
+        # Model image/icon placeholder (centered)
+        st.markdown("<div style='text-align: center; margin-bottom: 20px;'>🤖</div>", unsafe_allow_html=True)
+        
+        # Model name and color options (centered)
+        st.markdown(f"<div style='text-align: center; margin-bottom: 20px;'>{model_name}</div>", unsafe_allow_html=True)
+        
+        # Price and rate (centered)
+        st.markdown("""
+            <div style='text-align: center; margin-bottom: 20px;'>
+                <div style='font-size: 1.2em; font-weight: bold;'>$0.01/1k tokens</div>
+                <div style='color: #666;'>Rate: 25 tokens/second</div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Buy button (centered)
+        st.markdown("<div style='text-align: center; margin-bottom: 30px;'>", unsafe_allow_html=True)
+        st.button("Select", key=f"select_{version}", type="primary", use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+        
+        # Specifications section
+        st.markdown("<div style='margin-bottom: 30px;'>", unsafe_allow_html=True)
+        
+        # Summary section with larger numbers
+        st.markdown("""
+            <div style='text-align: center; margin-bottom: 30px;'>
+                <h2 style='font-size: 2.5em; margin-bottom: 5px;'>98%</h2>
+                <div>Accuracy Rate</div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Features with icons
+        st.markdown("""
+            <div style='margin-bottom: 20px;'>
+                <div style='margin-bottom: 15px;'>
+                    🎯 High Precision Output
+                </div>
+                <div style='margin-bottom: 15px;'>
+                    ⚡ Fast Response Time
+                </div>
+                <div style='margin-bottom: 15px;'>
+                    🔄 Context Awareness
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Detailed specifications
+        st.markdown("<h4>Specifications</h4>", unsafe_allow_html=True)
+        
+        specs = {
+            "Context Length": "100k tokens",
+            "Response Time": "< 1s",
+            "Memory Usage": "8GB",
+            "API Rate Limit": "100 req/min"
+        }
+        
+        for key, value in specs.items():
+            st.markdown(f"""
+                <div style='display: flex; justify-content: space-between; margin-bottom: 10px;'>
+                    <div style='color: #666;'>{key}</div>
+                    <div style='font-weight: 500;'>{value}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        # Divider
+        st.markdown("<hr style='margin: 30px 0;'>", unsafe_allow_html=True)
+        
+        # Capabilities section
+        st.markdown("<h4>Capabilities</h4>", unsafe_allow_html=True)
+        capabilities = [
+            "✓ Multi-language Support",
+            "✓ Code Generation",
+            "✓ Data Analysis",
+            "✓ Content Creation"
+        ]
+        
+        for cap in capabilities:
+            st.markdown(f"<div style='margin-bottom: 10px;'>{cap}</div>", unsafe_allow_html=True)
 
-            # Enhancements Section
-            with st.expander("Enhancements"):
-                st.markdown("##### Rich Context Integration")
-                st.text_area(
-                    "Rich Context Integration",
-                    placeholder="Example:\n- Tailor summaries based on user's industry background\n- Adapt to user's technical expertise level\n- Incorporate relevant domain terminology\n- Reference similar past cases",
-                    help="Tips:\n- Customize content based on user profile\n- Adapt to user preferences\n- Include domain knowledge\n- Support multiple data formats",
-                    key=f"{tab._key}_rich_context",
-                    height=150
-                )
-                
-                st.markdown("##### Reasoning Generation")
-                st.text_area(
-                    "Reasoning Generation",
-                    placeholder="Example:\n- Break down complex tasks into steps\n- Explain decision points and trade-offs\n- Show alternative approaches considered\n- Highlight key assumptions made",
-                    help="Tips:\n- Show step-by-step logic\n- Make decisions transparent\n- Allow manual adjustments\n- Explain key reasoning",
-                    key=f"{tab._key}_reasoning",
-                    height=150
-                )
-                
-                st.markdown("##### Actionable Outputs")
-                st.text_area(
-                    "Actionable Outputs",
-                    placeholder="Example:\n- Prioritized list of next steps\n- Clear success metrics for each action\n- Timeline recommendations\n- Required resources or dependencies",
-                    help="Tips:\n- Provide clear recommendations\n- Include priority levels\n- Define success metrics\n- Suggest next steps",
-                    key=f"{tab._key}_actionable",
-                    height=150
-                )
-                
-                st.markdown("##### Edge Case Handling")
-                st.text_area(
-                    "Edge Case Handling",
-                    placeholder="Example:\n- Handle missing or invalid data gracefully\n- Provide fallback options for each step\n- Validate inputs against business rules\n- Monitor and log edge cases",
-                    help="Tips:\n- Implement error detection\n- Create fallback strategies\n- Add validation checks\n- Handle unexpected inputs",
-                    key=f"{tab._key}_edge_case",
-                    height=150
-                )
-            
-        with col2:
-            # Evaluation Metrics
-            st.subheader("Quick Metrics")
-            metrics_col1, metrics_col2 = st.columns(2)
-            with metrics_col1:
-                st.metric("Accuracy", "95%", "+2%")
-                st.metric("Latency", "1.5s", "-0.3s")
-            with metrics_col2:
-                st.metric("Tokens", "1,200", "-100")
-                st.metric("Logic", "High", "+1")
-
-# Search Tab Content
-with tab4:
-    st.subheader("Search Templates")
-    search_query = st.text_input("Search for templates", placeholder="e.g., Email Onboarding Prompt")
-    
-    col_search, col_filters = st.columns([2, 1])
-    with col_search:
-        st.markdown("#### Search Results")
-        for i in range(3):
-            with st.container():
-                st.markdown(f"**Template {i+1}**")
-                st.markdown("Compatibility: High")
-                col_preview, col_apply = st.columns([1, 1])
-                with col_preview:
-                    st.button("Preview", key=f"preview_{i}")
-                with col_apply:
-                    st.button("Apply", key=f"apply_{i}")
-                st.markdown("---")
-    
-    with col_filters:
-        st.markdown("#### Filters")
-        st.multiselect("Sources", ["PromptBase", "Internal", "Community"])
-        st.slider("Minimum Compatibility", 0, 100, 80)
+# Render three prompt cards
+render_prompt_card(col1, "Solution A", "GPT-4 Turbo")
+render_prompt_card(col2, "Solution B", "Claude 3 Opus")
+render_prompt_card(col3, "Solution C", "Claude 3 Sonnet")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
