@@ -18,14 +18,35 @@ with st.sidebar:
     task_description = st.text_area("Task Description", placeholder="Describe your task here (e.g., Extract data from webpage and generate emails)")
 
     st.subheader("Preferences")
-    model_preference = st.selectbox("Language Model", ["Claude", "GPT-4", "PaLM", "Llama2"])
-    cost_preference = st.select_slider("Cost Expectation", options=["Low", "Medium", "High"])
-    prompt_type = st.multiselect("Preferred Prompt Types", ["Zero-Shot", "Few-Shot", "Chain-of-Thought (CoT)", "Tree-of-Thought (ToT)"])
-    execution_flow = st.radio("Execution Flow", ["Sequential", "Hierarchical", "Consensual"])
-    collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
+    model_options = {
+        "Recommended": ["Recommended"],
+        "Claude": ["Claude", "Claude 2", "Claude Instant"],
+        "GPT-4": ["GPT-4", "GPT-4 Turbo", "GPT-4 Vision"],
+        "PaLM": ["PaLM", "PaLM 2", "PaLM Chat"],
+        "Llama2": ["Llama2 7B", "Llama2 13B", "Llama2 70B"]
+    }
+    
+    model_preference = []
+    for model, versions in model_options.items():
+        if st.checkbox(model, value=model=="Recommended"):
+            if model == "Recommended":
+                model_preference.extend(["Recommended"])
+            else:
+                selected_versions = st.multiselect(f"Select {model} versions", versions)
+                model_preference.extend(selected_versions)
 
-    st.subheader("Testing Goals")
-    testing_goal = st.radio("Priority", ["Accuracy", "Speed", "Flexibility"])
+    cost_preference = st.selectbox("Cost Expectation", options=["Low", "Moderate", "Highest Quality"])
+
+    # Advanced Settings in an expander
+    with st.expander("Advanced Settings", expanded=False):
+        planning_features = st.checkbox("Enable Planning Features", value=True)        
+        collaboration_features = st.checkbox("Enable Collaboration Features", value=True)
+        execution_flow = st.radio("Preferred Execution Flow", ["Sequential", "Hierarchical", "Consensual"])
+        testing_goal = st.radio("Priority Goals", ["Recommended", "Accuracy", "Speed", "Flexibility"])
+
+    # Generate button
+    if st.button("Generate", type="primary"):
+        st.success("Generating prompts based on your preferences...")
 
 # Main Layout
 st.write("---")
