@@ -52,39 +52,133 @@ with st.sidebar:
 st.write("---")
 st.header("Solutions")
 
-# Structured Comparison Table
-st.subheader("Compare Options")
-comparison_data = {
-    "Feature": ["Flow Type", "Models Used", "Prompt Type", "Cost", "Expected Accuracy", "Execution Time"],
-    "Option 1": ["Sequential", "Claude", "Zero-Shot", "Low", "93%", "1.5s"],
-    "Option 2": ["Hierarchical", "GPT-4", "CoT", "High", "97%", "1.8s"],
-    "Option 3": ["Parallel", "Claude + PaLM", "Few-Shot", "Moderate", "90%", "1.2s"]
-}
-
-st.table(comparison_data)
-
-# Option Selection
-st.write("---")
-st.subheader("Select an Option")
+# Modern Comparison Layout
 col1, col2, col3 = st.columns(3)
+
+# Style for icons and headers
+icon_style = """
+<style>
+    .solution-icon {
+        font-size: 24px;
+        color: #1D6AE5;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .solution-header {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 15px 0;
+        text-align: center;
+    }
+    .feature-row {
+        padding: 20px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .feature-icon {
+        font-size: 20px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+</style>
+"""
+st.markdown(icon_style, unsafe_allow_html=True)
 
 # Option 1
 with col1:
-    st.subheader("Option 1")
-    st.text_area("Summary", "Sequential flow, using Claude and Zero-Shot prompts. Accurate and cost-effective.", height=150)
-    st.button("Select Option 1", key="option1")
+    st.markdown('<div class="solution-header">Sequential Flow</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-icon">🔄</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
+    st.markdown("**Processing Speed**")
+    st.markdown("1.5s average response")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown("**Model**")
+    st.markdown("claude-3.5-sonnet")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown("**Cost**")
+    st.markdown("Low - $0.01/1k tokens")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown("**Accuracy**")
+    st.markdown("93% precision rate")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 2
 with col2:
-    st.subheader("Option 2")
-    st.text_area("Summary", "Hierarchical flow with GPT-4 for dynamic task allocation and CoT prompts.", height=150)
-    st.button("Select Option 2", key="option2")
+    st.markdown('<div class="solution-header">Hierarchical Flow</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-icon">📊</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
+    st.markdown("**Processing Speed**")
+    st.markdown("1.8s average response")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown("**Model**")
+    st.markdown("gpt-4-turbo")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown("**Cost**")
+    st.markdown("High - $0.03/1k tokens")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown("**Accuracy**")
+    st.markdown("97% precision rate")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Option 3
 with col3:
-    st.subheader("Option 3")
-    st.text_area("Summary", "Parallel flow leveraging Claude and PaLM with Few-Shot prompts.", height=150)
-    st.button("Select Option 3", key="option3")
+    st.markdown('<div class="solution-header">Parallel Flow</div>', unsafe_allow_html=True)
+    st.markdown('<div class="solution-icon">⚡</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">⚡</div>', unsafe_allow_html=True)
+    st.markdown("**Processing Speed**")
+    st.markdown("1.2s average response")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">🎯</div>', unsafe_allow_html=True)
+    st.markdown("**Model**")
+    st.markdown("claude-3.5-haiku")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">💰</div>', unsafe_allow_html=True)
+    st.markdown("**Cost**")
+    st.markdown("Moderate - $0.02/1k tokens")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('<div class="feature-icon">📊</div>', unsafe_allow_html=True)
+    st.markdown("**Accuracy**")
+    st.markdown("90% precision rate")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Selection buttons at the bottom
+st.write("---")
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.button("Select Sequential Flow", key="select_sequential", type="primary")
+with col2:
+    st.button("Select Hierarchical Flow", key="select_hierarchical", type="primary")
+with col3:
+    st.button("Select Parallel Flow", key="select_parallel", type="primary")
 
 # Highlighted Changes Section
 st.write("---")
