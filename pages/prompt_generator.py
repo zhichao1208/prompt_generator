@@ -171,11 +171,21 @@ Order Number: ORD-2024-001''',
                 # 更新状态
                 status_container.info("开始生成提示词...")
                 
+                # 准备输入参数
+                inputs = {
+                    "task_description": task_description,
+                    "task_type": task_type,
+                    "model_preference": model_preference,
+                    "tone": tone,
+                    "context": context,
+                    "data_input": data_input
+                }
+                
                 # 使用 spinner 显示生成过程
                 with st.spinner('正在生成...'):
                     try:
-                        results = crew.run()
-                        st.write("Crew run 完成")
+                        results = crew.kickoff(inputs=inputs)
+                        st.write("Crew kickoff 完成")
                         
                         # 更新状态
                         status_container.success("✅ 提示词生成成功!")
