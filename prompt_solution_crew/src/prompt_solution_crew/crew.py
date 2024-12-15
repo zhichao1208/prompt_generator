@@ -5,6 +5,7 @@ import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import json
+import os
 
 class OptimizationDirection(BaseModel):
 	focus: str
@@ -33,6 +34,9 @@ class BaseCrew():
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
+		
+		# 获取模型名称
+		self.model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
 
 	def _format_task_description(self, task_name: str, inputs: dict, direction: OptimizationDirection = None) -> str:
 		"""Format task description with all required variables."""
@@ -69,7 +73,8 @@ class ArchitectCrew(BaseCrew):
 			role=self.agents_config['architect']['role'],
 			goal=self.agents_config['architect']['goal'],
 			backstory=self.agents_config['architect']['backstory'],
-			verbose=True
+			verbose=True,
+			llm=self.model_name
 		)
 
 	def analyze_requirements_task(self, **inputs) -> Task:
@@ -108,7 +113,8 @@ class PromptEngineerCrew(BaseCrew):
 			role=self.agents_config['prompt_engineer']['role'],
 			goal=self.agents_config['prompt_engineer']['goal'],
 			backstory=self.agents_config['prompt_engineer']['backstory'],
-			verbose=True
+			verbose=True,
+			llm=self.model_name
 		)
 
 	def optimize_prompt_task(self, direction: OptimizationDirection, **inputs) -> Task:
@@ -117,8 +123,8 @@ class PromptEngineerCrew(BaseCrew):
 		return Task(
 			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction']['expected_output'],
-				agent=self.prompt_engineer(),
-				output_json=PromptStructure
+			agent=self.prompt_engineer(),
+			output_json=PromptStructure
 		)
 
 	def run(self, direction: OptimizationDirection, inputs: dict = None) -> PromptStructure:
