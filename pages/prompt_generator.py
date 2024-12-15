@@ -219,6 +219,78 @@ Error Logging:
             label_visibility="collapsed"
         )
         
+        # Context Section
+        st.markdown("""
+            <div style='display: flex; align-items: center; gap: 8px;'>
+                <div class='section-label'>Context</div>
+                <div class='icon-button show-original' title='Show Original Context'>📄</div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Get user input from sidebar
+        user_context = context if 'context' in locals() else ""
+        
+        # Default context when no user input
+        default_context = """Background:
+- TechHeroes is an e-commerce company specializing in tech products
+- They receive orders through email and various document formats
+- The system needs to process both direct customer emails and forwarded messages
+
+Current Process:
+- Customer service receives order emails
+- Manual data extraction is time-consuming and error-prone
+- Need automated solution for accurate data extraction
+
+Technical Environment:
+- Email server supports IMAP/POP3 protocols
+- Document processing system handles PDF, DOC, and image formats
+- Integration with order management system required
+
+Business Requirements:
+- 24/7 order processing capability
+- Real-time data extraction and validation
+- Compliance with data protection regulations""" if version == "Solution A" else ""
+
+        # Display context with user input override
+        display_context = user_context if user_context else default_context
+        st.text_area(
+            "Define context",
+            value=display_context,
+            key=f"{version}_context",
+            height=200,
+            label_visibility="collapsed"
+        )
+        
+        # Add JavaScript for showing original context
+        st.markdown("""
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const showOriginalButtons = document.querySelectorAll('.show-original');
+                showOriginalButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Show original context in a modal or tooltip
+                        alert(`Original Context:\n\n${default_context}`);
+                    });
+                });
+            });
+        </script>
+        """, unsafe_allow_html=True)
+        
+        # Update CSS for context icon
+        st.markdown("""
+        <style>
+        .show-original {
+            cursor: pointer;
+            padding: 2px 8px;
+            font-size: 0.9em;
+        }
+        .show-original:hover {
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
         # Reasoning Section
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
         
