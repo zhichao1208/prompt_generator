@@ -1,4 +1,11 @@
 import streamlit as st
+from prompt_solution_crew.crew import PromptSolutionCrew
+import os
+
+# 设置 OpenAI API 密钥（从 Streamlit secrets 获取）
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_MODEL_NAME"] = st.secrets["OPENAI_MODEL_NAME"]
+
 
 # Page Configuration
 st.set_page_config(
@@ -132,9 +139,15 @@ Order Number: ORD-2024-001''',
     # Action Buttons
     col1, col2 = st.columns(2)
     with col1:
-        generate_button = st.button("Generate Prompt", type="primary")
+        st.empty()  # 保留空间以保持布局平衡
     with col2:
-        optimize_button = st.button("Optimize Prompt")
+        generate_button = st.button("Generate Prompt", type="primary")
+        if generate_button:
+            # 直接启动 PromptSolutionCrew
+            crew = PromptSolutionCrew()
+            with st.spinner('Generating prompts...'):
+                crew.kickoff()
+            st.success('Prompts generated successfully!')
 
 # Main Content Area
 st.title("Prompt Generator")
@@ -1264,7 +1277,7 @@ with eval_tab2:
         }
     }
     
-    # 使用Plotly��建雷达图
+    # 使用Plotly建雷达图
     import plotly.graph_objects as go
     
     categories = list(metrics_data["JARVIS"].keys())
