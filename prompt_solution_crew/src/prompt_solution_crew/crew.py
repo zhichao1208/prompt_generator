@@ -28,17 +28,12 @@ class ArchitectCrew():
 	"""Architect crew for analyzing requirements"""
 
 	def __init__(self):
-		self.config_dir = Path(__file__).parent / "config"
+		self.config_dir = Path(__file__).parent / "config" / "architect"
 		
 		with open(self.config_dir / 'agents.yaml', 'r') as f:
 			self.agents_config = yaml.safe_load(f)
-		
-		# 只加载需要的任务配置
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
-			all_tasks = yaml.safe_load(f)
-			self.tasks_config = {
-				'analyze_requirements_task': all_tasks['analyze_requirements_task']
-			}
+			self.tasks_config = yaml.safe_load(f)
 
 	@agent
 	def architect(self) -> Agent:
@@ -99,17 +94,12 @@ class PromptEngineerCrew():
 	"""Prompt Engineer crew for implementing optimization direction"""
 
 	def __init__(self):
-		self.config_dir = Path(__file__).parent / "config"
+		self.config_dir = Path(__file__).parent / "config" / "engineer"
 		
 		with open(self.config_dir / 'agents.yaml', 'r') as f:
 			self.agents_config = yaml.safe_load(f)
-		
-		# 只加载需要的任务配置
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
-			all_tasks = yaml.safe_load(f)
-			self.tasks_config = {
-				'optimize_prompt_direction': all_tasks['optimize_prompt_direction']
-			}
+			self.tasks_config = yaml.safe_load(f)
 
 	@agent
 	def prompt_engineer(self) -> Agent:
