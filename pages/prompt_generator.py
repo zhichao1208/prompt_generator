@@ -1100,50 +1100,169 @@ render_prompt_card(col3, "Solution C")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
-eval_tab1, eval_tab2, eval_tab3, eval_tab4 = st.tabs(["Test", "Evaluate", "Validate", "Suggestions"])
+eval_tab1, eval_tab2 = st.tabs(["Test & Results", "Evaluation Metrics"])
 
 with eval_tab1:
-    st.subheader("Test Results")
-    if st.button("Run Test"):
-        st.info("Running test...")
-        # Add test results display here
+    st.subheader("Test Input")
+    
+    # 显示用户输入的任务
+    st.markdown("**Task Description:**")
+    st.info("Extract order date, buyer name and email address from my order pdf")
+    
+    # 文件上传
+    uploaded_file = st.file_uploader("Upload PDF file for testing", type=['pdf'])
+    
+    # Run Test 按钮
+    if st.button("Run Test", type="primary"):
+        st.info("Running test with all three solutions...")
+        
+        # 创建三列显示测试结果
+        test_col1, test_col2, test_col3 = st.columns(3)
+        
+        with test_col1:
+            st.markdown("#### JARVIS Results")
+            
+            # Planning 部分
+            st.markdown("**Planning:**")
+            st.code("""1. Document Analysis
+- Parse PDF structure
+- Identify key sections
+- Map target fields
+
+2. Field Extraction
+- Date patterns
+- Name formats
+- Email validation
+
+3. Data Validation
+- Format check
+- Completeness verify
+- Error handling""")
+            
+            # Reasoning 部分
+            st.markdown("**Reasoning:**")
+            st.code("""Using Chain-of-Thought:
+1. Located order section
+2. Found date: 2024-03-20
+3. Identified customer info block
+4. Extracted name: John Smith
+5. Validated email format
+6. Confirmed: john.smith@example.com""")
+            
+            # Output 部分
+            st.markdown("**Output:**")
+            st.json({
+                "order_date": "2024-03-20",
+                "buyer_name": "John Smith",
+                "email": "john.smith@example.com",
+                "confidence_score": 0.95
+            })
+            
+        with test_col2:
+            st.markdown("#### SHERLOCK Results")
+            
+            # Planning 部分
+            st.markdown("**Planning:**")
+            st.code("""1. Initial Scan
+- Document structure check
+- Field location mapping
+- Validation rules setup
+
+2. Data Processing
+- Pattern matching
+- Format validation
+- Error detection
+
+3. Quality Control
+- Data verification
+- Format standardization
+- Completeness check""")
+            
+            # Reasoning 部分
+            st.markdown("**Reasoning:**")
+            st.code("""Using ReAct:
+1. PDF scan complete
+2. Date found: 2024-03-20
+3. Name section identified
+4. Name extracted: John Smith
+5. Email located and validated
+6. Email confirmed: john.smith@example.com""")
+            
+            # Output 部分
+            st.markdown("**Output:**")
+            st.json({
+                "extracted_data": {
+                    "date": "2024-03-20",
+                    "name": "John Smith",
+                    "email": "john.smith@example.com"
+                },
+                "validation": {
+                    "all_fields_found": True,
+                    "formats_valid": True
+                }
+            })
+            
+        with test_col3:
+            st.markdown("#### FLASH Results")
+            
+            # Planning 部分
+            st.markdown("**Planning:**")
+            st.code("""1. Quick Scan
+- Target field search
+- Direct extraction
+- Basic validation
+
+2. Processing
+- Simple pattern match
+- Format check
+- Data extraction""")
+            
+            # Reasoning 部分
+            st.markdown("**Reasoning:**")
+            st.code("""Using Tree-of-Thought:
+1. Scanned document
+2. Found date: 2024-03-20
+3. Extracted name: John Smith
+4. Found email: john.smith@example.com
+5. Basic validation passed""")
+            
+            # Output 部分
+            st.markdown("**Output:**")
+            st.json({
+                "date": "2024-03-20",
+                "name": "John Smith",
+                "email": "john.smith@example.com"
+            })
 
 with eval_tab2:
     st.subheader("Evaluation Metrics")
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Accuracy", "95%", "+2%")
-    with col2:
-        st.metric("Token Usage", "1,200", "-100")
-    with col3:
-        st.metric("Latency", "1.5s", "-0.3s")
-    with col4:
-        st.metric("Coherence", "High", "+1")
     
-    # Visualization
-    st.markdown("#### Performance Charts")
-    chart_col1, chart_col2 = st.columns(2)
-    with chart_col1:
-        st.markdown("Bar Chart placeholder")
-    with chart_col2:
-        st.markdown("Radar Chart placeholder")
-
-with eval_tab3:
-    st.subheader("Validation Report")
-    if st.button("Run Validation"):
-        st.info("Validating prompt...")
-        st.markdown("#### Validation Results")
-        st.markdown("- Rule Compliance Rate: 95%")
-        st.markdown("- Error List:")
-        st.markdown("  - No critical errors found")
-        st.markdown("  - 2 minor warnings")
-
-with eval_tab4:
-    st.subheader("Training Data")
-    st.file_uploader("Upload training data", type=["csv", "json"])
-    if st.button("Start Training"):
-        st.info("Training in progress...")
-        with st.expander("Training Progress"):
-            st.markdown("- Step 1: Data validation ✓")
-            st.markdown("- Step 2: Model fine-tuning...")
-            st.progress(0.45)
+    # 创建三列对应三个方案的指标
+    metric_col1, metric_col2, metric_col3 = st.columns(3)
+    
+    with metric_col1:
+        st.markdown("#### JARVIS Metrics")
+        st.metric("Accuracy", "98%", "+3%")
+        st.metric("Response Time", "2.5s", "-0.5s")
+        st.metric("Token Usage", "2,500", "-200")
+        st.metric("Cost", "$0.05", "-$0.01")
+        st.metric("Iterations", "3", "")
+        st.markdown("**Model:** GPT-4 Turbo")
+        
+    with metric_col2:
+        st.markdown("#### SHERLOCK Metrics")
+        st.metric("Accuracy", "95%", "+2%")
+        st.metric("Response Time", "1.8s", "-0.3s")
+        st.metric("Token Usage", "1,800", "-150")
+        st.metric("Cost", "$0.035", "-$0.005")
+        st.metric("Iterations", "2", "")
+        st.markdown("**Model:** Claude-3-Sonnet")
+        
+    with metric_col3:
+        st.markdown("#### FLASH Metrics")
+        st.metric("Accuracy", "92%", "+1%")
+        st.metric("Response Time", "1.2s", "-0.2s")
+        st.metric("Token Usage", "1,200", "-100")
+        st.metric("Cost", "$0.025", "-$0.003")
+        st.metric("Iterations", "1", "")
+        st.markdown("**Model:** GPT-3.5 Turbo")
