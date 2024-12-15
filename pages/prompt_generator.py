@@ -1,6 +1,13 @@
 import streamlit as st
-from prompt_solution_crew.crew import PromptSolutionCrew
+import sys
 import os
+from pathlib import Path
+
+# 添加 prompt_solution_crew 到 Python 路径
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
+
+from prompt_solution_crew.crew import PromptSolutionCrew
 
 # 设置 OpenAI API 密钥（从 Streamlit secrets 获取）
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -144,7 +151,7 @@ Order Number: ORD-2024-001''',
         generate_button = st.button("Generate Prompt", type="primary")
         if generate_button:
             try:
-                # 创建状态容器
+                # 创���状态容器
                 status_container = st.empty()
                 result_container = st.empty()
                 
