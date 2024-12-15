@@ -40,7 +40,7 @@ analyze_requirements_task:
         "business": "string // Comprehensive business context including stakeholder considerations"
       }
     }
-  output_json: true
+  output_json: "RequirementsAnalysis"
   agent: architect
   async_execution: false
 
@@ -110,7 +110,7 @@ develop_strategies_task:
         }
       ]
     }
-  output_json: true
+  output_json: "StrategicApproaches"
   agent: architect
   context: [analyze_requirements_task]
   async_execution: false
