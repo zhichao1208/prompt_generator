@@ -35,8 +35,21 @@ class BaseCrew():
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
 		
-		# 获取模型名称
-		self.model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
+		# 获取模型名称并添加提供商前缀
+		model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
+		
+		# 根据模型名称添加相应的提供商前缀
+		if model_name.startswith('gpt-'):
+			self.model_name = f"openai/{model_name}"
+		elif model_name.startswith('claude-'):
+			self.model_name = f"anthropic/{model_name}"
+		elif model_name.startswith('gemini-'):
+			self.model_name = f"google/{model_name}"
+		elif model_name.startswith('o1-'):
+			self.model_name = f"openai/{model_name}"
+		else:
+			# 默认使用 OpenAI
+			self.model_name = f"openai/{model_name}"
 
 	def _format_task_description(self, task_name: str, inputs: dict, direction: OptimizationDirection = None) -> str:
 		"""Format task description with all required variables."""
