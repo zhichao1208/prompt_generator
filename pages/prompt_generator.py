@@ -1235,7 +1235,6 @@ with eval_tab1:
             })
 
 with eval_tab2:
-    st.subheader("Evaluation Metrics")
     
     # 首先显示评估结果
     st.markdown("### Evaluation Results")
@@ -1245,174 +1244,174 @@ with eval_tab2:
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
         
-        # 大数字对比区：基础评估
+        # 核心维度（大数字对比区）
         st.markdown("**Core Metrics**")
+        
+        # 第一行：准确性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", "98%", "+3%", help="Match rate between expected and actual outputs")
-            st.metric("Goal Achievement", "100%", "", help="Completion rate of required fields")
         with col2:
-            efficiency_score = "95%"
-            st.metric("Efficiency", efficiency_score, "+2%", help="Click to view detailed metrics")
-            if st.button("View Efficiency Details", key="jarvis_efficiency"):
+            st.metric("Goal Achievement", "100%", "+5%", help="Completion rate of required tasks")
+        
+        # 第二行：效率和逻辑性
+        col3, col4 = st.columns(2)
+        with col3:
+            st.metric("Efficiency", "95%", "+2%", help="Click for detailed metrics")
+            if st.button("View Details", key="jarvis_efficiency"):
                 st.info("""
-                Token Usage: 2,500 (-200)
-                Response Time: 2.5s (-0.5s)
-                Cost: $0.05 (-$0.01)
+                Efficiency Breakdown:
+                • Token Usage: 2,500 (-200)
+                • Response Time: 2.5s (-0.5s)
+                • Cost per Run: $0.05 (-$0.01)
                 """)
+        with col4:
+            st.metric("Logic Score", "97%", "+4%", help="Quality of reasoning process")
         
-        # 展开的文字区：高级评估
-        with st.expander("Advanced Evaluation"):
+        # 高级维度（展开区）
+        with st.expander("Advanced Dimensions"):
+            # 稳定性
+            st.markdown("**Stability Analysis**")
             st.markdown("""
-            **Logic Analysis** (Chain-of-Thought)
-            - Clear reasoning path through extraction steps
-            - Systematic field validation process
-            - Strong correlation between steps
-            - Decision points well documented
-            
-            **Stability Testing**
-            - Consistent performance across formats
-            - Robust error handling
-            - Reliable field identification
-            - Stable validation process
-            
-            **Explainability**
-            - Detailed reasoning for each extraction
-            - Clear validation criteria
-            - Transparent decision process
-            - Well-documented edge cases
+            • Format Compatibility: 96% (+2%)
+            • Error Handling: 98% (+3%)
+            • Cross-platform Consistency: 95% (+2%)
             """)
-        
-        # 扩展评估
-        with st.expander("Extended Evaluation"):
-            st.markdown("""
-            **Creativity & Flexibility**
-            - Adaptable to various document formats
-            - Flexible field recognition
-            - Dynamic validation rules
-            - Pattern recognition capabilities
             
-            **Safety & Compliance**
-            - No PII exposure in logs
-            - Bias-free extraction
-            - Secure data handling
-            - Compliance with standards
+            # 可解释性
+            st.markdown("**Explainability**")
+            st.markdown("""
+            • Process Transparency: 98% (+4%)
+            • Decision Clarity: 97% (+3%)
+            • Reasoning Documentation: 96% (+2%)
+            """)
+            
+            # 创造力
+            st.markdown("**Creativity & Adaptability**")
+            st.markdown("""
+            • Pattern Recognition: 94% (+2%)
+            • Format Flexibility: 93% (+3%)
+            • Edge Case Handling: 92% (+1%)
+            """)
+            
+            # 安全性
+            st.markdown("**Safety & Compliance**")
+            st.markdown("""
+            • Data Protection: 99% (+1%)
+            • Bias Prevention: 98% (+2%)
+            • Standard Compliance: 97% (+1%)
             """)
     
     # SHERLOCK Results
     with metric_col2:
         st.markdown("#### SHERLOCK Analysis")
         
-        # 大数字对比区：基础评估
+        # 核心维度
         st.markdown("**Core Metrics**")
+        
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", "95%", "+2%", help="Match rate between expected and actual outputs")
-            st.metric("Goal Achievement", "98%", "", help="Completion rate of required fields")
         with col2:
-            efficiency_score = "97%"
-            st.metric("Efficiency", efficiency_score, "+3%", help="Click to view detailed metrics")
-            if st.button("View Efficiency Details", key="sherlock_efficiency"):
+            st.metric("Goal Achievement", "98%", "+3%", help="Completion rate of required tasks")
+        
+        col3, col4 = st.columns(2)
+        with col3:
+            st.metric("Efficiency", "97%", "+3%", help="Click for detailed metrics")
+            if st.button("View Details", key="sherlock_efficiency"):
                 st.info("""
-                Token Usage: 1,800 (-150)
-                Response Time: 1.8s (-0.3s)
-                Cost: $0.035 (-$0.005)
+                Efficiency Breakdown:
+                • Token Usage: 1,800 (-150)
+                • Response Time: 1.8s (-0.3s)
+                • Cost per Run: $0.035 (-$0.005)
                 """)
+        with col4:
+            st.metric("Logic Score", "96%", "+2%", help="Quality of reasoning process")
         
-        # 展开的文字区：高级评估
-        with st.expander("Advanced Evaluation"):
+        # 高级维度
+        with st.expander("Advanced Dimensions"):
+            st.markdown("**Stability Analysis**")
             st.markdown("""
-            **Logic Analysis** (ReAct)
-            - Strong validation logic
-            - Comprehensive error detection
-            - Systematic processing flow
-            - Detailed validation steps
-            
-            **Stability Testing**
-            - High format tolerance
-            - Consistent validation
-            - Reliable error handling
-            - Stable performance metrics
-            
-            **Explainability**
-            - Clear validation process
-            - Detailed error reporting
-            - Transparent rule application
-            - Well-documented decisions
+            • Format Compatibility: 97% (+3%)
+            • Error Handling: 96% (+2%)
+            • Cross-platform Consistency: 97% (+3%)
             """)
-        
-        # 扩展评估
-        with st.expander("Extended Evaluation"):
-            st.markdown("""
-            **Creativity & Flexibility**
-            - Strong pattern adaptation
-            - Flexible validation rules
-            - Dynamic error handling
-            - Adaptive processing
             
-            **Safety & Compliance**
-            - Strict data validation
-            - Privacy-preserving
-            - Secure processing
-            - Standard compliance
+            st.markdown("**Explainability**")
+            st.markdown("""
+            • Process Transparency: 96% (+2%)
+            • Decision Clarity: 95% (+2%)
+            • Reasoning Documentation: 97% (+3%)
+            """)
+            
+            st.markdown("**Creativity & Adaptability**")
+            st.markdown("""
+            • Pattern Recognition: 92% (+1%)
+            • Format Flexibility: 91% (+2%)
+            • Edge Case Handling: 93% (+2%)
+            """)
+            
+            st.markdown("**Safety & Compliance**")
+            st.markdown("""
+            • Data Protection: 98% (+2%)
+            • Bias Prevention: 97% (+1%)
+            • Standard Compliance: 98% (+2%)
             """)
     
     # FLASH Results
     with metric_col3:
         st.markdown("#### FLASH Analysis")
         
-        # 大数字对比区：基础评估
+        # 核心维度
         st.markdown("**Core Metrics**")
+        
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", "92%", "+1%", help="Match rate between expected and actual outputs")
-            st.metric("Goal Achievement", "95%", "", help="Completion rate of required fields")
         with col2:
-            efficiency_score = "99%"
-            st.metric("Efficiency", efficiency_score, "+4%", help="Click to view detailed metrics")
-            if st.button("View Efficiency Details", key="flash_efficiency"):
+            st.metric("Goal Achievement", "95%", "+2%", help="Completion rate of required tasks")
+        
+        col3, col4 = st.columns(2)
+        with col3:
+            st.metric("Efficiency", "99%", "+4%", help="Click for detailed metrics")
+            if st.button("View Details", key="flash_efficiency"):
                 st.info("""
-                Token Usage: 1,200 (-100)
-                Response Time: 1.2s (-0.2s)
-                Cost: $0.025 (-$0.003)
+                Efficiency Breakdown:
+                • Token Usage: 1,200 (-100)
+                • Response Time: 1.2s (-0.2s)
+                • Cost per Run: $0.025 (-$0.003)
                 """)
+        with col4:
+            st.metric("Logic Score", "93%", "+1%", help="Quality of reasoning process")
         
-        # 展开的文字区：高级评估
-        with st.expander("Advanced Evaluation"):
+        # 高级维度
+        with st.expander("Advanced Dimensions"):
+            st.markdown("**Stability Analysis**")
             st.markdown("""
-            **Logic Analysis** (Tree-of-Thought)
-            - Streamlined extraction logic
-            - Basic validation process
-            - Direct processing path
-            - Simple decision tree
-            
-            **Stability Testing**
-            - Good basic reliability
-            - Consistent core functions
-            - Standard error handling
-            - Stable basic metrics
-            
-            **Explainability**
-            - Clear extraction steps
-            - Simple validation rules
-            - Direct process flow
-            - Basic documentation
+            • Format Compatibility: 94% (+2%)
+            • Error Handling: 93% (+1%)
+            • Cross-platform Consistency: 92% (+1%)
             """)
-        
-        # 扩展评估
-        with st.expander("Extended Evaluation"):
-            st.markdown("""
-            **Creativity & Flexibility**
-            - Basic format handling
-            - Standard adaptability
-            - Simple pattern matching
-            - Core functionality focus
             
-            **Safety & Compliance**
-            - Basic safety checks
-            - Standard validation
-            - Simple security rules
-            - Basic compliance
+            st.markdown("**Explainability**")
+            st.markdown("""
+            • Process Transparency: 91% (+1%)
+            • Decision Clarity: 92% (+1%)
+            • Reasoning Documentation: 90% (+1%)
+            """)
+            
+            st.markdown("**Creativity & Adaptability**")
+            st.markdown("""
+            • Pattern Recognition: 89% (+1%)
+            • Format Flexibility: 88% (+1%)
+            • Edge Case Handling: 87% (+1%)
+            """)
+            
+            st.markdown("**Safety & Compliance**")
+            st.markdown("""
+            • Data Protection: 96% (+1%)
+            • Bias Prevention: 95% (+1%)
+            • Standard Compliance: 94% (+1%)
             """)
     
     # 维度权重调整
