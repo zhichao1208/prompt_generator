@@ -353,6 +353,7 @@ Quality Requirements:
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
         
         # Reasoning Method Selection
+        default_reasoning_method = "Chain-of-Thought (CoT)" if version == "Solution A" else ("ReAct" if version == "Solution B" else "Tree-of-Thought (ToT)")
         reasoning_method = st.selectbox(
             "Select Reasoning Method",
             options=[
@@ -362,12 +363,14 @@ Quality Requirements:
                 "ReAct",
                 "Program-of-Thought"
             ],
+            index=["Chain-of-Thought (CoT)", "Tree-of-Thought (ToT)", "Buffer of Thoughts (BoT)", "ReAct", "Program-of-Thought"].index(default_reasoning_method),
             key=f"{version}_reasoning_method",
             help="Select the reasoning method that best fits your task"
         )
         
-        # Reasoning Details
-        default_reasoning = """Implementation Details for Chain-of-Thought:
+        # Reasoning Details based on selected method
+        reasoning_templates = {
+            "Chain-of-Thought (CoT)": """Implementation Details for Chain-of-Thought:
 
 1. Initial Data Scan
    - Identify all potential data fields in email and attachments
@@ -385,7 +388,8 @@ Quality Requirements:
 4. Cross-validation
    - Compare data between email body and attachments
    - Resolve conflicts using priority rules
-   - Document reasoning for choices made""" if version == "Solution A" else ("""Implementation Details for ReAct:
+   - Document reasoning for choices made""",
+            "ReAct": """Implementation Details for ReAct:
 
 1. Observation Phase
    - Scan document for target fields
@@ -405,7 +409,31 @@ Quality Requirements:
 4. Verification
    - Check extraction results
    - Validate against rules
-   - Document any issues""" if version == "Solution B" else "")
+   - Document any issues""",
+            "Tree-of-Thought (ToT)": """Implementation Details for Tree-of-Thought:
+
+1. Root Analysis
+   - Identify document structure
+   - Map key information locations
+   - Define extraction paths
+
+2. Branch Development
+   - Create parallel extraction strategies
+   - Consider alternative data formats
+   - Establish validation branches
+
+3. Path Evaluation
+   - Compare extraction results
+   - Score path effectiveness
+   - Select optimal route
+
+4. Result Synthesis
+   - Combine successful paths
+   - Apply final validation
+   - Generate output"""
+        }
+        
+        default_reasoning = reasoning_templates.get(reasoning_method, "")
         st.text_area(
             "Define reasoning",
             value=default_reasoning,
@@ -418,6 +446,7 @@ Quality Requirements:
         st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
         
         # Planning Method Selection
+        default_planning_method = "Least-to-Most Decomposition" if version == "Solution A" else ("Plan-and-Solve Strategy" if version == "Solution B" else "Progressive Task Refinement")
         planning_method = st.selectbox(
             "Select Planning Method",
             options=[
@@ -427,12 +456,14 @@ Quality Requirements:
                 "Dependency-Based Planning",
                 "Hierarchical Task Planning"
             ],
+            index=["Least-to-Most Decomposition", "Plan-and-Solve Strategy", "Progressive Task Refinement", "Dependency-Based Planning", "Hierarchical Task Planning"].index(default_planning_method),
             key=f"{version}_planning_method",
             help="Select the planning method that best fits your task complexity"
         )
         
-        # Planning Details
-        default_planning = """Implementation of Least-to-Most Decomposition:
+        # Planning Details based on selected method
+        planning_templates = {
+            "Least-to-Most Decomposition": """Implementation of Least-to-Most Decomposition:
 
 1. Field-level Tasks
    - Identify required fields (order_number, dates, emails, etc.)
@@ -452,7 +483,8 @@ Quality Requirements:
 4. Validation Tasks
    - Verify data completeness
    - Check format compliance
-   - Validate business rules""" if version == "Solution A" else ("""Implementation of Plan-and-Solve Strategy:
+   - Validate business rules""",
+            "Plan-and-Solve Strategy": """Implementation of Plan-and-Solve Strategy:
 
 1. Analysis Phase
    - Identify document type and structure
@@ -472,7 +504,31 @@ Quality Requirements:
 4. Quality Control
    - Run validation suite
    - Check completeness
-   - Generate quality report""" if version == "Solution B" else "")
+   - Generate quality report""",
+            "Progressive Task Refinement": """Implementation of Progressive Task Refinement:
+
+1. Initial Scan
+   - Quick document overview
+   - Identify key sections
+   - Mark target fields
+
+2. Refinement Steps
+   - Focus on each target field
+   - Apply specific extraction rules
+   - Validate as you go
+
+3. Optimization
+   - Refine extraction patterns
+   - Improve accuracy
+   - Minimize processing time
+
+4. Final Check
+   - Verify all fields
+   - Format consistency
+   - Output preparation"""
+        }
+        
+        default_planning = planning_templates.get(planning_method, "")
         st.text_area(
             "Define planning",
             value=default_planning,
