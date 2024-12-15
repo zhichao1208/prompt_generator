@@ -147,7 +147,10 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Header section with title and buttons
         st.markdown(f"""
             <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
-                <h3 style='margin: 0;'>{version}</h3>
+                <h3 style='margin: 0;'>{version} {
+                    "JARVIS" if version == "Solution A" else 
+                    "SHERLOCK" if version == "Solution B" else 
+                    "FLASH"}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
                     <div class='icon-button'>📥 Import</div>
@@ -160,16 +163,13 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
         # Solution Introduction
-        intro_text = """[JARVIS - Your All-Seeing Assistant]
-•Comprehensive Approach
+        intro_text = """•Comprehensive Approach
 •Complete data validation and error handling
 •Resource Consumption: high""" if version == "Solution A" else (
-            """[SHERLOCK - The Meticulous Detective]
-•Validation Focus
+            """•Validation Focus
 •Strong error detection and correction
 •Resource Consumption: medium""" if version == "Solution B" else 
-            """[FLASH - The Speed Force]
-•Lightweight Design
+            """•Lightweight Design
 •Fast processing speed
 •Resource Consumption: low""")
         
