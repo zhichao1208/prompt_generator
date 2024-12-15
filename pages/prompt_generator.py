@@ -164,7 +164,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ""
+        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ("""You are a Data Validation Expert specializing in PDF document analysis and structured information extraction. Your focus is on maintaining data accuracy, implementing robust validation rules, and ensuring data consistency across different document formats. You excel at pattern recognition and data standardization.""" if version == "Solution B" else "")
         st.text_area(
             "Define the role",
             value=default_role,
@@ -175,13 +175,16 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
-        default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
+        default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.""" if version == "Solution A" else ("""Your primary task is to extract and validate three key pieces of information from PDF documents:
+1. Order date - Must be in a valid date format
+2. Buyer name - Full name of the customer
+3. Email address - Must be a valid individual email address
 
-Data
-Email Content:
-{Email}
-Attachments:
-{Attachments}""" if version == "Solution A" else ""
+You will:
+- Scan the PDF for these specific data points
+- Apply validation rules to each field
+- Standardize the format of extracted information
+- Report any validation issues or missing data""" if version == "Solution B" else "")
         st.text_area(
             "Define the task",
             value=default_task,
@@ -223,7 +226,31 @@ Time Zone Standardization:
 - Normalize all dates to the YYYY-MM-DD format.
 
 Error Logging:
-- Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ""
+- Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ("""Data Quality Rules:
+1. Field Validation
+   - Order Date: Must be a valid date within the last 30 days
+   - Buyer Name: Must contain both first and last name
+   - Email: Must be individual email (not generic/group address)
+
+2. Format Requirements
+   - Dates: Convert all formats to YYYY-MM-DD
+   - Names: Capitalize first letter of each word
+   - Email: Convert to lowercase, verify format
+
+3. Data Completeness
+   - All three fields are mandatory
+   - No partial extractions allowed
+   - Missing data must be flagged
+
+4. Validation Process
+   - Apply regex patterns for email validation
+   - Check date format and validity
+   - Verify name format and completeness
+
+5. Error Handling
+   - Log all validation failures
+   - Provide specific error messages
+   - Suggest possible corrections""" if version == "Solution B" else "")
         st.text_area(
             "Define rules",
             value=default_rules,
@@ -262,7 +289,25 @@ Technical Environment:
 Business Requirements:
 - 24/7 order processing capability
 - Real-time data extraction and validation
-- Compliance with data protection regulations""" if version == "Solution A" else ""
+- Compliance with data protection regulations""" if version == "Solution A" else ("""Processing Environment:
+- PDF processing system with OCR capabilities
+- Regular document structure updates
+- High volume of daily orders
+
+Current Workflow:
+- Documents received through multiple channels
+- Automated initial scanning
+- Manual verification for exceptions
+
+Technical Setup:
+- OCR engine for text extraction
+- Pattern matching algorithms
+- Validation rule engine
+
+Quality Requirements:
+- 99.9% accuracy target
+- Real-time validation
+- Automated error reporting""" if version == "Solution B" else "")
 
         # Display context with user input override
         display_context = user_context if user_context else default_context
@@ -340,7 +385,27 @@ Business Requirements:
 4. Cross-validation
    - Compare data between email body and attachments
    - Resolve conflicts using priority rules
-   - Document reasoning for choices made""" if version == "Solution A" else ""
+   - Document reasoning for choices made""" if version == "Solution A" else ("""Implementation Details for ReAct:
+
+1. Observation Phase
+   - Scan document for target fields
+   - Identify potential data locations
+   - Note any irregularities or patterns
+
+2. Thought Process
+   - Analyze document structure
+   - Consider possible data formats
+   - Plan extraction strategy
+
+3. Action Steps
+   - Extract target fields
+   - Apply validation rules
+   - Standardize formats
+
+4. Verification
+   - Check extraction results
+   - Validate against rules
+   - Document any issues""" if version == "Solution B" else "")
         st.text_area(
             "Define reasoning",
             value=default_reasoning,
@@ -387,7 +452,27 @@ Business Requirements:
 4. Validation Tasks
    - Verify data completeness
    - Check format compliance
-   - Validate business rules""" if version == "Solution A" else ""
+   - Validate business rules""" if version == "Solution A" else ("""Implementation of Plan-and-Solve Strategy:
+
+1. Analysis Phase
+   - Identify document type and structure
+   - Locate potential data regions
+   - Map validation requirements
+
+2. Extraction Strategy
+   - Define field extraction sequence
+   - Set up validation checkpoints
+   - Prepare error handlers
+
+3. Processing Steps
+   - Extract each target field
+   - Apply immediate validation
+   - Format standardization
+
+4. Quality Control
+   - Run validation suite
+   - Check completeness
+   - Generate quality report""" if version == "Solution B" else "")
         st.text_area(
             "Define planning",
             value=default_planning,
@@ -437,7 +522,26 @@ Business Requirements:
       "product_n_quantity": "integer"
     }
   ]
-}""" if version == "Solution A" else ""
+}""" if version == "Solution A" else ("""{
+  "status": "success|error",
+  "extracted_data": {
+    "order_date": "YYYY-MM-DD",
+    "buyer_name": "First Last",
+    "email": "user@domain.com"
+  },
+  "validation_results": {
+    "date_valid": true|false,
+    "name_valid": true|false,
+    "email_valid": true|false
+  },
+  "errors": [
+    {
+      "field": "field_name",
+      "error": "error_description",
+      "suggestion": "correction_suggestion"
+    }
+  ]
+}""" if version == "Solution B" else "")
         st.text_area(
             "Define output format",
             value=default_output,
@@ -502,12 +606,41 @@ Business Requirements:
 3. Performance Factors:
    - Response accuracy and consistency
    - Processing speed for real-time requirements
-   - Cost-effectiveness for production deployment""" if version == "Solution A" else ""
+   - Cost-effectiveness for production deployment""" if version == "Solution A" else ("""This prompt configuration is optimized for data validation tasks with the following considerations:
+
+1. Model Capabilities:
+   - GPT-4 Turbo: Excellent at pattern recognition and validation
+   - Claude 3 Opus: Strong in format standardization and error detection
+
+2. Task Requirements:
+   - Field-level validation and standardization
+   - Format consistency across documents
+   - Error detection and correction
+
+3. Performance Factors:
+   - Validation accuracy and reliability
+   - Real-time processing capability
+   - Scalability for high-volume processing""" if version == "Solution B" else """This prompt configuration is optimized for minimal data extraction with the following considerations:
+
+1. Model Capabilities:
+   - GPT-4 Turbo: Efficient at targeted data extraction
+   - Claude 3 Opus: Precise in specific field identification
+
+2. Task Requirements:
+   - Focused extraction of key fields
+   - Simple format standardization
+   - Basic validation checks
+
+3. Performance Factors:
+   - Speed and efficiency
+   - Resource optimization
+   - Cost minimization""")
             
             st.text_area(
                 "Model Selection Reasoning",
                 value=default_rationale,
                 height=200,
+                key=f"{version}_model_rationale",
                 help="Explanation of why these models were selected for this prompt"
             )
             
