@@ -147,7 +147,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Header section with title and buttons
         st.markdown(f"""
             <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
-                <h3 style='margin: 0;'>{version} {
+                <h3 style='margin: 0;'>{
                     "JARVIS" if version == "Solution A" else 
                     "SHERLOCK" if version == "Solution B" else 
                     "FLASH"}</h3>
@@ -160,7 +160,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         """, unsafe_allow_html=True)
         
         # Version info
-        st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
+        st.markdown("<div style='color: #666; margin-bottom: 20px;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
         # Solution Introduction
         intro_text = """•Comprehensive Approach
@@ -174,7 +174,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 •Resource Consumption: low""")
         
         st.markdown(f"""
-            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin: 12px 0;'>
+            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 20px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
                 <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
                     {intro_text}
                 </div>
