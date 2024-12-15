@@ -1244,65 +1244,176 @@ with eval_tab2:
     # JARVIS Results
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
-        st.markdown("**Core Metrics:**")
-        st.metric("Accuracy", "98%", "+3%")
-        st.metric("Efficiency Score", "95%", "+2%")
-        st.metric("Logic Score", "97%", "+4%")
-        st.metric("Goal Achievement", "100%", "")
         
-        with st.expander("Detailed Analysis"):
+        # 大数字对比区：基础评估
+        st.markdown("**Core Metrics**")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Accuracy", "98%", "+3%", help="Match rate between expected and actual outputs")
+            st.metric("Goal Achievement", "100%", "", help="Completion rate of required fields")
+        with col2:
+            efficiency_score = "95%"
+            st.metric("Efficiency", efficiency_score, "+2%", help="Click to view detailed metrics")
+            if st.button("View Efficiency Details", key="jarvis_efficiency"):
+                st.info("""
+                Token Usage: 2,500 (-200)
+                Response Time: 2.5s (-0.5s)
+                Cost: $0.05 (-$0.01)
+                """)
+        
+        # 展开的文字区：高级评估
+        with st.expander("Advanced Evaluation"):
             st.markdown("""
-            **Accuracy Analysis:**
-            - Perfect field extraction
-            - Correct format conversion
-            - High validation accuracy
+            **Logic Analysis** (Chain-of-Thought)
+            - Clear reasoning path through extraction steps
+            - Systematic field validation process
+            - Strong correlation between steps
+            - Decision points well documented
             
-            **Efficiency Metrics:**
-            - Token Usage: 2,500 (-200)
-            - Response Time: 2.5s (-0.5s)
-            - Cost: $0.05 (-$0.01)""")
+            **Stability Testing**
+            - Consistent performance across formats
+            - Robust error handling
+            - Reliable field identification
+            - Stable validation process
+            
+            **Explainability**
+            - Detailed reasoning for each extraction
+            - Clear validation criteria
+            - Transparent decision process
+            - Well-documented edge cases
+            """)
+        
+        # 扩展评估
+        with st.expander("Extended Evaluation"):
+            st.markdown("""
+            **Creativity & Flexibility**
+            - Adaptable to various document formats
+            - Flexible field recognition
+            - Dynamic validation rules
+            - Pattern recognition capabilities
+            
+            **Safety & Compliance**
+            - No PII exposure in logs
+            - Bias-free extraction
+            - Secure data handling
+            - Compliance with standards
+            """)
     
     # SHERLOCK Results
     with metric_col2:
         st.markdown("#### SHERLOCK Analysis")
-        st.markdown("**Core Metrics:**")
-        st.metric("Accuracy", "95%", "+2%")
-        st.metric("Efficiency Score", "97%", "+3%")
-        st.metric("Logic Score", "96%", "+2%")
-        st.metric("Goal Achievement", "98%", "")
         
-        with st.expander("Detailed Analysis"):
+        # 大数字对比区：基础评估
+        st.markdown("**Core Metrics**")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Accuracy", "95%", "+2%", help="Match rate between expected and actual outputs")
+            st.metric("Goal Achievement", "98%", "", help="Completion rate of required fields")
+        with col2:
+            efficiency_score = "97%"
+            st.metric("Efficiency", efficiency_score, "+3%", help="Click to view detailed metrics")
+            if st.button("View Efficiency Details", key="sherlock_efficiency"):
+                st.info("""
+                Token Usage: 1,800 (-150)
+                Response Time: 1.8s (-0.3s)
+                Cost: $0.035 (-$0.005)
+                """)
+        
+        # 展开的文字区：高级评估
+        with st.expander("Advanced Evaluation"):
             st.markdown("""
-            **Accuracy Analysis:**
-            - Strong validation focus
-            - Detailed error detection
-            - High format consistency
+            **Logic Analysis** (ReAct)
+            - Strong validation logic
+            - Comprehensive error detection
+            - Systematic processing flow
+            - Detailed validation steps
             
-            **Efficiency Metrics:**
-            - Token Usage: 1,800 (-150)
-            - Response Time: 1.8s (-0.3s)
-            - Cost: $0.035 (-$0.005)""")
+            **Stability Testing**
+            - High format tolerance
+            - Consistent validation
+            - Reliable error handling
+            - Stable performance metrics
+            
+            **Explainability**
+            - Clear validation process
+            - Detailed error reporting
+            - Transparent rule application
+            - Well-documented decisions
+            """)
+        
+        # 扩展评估
+        with st.expander("Extended Evaluation"):
+            st.markdown("""
+            **Creativity & Flexibility**
+            - Strong pattern adaptation
+            - Flexible validation rules
+            - Dynamic error handling
+            - Adaptive processing
+            
+            **Safety & Compliance**
+            - Strict data validation
+            - Privacy-preserving
+            - Secure processing
+            - Standard compliance
+            """)
     
     # FLASH Results
     with metric_col3:
         st.markdown("#### FLASH Analysis")
-        st.markdown("**Core Metrics:**")
-        st.metric("Accuracy", "92%", "+1%")
-        st.metric("Efficiency Score", "99%", "+4%")
-        st.metric("Logic Score", "93%", "+1%")
-        st.metric("Goal Achievement", "95%", "")
         
-        with st.expander("Detailed Analysis"):
+        # 大数字对比区：基础评估
+        st.markdown("**Core Metrics**")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Accuracy", "92%", "+1%", help="Match rate between expected and actual outputs")
+            st.metric("Goal Achievement", "95%", "", help="Completion rate of required fields")
+        with col2:
+            efficiency_score = "99%"
+            st.metric("Efficiency", efficiency_score, "+4%", help="Click to view detailed metrics")
+            if st.button("View Efficiency Details", key="flash_efficiency"):
+                st.info("""
+                Token Usage: 1,200 (-100)
+                Response Time: 1.2s (-0.2s)
+                Cost: $0.025 (-$0.003)
+                """)
+        
+        # 展开的文字区：高级评估
+        with st.expander("Advanced Evaluation"):
             st.markdown("""
-            **Accuracy Analysis:**
-            - Fast field extraction
-            - Basic validation
-            - Good format handling
+            **Logic Analysis** (Tree-of-Thought)
+            - Streamlined extraction logic
+            - Basic validation process
+            - Direct processing path
+            - Simple decision tree
             
-            **Efficiency Metrics:**
-            - Token Usage: 1,200 (-100)
-            - Response Time: 1.2s (-0.2s)
-            - Cost: $0.025 (-$0.003)""")
+            **Stability Testing**
+            - Good basic reliability
+            - Consistent core functions
+            - Standard error handling
+            - Stable basic metrics
+            
+            **Explainability**
+            - Clear extraction steps
+            - Simple validation rules
+            - Direct process flow
+            - Basic documentation
+            """)
+        
+        # 扩展评估
+        with st.expander("Extended Evaluation"):
+            st.markdown("""
+            **Creativity & Flexibility**
+            - Basic format handling
+            - Standard adaptability
+            - Simple pattern matching
+            - Core functionality focus
+            
+            **Safety & Compliance**
+            - Basic safety checks
+            - Standard validation
+            - Simple security rules
+            - Basic compliance
+            """)
     
     # 维度权重调整
     st.markdown("### Dimension Weights")
