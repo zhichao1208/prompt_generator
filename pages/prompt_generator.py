@@ -1260,7 +1260,7 @@ with eval_tab2:
             st.metric("Efficiency", "95%", "+2%", help="Overall efficiency score")
             # Efficiency Breakdown Box
             st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; border: 1px solid #cce5ff;'>
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
                     <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
                         <strong>Efficiency Breakdown</strong>
                     </div>
@@ -1281,7 +1281,7 @@ with eval_tab2:
         with col4:
             st.metric("Logic Score", "97%", "+4%", help="Quality of reasoning process")
         
-        # 高级维度（展开区）
+        # 高级维度（展��区）
         with st.expander("Advanced Dimensions"):
             # 稳定性
             st.markdown("**Stability Analysis**")
@@ -1332,12 +1332,25 @@ with eval_tab2:
         with col3:
             st.metric("Efficiency", "97%", "+3%", help="Click for detailed metrics")
             if st.button("View Details", key="sherlock_efficiency"):
-                st.info("""
-                Efficiency Breakdown:
-                • Token Usage: 1,800 (-150)
-                • Response Time: 1.8s (-0.3s)
-                • Cost per Run: $0.035 (-$0.005)
-                """)
+                st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>1,800 <span style='color: #28a745'>(-150)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>1.8s <span style='color: #28a745'>(-0.3s)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.035 <span style='color: #28a745'>(-$0.005)</span></span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
         with col4:
             st.metric("Logic Score", "96%", "+2%", help="Quality of reasoning process")
         
@@ -1388,12 +1401,25 @@ with eval_tab2:
         with col3:
             st.metric("Efficiency", "99%", "+4%", help="Click for detailed metrics")
             if st.button("View Details", key="flash_efficiency"):
-                st.info("""
-                Efficiency Breakdown:
-                • Token Usage: 1,200 (-100)
-                • Response Time: 1.2s (-0.2s)
-                • Cost per Run: $0.025 (-$0.003)
-                """)
+                st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>1,200 <span style='color: #28a745'>(-100)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>1.2s <span style='color: #28a745'>(-0.2s)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.025 <span style='color: #28a745'>(-$0.003)</span></span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
         with col4:
             st.metric("Logic Score", "93%", "+1%", help="Quality of reasoning process")
         
