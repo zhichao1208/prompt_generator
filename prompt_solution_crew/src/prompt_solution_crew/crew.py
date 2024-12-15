@@ -90,48 +90,68 @@ class PromptSolutionCrew():
 			agent=self.architect()
 		)
 
-	def _extract_directions(self, architect_output: str) -> Dict[str, str]:
-		"""Extract the three directions from architect's JSON output."""
+	def _get_direction_from_output(self, output: str, index: int) -> str:
+		"""Extract a specific direction from the architect's output."""
 		try:
-			output_dict = json.loads(architect_output)
-			return {
-				"direction_1": output_dict["optimization_directions"][0],
-				"direction_2": output_dict["optimization_directions"][1],
-				"direction_3": output_dict["optimization_directions"][2]
-			}
+			output_dict = json.loads(output)
+			return output_dict["optimization_directions"][index]
 		except (json.JSONDecodeError, KeyError, IndexError) as e:
-			print(f"Error extracting directions: {e}")
-			return {
-				"direction_1": "Error extracting direction 1",
-				"direction_2": "Error extracting direction 2", 
-				"direction_3": "Error extracting direction 3"
-			}
+			print(f"Error extracting direction {index + 1}: {e}")
+			return f"Error extracting direction {index + 1}"
+
+	def _format_task_description(self, task_name: str, inputs: dict, direction: str = None) -> str:
+		"""Format task description with all required variables."""
+		description = self.tasks_config[task_name]['description']
+		
+		# Create a copy of inputs to avoid modifying the original
+		format_vars = inputs.copy()
+		
+		# Add direction if provided
+		if direction is not None:
+			if "direction_1" in description:
+				format_vars["direction_1"] = direction
+			elif "direction_2" in description:
+				format_vars["direction_2"] = direction
+			elif "direction_3" in description:
+				format_vars["direction_3"] = direction
+		
+		try:
+			return description.format(**format_vars)
+		except KeyError as e:
+			print(f"Missing required input: {e}")
+			return description
 
 	@task
-	def optimize_prompt_direction_1(self) -> Task:
+	def optimize_prompt_direction_1(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for first optimization direction."""
+		direction = self._get_direction_from_output(architect_output, 0)
+		description = self._format_task_description('optimize_prompt_direction_1', inputs, direction)
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_1']['description'],
+			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
 			agent=self.prompt_engineer_1(),
 			context=[self.analyze_requirements_task()]
 		)
 
 	@task
-	def optimize_prompt_direction_2(self) -> Task:
+	def optimize_prompt_direction_2(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for second optimization direction."""
+		direction = self._get_direction_from_output(architect_output, 1)
+		description = self._format_task_description('optimize_prompt_direction_2', inputs, direction)
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_2']['description'],
+			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
 			agent=self.prompt_engineer_2(),
 			context=[self.analyze_requirements_task()]
 		)
 
 	@task
-	def optimize_prompt_direction_3(self) -> Task:
+	def optimize_prompt_direction_3(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for third optimization direction."""
+		direction = self._get_direction_from_output(architect_output, 2)
+		description = self._format_task_description('optimize_prompt_direction_3', inputs, direction)
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_3']['description'],
+			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
 			agent=self.prompt_engineer_3(),
 			context=[self.analyze_requirements_task()]
