@@ -153,8 +153,8 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                     "FLASH"}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>📥 Import</div>
-                    <div class='icon-button'>🔍 Search</div>
+                    <div class='icon-button'>📥 </div>
+                    <div class='icon-button'>🔍 </div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -763,7 +763,6 @@ Performance Focus:
             
             # Model Settings
             st.markdown("##### Model Settings")
-            st.markdown(f"**{selected_model}**")
             cols = st.columns(2)
             
             with cols[0]:
@@ -1346,37 +1345,45 @@ with eval_tab2:
         
         # 高级维度（展示区）
         with st.expander("Advanced Dimensions"):
-            # 稳定性
+            # 稳定性分析
             st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 96%
-            • Error Handling: 98%   
-            • Cross-platform Consistency: 95%
-            """)
+            stab_col1, stab_col2, stab_col3 = st.columns(3)
+            with stab_col1:
+                st.metric("Format Compatibility", "96%", help="Ability to handle different document formats")
+            with stab_col2:
+                st.metric("Error Handling", "98%", help="Effectiveness in handling exceptions")
+            with stab_col3:
+                st.metric("Cross-platform", "95%", help="Consistency across different platforms")
             
             # 可解释性
             st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 98% 
-            • Decision Clarity: 97% 
-            • Reasoning Documentation: 96% 
-            """)
+            exp_col1, exp_col2, exp_col3 = st.columns(3)
+            with exp_col1:
+                st.metric("Process Transparency", "98%", help="Clarity of the extraction process")
+            with exp_col2:
+                st.metric("Decision Clarity", "97%", help="Clarity of decision making")
+            with exp_col3:
+                st.metric("Documentation", "96%", help="Quality of reasoning documentation")
             
             # 创造力
             st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 94% 
-            • Format Flexibility: 93% 
-            • Edge Case Handling: 92% 
-            """)
+            cre_col1, cre_col2, cre_col3 = st.columns(3)
+            with cre_col1:
+                st.metric("Pattern Recognition", "94%", help="Ability to identify data patterns")
+            with cre_col2:
+                st.metric("Format Flexibility", "93%", help="Adaptability to format changes")
+            with cre_col3:
+                st.metric("Edge Case Handling", "92%", help="Handling of unusual scenarios")
             
             # 安全性
             st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 99%
-            • Bias Prevention: 98%
-            • Standard Compliance: 97%
-            """)
+            saf_col1, saf_col2, saf_col3 = st.columns(3)
+            with saf_col1:
+                st.metric("Data Protection", "99%", help="Security of data handling")
+            with saf_col2:
+                st.metric("Bias Prevention", "98%", help="Prevention of biased results")
+            with saf_col3:
+                st.metric("Compliance", "97%", help="Adherence to standards")
     
     # SHERLOCK Results
     with metric_col2:
@@ -1417,35 +1424,47 @@ with eval_tab2:
         with col4:
             st.metric("Logic Score", "96%", help="Quality of reasoning process")
         
-        # 高级维度
+        # SHERLOCK Advanced Dimensions
         with st.expander("Advanced Dimensions"):
+            # 稳定性分析
             st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 97%
-            • Error Handling: 96%
-            • Cross-platform Consistency: 97%
-            """)
+            stab_col1, stab_col2, stab_col3 = st.columns(3)
+            with stab_col1:
+                st.metric("Format Compatibility", "97%", help="Ability to handle different document formats")
+            with stab_col2:
+                st.metric("Error Handling", "96%", help="Effectiveness in handling exceptions")
+            with stab_col3:
+                st.metric("Cross-platform", "97%", help="Consistency across different platforms")
             
+            # 可解释性
             st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 96%
-            • Decision Clarity: 95%
-            • Reasoning Documentation: 97%
-            """)
+            exp_col1, exp_col2, exp_col3 = st.columns(3)
+            with exp_col1:
+                st.metric("Process Transparency", "96%", help="Clarity of the extraction process")
+            with exp_col2:
+                st.metric("Decision Clarity", "95%", help="Clarity of decision making")
+            with exp_col3:
+                st.metric("Documentation", "97%", help="Quality of reasoning documentation")
             
+            # 创造力
             st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 92%
-            • Format Flexibility: 91%
-            • Edge Case Handling: 93%
-            """)
+            cre_col1, cre_col2, cre_col3 = st.columns(3)
+            with cre_col1:
+                st.metric("Pattern Recognition", "92%", help="Ability to identify data patterns")
+            with cre_col2:
+                st.metric("Format Flexibility", "91%", help="Adaptability to format changes")
+            with cre_col3:
+                st.metric("Edge Case Handling", "93%", help="Handling of unusual scenarios")
             
+            # 安全性
             st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 98%
-            • Bias Prevention: 97%
-            • Standard Compliance: 98%
-            """)
+            saf_col1, saf_col2, saf_col3 = st.columns(3)
+            with saf_col1:
+                st.metric("Data Protection", "98%", help="Security of data handling")
+            with saf_col2:
+                st.metric("Bias Prevention", "97%", help="Prevention of biased results")
+            with saf_col3:
+                st.metric("Compliance", "98%", help="Adherence to standards")
     
     # FLASH Results
     with metric_col3:
@@ -1486,35 +1505,47 @@ with eval_tab2:
         with col4:
             st.metric("Logic Score", "93%", help="Quality of reasoning process")
         
-        # 高级维度
+        # FLASH Advanced Dimensions
         with st.expander("Advanced Dimensions"):
+            # 稳定性分析
             st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 94%
-            • Error Handling: 93%
-            • Cross-platform Consistency: 92%
-            """)
+            stab_col1, stab_col2, stab_col3 = st.columns(3)
+            with stab_col1:
+                st.metric("Format Compatibility", "94%", help="Ability to handle different document formats")
+            with stab_col2:
+                st.metric("Error Handling", "93%", help="Effectiveness in handling exceptions")
+            with stab_col3:
+                st.metric("Cross-platform", "92%", help="Consistency across different platforms")
             
+            # 可解释性
             st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 91%
-            • Decision Clarity: 92%
-            • Reasoning Documentation: 90%
-            """)
+            exp_col1, exp_col2, exp_col3 = st.columns(3)
+            with exp_col1:
+                st.metric("Process Transparency", "91%", help="Clarity of the extraction process")
+            with exp_col2:
+                st.metric("Decision Clarity", "92%", help="Clarity of decision making")
+            with exp_col3:
+                st.metric("Documentation", "90%", help="Quality of reasoning documentation")
             
+            # 创造力
             st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 89%
-            • Format Flexibility: 88%
-            • Edge Case Handling: 87%
-            """)
+            cre_col1, cre_col2, cre_col3 = st.columns(3)
+            with cre_col1:
+                st.metric("Pattern Recognition", "89%", help="Ability to identify data patterns")
+            with cre_col2:
+                st.metric("Format Flexibility", "88%", help="Adaptability to format changes")
+            with cre_col3:
+                st.metric("Edge Case Handling", "87%", help="Handling of unusual scenarios")
             
+            # 安全性
             st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 96%
-            • Bias Prevention: 95%
-            • Standard Compliance: 94%
-            """)
+            saf_col1, saf_col2, saf_col3 = st.columns(3)
+            with saf_col1:
+                st.metric("Data Protection", "96%", help="Security of data handling")
+            with saf_col2:
+                st.metric("Bias Prevention", "95%", help="Prevention of biased results")
+            with saf_col3:
+                st.metric("Compliance", "94%", help="Adherence to standards")
     
     # 维度权重调整
     st.markdown("### Dimension Weights")
@@ -1579,7 +1610,7 @@ with eval_tab2:
                     key=f"{solution_name}_safety"
                 )
             
-            # ��新生成按钮
+            # 新生成按钮
             if st.button(f"Regenerate {solution_name} Prompt", type="primary", key=f"regenerate_{solution_name}"):
                 # 版本号管理
                 if f'{solution_name}_version' not in st.session_state:
