@@ -164,7 +164,9 @@ Order Number: ORD-2024-001''',
                 st.write(f"配置文件是否存在: {(config_dir / 'agents.yaml').exists()} (agents.yaml), {(config_dir / 'tasks.yaml').exists()} (tasks.yaml)")
                 
                 # 创建 PromptSolutionCrew 实例
-                crew = PromptSolutionCrew()
+                crew_instance = PromptSolutionCrew()
+                # 获取 crew 对象
+                crew = crew_instance.crew()
                 
                 # 更新状态
                 status_container.info("开始生成提示词...")
@@ -1297,7 +1299,7 @@ with eval_tab2:
     st.markdown("### Evaluation Results")
     metric_col1, metric_col2, metric_col3 = st.columns(3)
     
-    # 创建核心指标对比可���化
+    # 创建核心指标对比可化
     st.markdown("### Core Metrics Comparison")
     
     # 准备数据
