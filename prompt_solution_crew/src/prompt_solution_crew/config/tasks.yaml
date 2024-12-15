@@ -1,17 +1,192 @@
-research_task:
+analyze_requirements_task:
+  name: "Analyze Requirements"
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2024.
-  expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    Analyze the following user requirements for prompt engineering solution:
+    
+    Primary Goal: {task_description}
+    Task Type: {task_type}
+    Model Preference: {model_preference}
+    Tone: {tone}
+    Context: {context}
+    Sample Data: {data_input}
+    Few-Shot Examples: {examples}
 
-reporting_task:
-  description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Review the user preferences and identify:
+    1. Key requirements and constraints
+    2. Critical success factors
+    3. Potential challenges and risks
+    4. Available resources and limitations
+    5. Technical and business context
+
+    Respond exactly in the following perfectly formatted JSON structure with no missing fields.
+    Example output:
+    {
+      "summary": "Extract order date, buyer name and email address from order PDF",
+      "constraints": [
+        "Must handle different PDF formats and structures",
+        "Must extract three specific fields: date, name, email",
+        "Must validate email format"
+      ],
+      "success_factors": [
+        "Accurate field extraction with >95% success rate",
+        "Proper validation of email format",
+        "Consistent date format conversion"
+      ],
+      "risks": [
+        {
+          "risk": "Inconsistent PDF formats leading to extraction errors",
+          "impact": "High - Could result in missing or incorrect data",
+          "mitigation": "Implement robust PDF parsing with format detection"
+        }
+      ],
+      "context": {
+        "technical": "System uses GPT-4 API with PDF processing capabilities",
+        "business": "Part of order processing automation, requires high accuracy"
+      }
+    }
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    {
+      "summary": "string // Comprehensive summary of all key requirements, must include all aspects from user input",
+      "constraints": [
+        "string // Each identified constraint, both explicit from user input and implicit from analysis"
+      ],
+      "success_factors": [
+        "string // Each critical success factor identified, must be specific and measurable"
+      ],
+      "risks": [
+        {
+          "risk": "string // Clear description of the identified risk",
+          "impact": "string // Specific impact level (High/Medium/Low) with detailed explanation",
+          "mitigation": "string // Concrete mitigation strategy with actionable steps"
+        }
+      ],
+      "context": {
+        "technical": "string // Detailed technical context including all relevant technical considerations",
+        "business": "string // Comprehensive business context including stakeholder considerations"
+      }
+    }
+  output_json: RequirementsAnalysis
+  agent: architect
+  async_execution: false
+
+develop_strategies_task:
+  name: "Develop Strategic Approaches"
+  description: >
+    Based on the requirements analysis, develop three distinct strategic approaches for the prompt engineering solution.
+    Each strategy should optimize for different priorities while ensuring the core requirements are met.
+
+    User Requirements:
+    Task Description: {task_description}
+    Task Type: {task_type}
+    Model Preference: {model_preference}
+    Tone: {tone}
+    Context: {context}
+    Sample Data: {data_input}
+    
+    Consider the following optimization directions:
+    - Accuracy (result reliability)
+    - Efficiency (processing speed)
+    - Cost (resource utilization)
+    - Maintainability (ease of updates)
+    - Robustness (error handling)
+    - Consistency (output stability)
+    - Scalability (handling different scales)
+    - Security (data protection)
+    - Flexibility (adaptation capability)
+    - Explainability (result traceability)
+
+    Develop THREE complete strategies, each focusing on different priorities.
+    Make sure each strategy is fully detailed and actionable.
+
+    Respond exactly in the following perfectly formatted JSON structure with no missing fields.
+    Example output:
+    {
+      "strategies": [
+        {
+          "name": "High-Accuracy Focus",
+          "core_focus": "Maximize extraction accuracy and validation",
+          "priorities": [
+            "Accuracy - Ensure 99.9% accurate field extraction",
+            "Robustness - Comprehensive PDF format handling",
+            "Explainability - Detailed extraction process tracking"
+          ],
+          "implementation": {
+            "approach": "Multi-stage validation pipeline with format detection",
+            "steps": [
+              "Implement PDF structure analysis",
+              "Add field pattern recognition",
+              "Integrate format validation",
+              "Set up error handling for edge cases"
+            ]
+          },
+          "benefits": [
+            "Highest possible accuracy in field extraction",
+            "Robust handling of different PDF formats",
+            "Clear audit trail for validation process"
+          ],
+          "trade_offs": [
+            "Higher processing time per document",
+            "Increased computational cost",
+            "More complex implementation"
+          ],
+          "resources": {
+            "required": [
+              "PDF processing library",
+              "Pattern matching system",
+              "Validation framework"
+            ],
+            "estimated_cost": "High - $0.05 per document processed"
+          },
+          "risk_mitigation": [
+            "Implement format detection",
+            "Set up comprehensive validation",
+            "Establish error handling"
+          ],
+          "success_metrics": [
+            "Field extraction accuracy > 99.9%",
+            "Format compatibility rate",
+            "Validation success rate"
+          ]
+        }
+      ]
+    }
+  expected_output: >
+    {
+      "strategies": [
+        {
+          "name": "string // Descriptive name reflecting the strategy's core focus",
+          "core_focus": "string // Clear statement of the main strategic direction",
+          "priorities": [
+            "string // Three carefully selected priorities from the provided list, with justification"
+          ],
+          "implementation": {
+            "approach": "string // Detailed description of the implementation methodology",
+            "steps": [
+              "string // Specific, actionable implementation steps in chronological order"
+            ]
+          },
+          "benefits": [
+            "string // Concrete benefits directly tied to the chosen priorities"
+          ],
+          "trade_offs": [
+            "string // Specific trade-offs and their implications"
+          ],
+          "resources": {
+            "required": [
+              "string // Specific resources needed, including tools, skills, and time"
+            ],
+            "estimated_cost": "string // Detailed cost breakdown with justification"
+          },
+          "risk_mitigation": [
+            "string // Specific risk mitigation strategies aligned with identified risks"
+          ],
+          "success_metrics": [
+            "string // Measurable metrics to evaluate strategy success"
+          ]
+        }
+      ]
+    }
+  output_json: StrategicApproaches
+  agent: architect
+  context: [analyze_requirements_task]
+  async_execution: false

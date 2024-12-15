@@ -1,4 +1,30 @@
-User name is John Doe.
-User is an AI Engineer.
-User is interested in AI Agents.
-User is based in San Francisco, California.
+User Profile:
+- Name: John Doe
+- Role: AI Engineer
+- Expertise: AI Agents and Prompt Engineering
+- Location: San Francisco, California
+
+Task Preferences:
+- Preferred Task Types: Data Extraction, Decision Support
+- Model Preferences: 
+  - Primary: GPT-4-turbo
+  - Secondary: Claude-3-opus
+  - Fallback: Gemini-pro
+
+Style Preferences:
+- Communication Tone: Professional
+- Output Format: JSON
+- Documentation: Detailed with examples
+- Error Handling: Comprehensive
+
+Technical Requirements:
+- Response Time: Optimized for accuracy over speed
+- Validation Level: High with detailed error messages
+- Format Consistency: Strict adherence to specified schemas
+- Documentation: Includes reasoning and validation steps
+
+Special Considerations:
+- Prefers detailed explanations of decision-making processes
+- Values comprehensive error handling and validation
+- Emphasizes code quality and maintainability
+- Focuses on scalable and production-ready solutions

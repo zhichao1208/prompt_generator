@@ -154,34 +154,38 @@ Order Number: ORD-2024-001''',
             # 显示初始状态
             status_container.info("正在初始化 PromptSolutionCrew...")
             
-            # 获取配置文件路径
-            config_dir = project_root / "prompt_solution_crew" / "src" / "prompt_solution_crew" / "config"
-            st.write(f"配置文件目录: {config_dir}")
-            st.write(f"配置文件是否存在: {(config_dir / 'agents.yaml').exists()} (agents.yaml), {(config_dir / 'tasks.yaml').exists()} (tasks.yaml)")
+            # 从Task Configuration收集用户设置
+            inputs = {
+                'task_description': task_description,
+                'task_type': task_type,
+                'model_preference': model_preference,
+                'tone': tone,
+                'context': context,
+                'data_input': data_input
+            }
             
-            # 创建 PromptSolutionCrew 实例
-            crew_instance = PromptSolutionCrew()
-            # 获取 crew 对象
-            crew = crew_instance.crew()
+            # 收集Few-Shot Examples
+            examples = []
+            for i in range(st.session_state.num_examples):
+                example_input = st.session_state.get(f"example_input_{i}")
+                example_output = st.session_state.get(f"example_output_{i}")
+                if example_input and example_output:
+                    examples.append({
+                        "input": example_input,
+                        "output": example_output
+                    })
+            inputs['examples'] = examples
             
             # 更新状态
             status_container.info("开始生成提示词...")
             
-            # 准备输入参数
-            inputs = {
-                "task_description": task_description,
-                "task_type": task_type,
-                "model_preference": model_preference,
-                "tone": tone,
-                "context": context,
-                "data_input": data_input
-            }
-            
             # 使用 spinner 显示生成过程
             with st.spinner('正在生成...'):
                 try:
+                    # 创建 PromptSolutionCrew 实例并运行
+                    crew_instance = PromptSolutionCrew()
+                    crew = crew_instance.crew()
                     results = crew.kickoff(inputs=inputs)
-                    st.write("Crew kickoff 完成")
                     
                     # 更新状态
                     status_container.success("✅ 提示词生成成功!")
@@ -191,8 +195,9 @@ Order Number: ORD-2024-001''',
                         result_container.json(results)
                     else:
                         result_container.info("生成完成，请查看上方结果。")
+                        
                 except Exception as e:
-                    st.error(f"Crew run 过程中出现错误: {str(e)}")
+                    st.error(f"生成过程中出现错误: {str(e)}")
                     st.error("详细错误信息:")
                     st.exception(e)
                     

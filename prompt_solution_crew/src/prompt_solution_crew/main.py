@@ -6,53 +6,35 @@ from prompt_solution_crew.crew import PromptSolutionCrew
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
-def run():
+def run(inputs):
     """
-    Run the crew.
+    Run the crew with the provided inputs.
     """
-    inputs = {
-        'topic': 'AI LLMs'
-    }
-    PromptSolutionCrew().crew().kickoff(inputs=inputs)
+    return PromptSolutionCrew().crew().kickoff(inputs=inputs)
 
-
-def train():
+def train(inputs, n_iterations, filename):
     """
     Train the crew for a given number of iterations.
     """
-    inputs = {
-        "topic": "AI LLMs"
-    }
     try:
-        PromptSolutionCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
+        return PromptSolutionCrew().crew().train(n_iterations=n_iterations, filename=filename, inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
 
-def replay():
+def replay(task_id):
     """
     Replay the crew execution from a specific task.
     """
     try:
-        PromptSolutionCrew().crew().replay(task_id=sys.argv[1])
-
+        return PromptSolutionCrew().crew().replay(task_id=task_id)
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
-def test():
+def test(inputs, n_iterations, openai_model_name):
     """
     Test the crew execution and returns the results.
     """
-    inputs = {
-        "topic": "AI LLMs"
-    }
     try:
-        PromptSolutionCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
-
+        return PromptSolutionCrew().crew().test(n_iterations=n_iterations, openai_model_name=openai_model_name, inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+        raise Exception(f"An error occurred while testing the crew: {e}")
