@@ -1,2 +1,7 @@
-streamlit==1.31.1
-plotly==5.19.0 
+streamlit
+plotly
+crewai
+openai
+python-dotenv
+crewai-tools
+pysqlite3-binary # for live version of streamlit, u don't need it on local windows
