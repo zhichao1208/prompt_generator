@@ -457,6 +457,47 @@ Business Requirements:
                 help="Select the models you want to evaluate for this prompt"
             )
             
+            # Get user's model preferences from sidebar
+            user_models = model_preference if 'model_preference' in locals() else []
+            
+            # Display model status labels
+            st.markdown("##### Model Status")
+            for model in models_to_evaluate:
+                status_color = "#28a745" if model in user_models else "#dc3545"  # Green for match, Red for mismatch
+                status_text = "✓ Matches User Preference" if model in user_models else "× Not in User Preference"
+                st.markdown(f"""
+                    <div style='display: flex; align-items: center; gap: 8px; margin-bottom: 4px;'>
+                        <div style='color: {status_color};'>●</div>
+                        <div style='font-weight: 500;'>{model}</div>
+                        <div style='color: {status_color}; font-size: 0.9em;'>({status_text})</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            
+            # Model Selection Rationale
+            st.markdown("##### Selection Rationale")
+            default_rationale = """This prompt configuration is optimized for data extraction tasks with the following considerations:
+
+1. Model Capabilities:
+   - GPT-4 Turbo: Excellent at handling complex data structures and validation rules
+   - Claude 3 Opus: Strong in natural language understanding and format consistency
+
+2. Task Requirements:
+   - Structured data extraction from unstructured text
+   - Multiple format handling (email, PDF, attachments)
+   - Complex validation rules and error handling
+
+3. Performance Factors:
+   - Response accuracy and consistency
+   - Processing speed for real-time requirements
+   - Cost-effectiveness for production deployment""" if version == "Solution A" else ""
+            
+            st.text_area(
+                "Model Selection Reasoning",
+                value=default_rationale,
+                height=200,
+                help="Explanation of why these models were selected for this prompt"
+            )
+            
             # Model-specific settings
             if models_to_evaluate:
                 st.markdown("##### Model Settings")
