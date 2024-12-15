@@ -1237,32 +1237,169 @@ with eval_tab1:
 with eval_tab2:
     st.subheader("Evaluation Metrics")
     
-    # 创建三列对应三个方案的指标
-    metric_col1, metric_col2, metric_col3 = st.columns(3)
+    # 添加评估维度选择和权重调整
+    st.markdown("### Evaluation Dimensions")
     
-    with metric_col1:
-        st.markdown("#### JARVIS Metrics")
-        st.metric("Accuracy", "98%", "+3%")
-        st.metric("Response Time", "2.5s", "-0.5s")
-        st.metric("Token Usage", "2,500", "-200")
-        st.metric("Cost", "$0.05", "-$0.01")
-        st.metric("Iterations", "3", "")
-        st.markdown("**Model:** GPT-4 Turbo")
+    # 核心维度
+    st.markdown("#### Core Dimensions")
+    core_col1, core_col2 = st.columns(2)
+    with core_col1:
+        accuracy_weight = st.slider("Accuracy Weight", 0.0, 1.0, 0.3, 0.1, 
+            help="Measures the match between expected and actual outputs")
+        efficiency_weight = st.slider("Efficiency Weight", 0.0, 1.0, 0.2, 0.1,
+            help="Evaluates token usage, response time, and cost")
+    with core_col2:
+        logic_weight = st.slider("Logic Weight", 0.0, 1.0, 0.3, 0.1,
+            help="Assesses reasoning path and process clarity")
+        goal_weight = st.slider("Goal Achievement Weight", 0.0, 1.0, 0.2, 0.1,
+            help="Checks if all required tasks are completed")
+    
+    if st.button("Recalculate Scores", type="primary"):
+        st.markdown("### Evaluation Results")
         
-    with metric_col2:
-        st.markdown("#### SHERLOCK Metrics")
-        st.metric("Accuracy", "95%", "+2%")
-        st.metric("Response Time", "1.8s", "-0.3s")
-        st.metric("Token Usage", "1,800", "-150")
-        st.metric("Cost", "$0.035", "-$0.005")
-        st.metric("Iterations", "2", "")
-        st.markdown("**Model:** Claude-3-Sonnet")
+        # 创建三列显示评估结果
+        metric_col1, metric_col2, metric_col3 = st.columns(3)
         
-    with metric_col3:
-        st.markdown("#### FLASH Metrics")
-        st.metric("Accuracy", "92%", "+1%")
-        st.metric("Response Time", "1.2s", "-0.2s")
-        st.metric("Token Usage", "1,200", "-100")
-        st.metric("Cost", "$0.025", "-$0.003")
-        st.metric("Iterations", "1", "")
-        st.markdown("**Model:** GPT-3.5 Turbo")
+        with metric_col1:
+            st.markdown("#### JARVIS Analysis")
+            
+            # Core Metrics
+            st.markdown("**Core Metrics:**")
+            st.metric("Accuracy", "98%", "+3%")
+            st.metric("Efficiency Score", "95%", "+2%")
+            st.metric("Logic Score", "97%", "+4%")
+            st.metric("Goal Achievement", "100%", "")
+            
+            # Advanced Metrics
+            st.markdown("**Advanced Metrics:**")
+            st.metric("Stability", "96%", "+2%")
+            st.metric("Explainability", "98%", "+3%")
+            st.metric("Creativity", "92%", "+1%")
+            st.metric("Safety", "99%", "")
+            
+            # Detailed Analysis
+            with st.expander("Detailed Analysis"):
+                st.markdown("""
+                **Accuracy Analysis:**
+                - Perfect field extraction
+                - Correct format conversion
+                - High validation accuracy
+                
+                **Efficiency Metrics:**
+                - Token Usage: 2,500 (-200)
+                - Response Time: 2.5s (-0.5s)
+                - Cost: $0.05 (-$0.01)
+                
+                **Logic Evaluation:**
+                - Clear reasoning path
+                - Well-documented decisions
+                - Consistent validation process
+                
+                **Stability Tests:**
+                - Robust across different formats
+                - Consistent performance
+                - Good error handling
+                """)
+        
+        with metric_col2:
+            st.markdown("#### SHERLOCK Analysis")
+            
+            # Core Metrics
+            st.markdown("**Core Metrics:**")
+            st.metric("Accuracy", "95%", "+2%")
+            st.metric("Efficiency Score", "97%", "+3%")
+            st.metric("Logic Score", "96%", "+2%")
+            st.metric("Goal Achievement", "98%", "")
+            
+            # Advanced Metrics
+            st.markdown("**Advanced Metrics:**")
+            st.metric("Stability", "97%", "+3%")
+            st.metric("Explainability", "96%", "+2%")
+            st.metric("Creativity", "90%", "+1%")
+            st.metric("Safety", "98%", "")
+            
+            # Detailed Analysis
+            with st.expander("Detailed Analysis"):
+                st.markdown("""
+                **Accuracy Analysis:**
+                - Strong validation focus
+                - Detailed error detection
+                - High format consistency
+                
+                **Efficiency Metrics:**
+                - Token Usage: 1,800 (-150)
+                - Response Time: 1.8s (-0.3s)
+                - Cost: $0.035 (-$0.005)
+                
+                **Logic Evaluation:**
+                - Systematic validation
+                - Clear error reporting
+                - Strong reasoning process
+                
+                **Stability Tests:**
+                - Excellent error handling
+                - Consistent validation
+                - Good format adaptation
+                """)
+        
+        with metric_col3:
+            st.markdown("#### FLASH Analysis")
+            
+            # Core Metrics
+            st.markdown("**Core Metrics:**")
+            st.metric("Accuracy", "92%", "+1%")
+            st.metric("Efficiency Score", "99%", "+4%")
+            st.metric("Logic Score", "93%", "+1%")
+            st.metric("Goal Achievement", "95%", "")
+            
+            # Advanced Metrics
+            st.markdown("**Advanced Metrics:**")
+            st.metric("Stability", "94%", "+2%")
+            st.metric("Explainability", "91%", "+1%")
+            st.metric("Creativity", "88%", "+1%")
+            st.metric("Safety", "96%", "")
+            
+            # Detailed Analysis
+            with st.expander("Detailed Analysis"):
+                st.markdown("""
+                **Accuracy Analysis:**
+                - Fast field extraction
+                - Basic validation
+                - Good format handling
+                
+                **Efficiency Metrics:**
+                - Token Usage: 1,200 (-100)
+                - Response Time: 1.2s (-0.2s)
+                - Cost: $0.025 (-$0.003)
+                
+                **Logic Evaluation:**
+                - Simple reasoning path
+                - Direct extraction
+                - Basic validation logic
+                
+                **Stability Tests:**
+                - Good basic performance
+                - Fast processing
+                - Simple error handling
+                """)
+    
+    # 添加权重调整建议
+    with st.expander("Weight Adjustment Tips"):
+        st.markdown("""
+        **How to Adjust Weights:**
+        
+        1. **Task-Specific Focus:**
+           - Data Extraction: Prioritize accuracy and efficiency
+           - Creative Tasks: Increase creativity and stability weights
+           - Critical Applications: Emphasize safety and explainability
+        
+        2. **Use Case Considerations:**
+           - Production Environment: Higher weights for stability and efficiency
+           - Development Phase: Focus on accuracy and explainability
+           - User-Facing Applications: Balance all dimensions
+        
+        3. **Performance Optimization:**
+           - Identify bottlenecks in current results
+           - Adjust weights to focus on improvement areas
+           - Monitor impact on overall performance
+        """)
