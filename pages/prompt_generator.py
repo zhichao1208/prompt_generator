@@ -219,47 +219,95 @@ Error Logging:
             label_visibility="collapsed"
         )
         
-        # Planning Section
-        st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
-        default_planning = """To ensure accuracy and completeness, the task is divided into the following steps:
-
-1. Identify Relevant Fields:
-   - Extract required fields (order_number, buyer_email_address, etc.) from the email body.
-   - Cross-verify with attachment data for completeness.
-
-2. Normalize Data:
-   - Format dates and product codes according to the constraints.
-
-3. Validate Outputs:
-   - Ensure all extracted fields meet the rules.
-
-4. Reasoning Generation:
-   - For ambiguous data points, document the logic behind decisions.""" if version == "Solution A" else ""
-        st.text_area(
-            "Define planning",
-            value=default_planning,
-            key=f"{version}_planning",
-            height=200,
-            label_visibility="collapsed"
-        )
-        
         # Reasoning Section
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-        default_reasoning = """1. The buyer_email_address was validated to ensure it belongs to an individual and not a generic email.
-2. The order_date was normalized to YYYY-MM-DD from the email's header section.
-3. Ambiguity in product codes was resolved by extracting only TechHeroes' product identifiers from the attachment and removing invalid characters.
-4. Missing delivery instructions were logged as "unknown" for manual follow-up.
-5. Duplicate entries for order_number were detected in the email and attachment, and the most recent version was retained.
-6. All extracted fields were cross-validated between the email body and attachments for consistency.
-7. Time zones were unified across all date fields.
-8. Errors in attachment parsing (e.g., corrupted files) were flagged for review.
-9. Special characters in product codes were removed as per the constraints.
-10. The final output format strictly adhered to the JSON structure.""" if version == "Solution A" else ""
+        
+        # Reasoning Method Selection
+        reasoning_method = st.selectbox(
+            "Select Reasoning Method",
+            options=[
+                "Chain-of-Thought (CoT)",
+                "Tree-of-Thought (ToT)",
+                "Buffer of Thoughts (BoT)",
+                "ReAct",
+                "Program-of-Thought"
+            ],
+            key=f"{version}_reasoning_method",
+            help="Select the reasoning method that best fits your task"
+        )
+        
+        # Reasoning Details
+        default_reasoning = """Implementation Details for Chain-of-Thought:
+
+1. Initial Data Scan
+   - Identify all potential data fields in email and attachments
+   - Mark ambiguous or duplicate information
+   
+2. Field Extraction
+   - Apply validation rules for each field type
+   - Handle special cases (dates, email addresses, product codes)
+   
+3. Data Normalization
+   - Convert dates to YYYY-MM-DD format
+   - Clean product codes by removing special characters
+   - Validate email format
+   
+4. Cross-validation
+   - Compare data between email body and attachments
+   - Resolve conflicts using priority rules
+   - Document reasoning for choices made""" if version == "Solution A" else ""
         st.text_area(
             "Define reasoning",
             value=default_reasoning,
             key=f"{version}_reasoning",
             height=250,
+            label_visibility="collapsed"
+        )
+        
+        # Planning Section
+        st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
+        
+        # Planning Method Selection
+        planning_method = st.selectbox(
+            "Select Planning Method",
+            options=[
+                "Least-to-Most Decomposition",
+                "Plan-and-Solve Strategy",
+                "Progressive Task Refinement",
+                "Dependency-Based Planning",
+                "Hierarchical Task Planning"
+            ],
+            key=f"{version}_planning_method",
+            help="Select the planning method that best fits your task complexity"
+        )
+        
+        # Planning Details
+        default_planning = """Implementation of Least-to-Most Decomposition:
+
+1. Field-level Tasks
+   - Identify required fields (order_number, dates, emails, etc.)
+   - Define validation rules for each field
+   - Create field-specific extraction functions
+
+2. Document-level Tasks
+   - Parse email body structure
+   - Extract attachment content
+   - Create document traversal strategy
+
+3. Integration Tasks
+   - Combine data from multiple sources
+   - Apply business rules and constraints
+   - Generate final output structure
+
+4. Validation Tasks
+   - Verify data completeness
+   - Check format compliance
+   - Validate business rules""" if version == "Solution A" else ""
+        st.text_area(
+            "Define planning",
+            value=default_planning,
+            key=f"{version}_planning",
+            height=200,
             label_visibility="collapsed"
         )
         
@@ -315,94 +363,6 @@ Error Logging:
         
         # Enhancements Section
         with st.expander("Enhancements"):
-            # Reasoning
-            st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-            
-            # Reasoning Method Selection
-            reasoning_method = st.selectbox(
-                "Select Reasoning Method",
-                options=[
-                    "Chain-of-Thought (CoT)",
-                    "Tree-of-Thought (ToT)",
-                    "Buffer of Thoughts (BoT)",
-                    "ReAct",
-                    "Program-of-Thought"
-                ],
-                key=f"{version}_reasoning_method",
-                help="Select the reasoning method that best fits your task"
-            )
-            
-            # Reasoning Details
-            st.text_area(
-                "Reasoning Details",
-                value="""Implementation Details for Chain-of-Thought:
-
-1. Initial Data Scan
-   - Identify all potential data fields in email and attachments
-   - Mark ambiguous or duplicate information
-   
-2. Field Extraction
-   - Apply validation rules for each field type
-   - Handle special cases (dates, email addresses, product codes)
-   
-3. Data Normalization
-   - Convert dates to YYYY-MM-DD format
-   - Clean product codes by removing special characters
-   - Validate email format
-   
-4. Cross-validation
-   - Compare data between email body and attachments
-   - Resolve conflicts using priority rules
-   - Document reasoning for choices made""" if version == "Solution A" else "",
-                key=f"{version}_reasoning_details",
-                height=150
-            )
-            
-            # Planning and Task Decomposition
-            st.markdown("<div class='section-label'>Planning and Task Decomposition</div>", unsafe_allow_html=True)
-            
-            # Planning Method Selection
-            planning_method = st.selectbox(
-                "Select Planning Method",
-                options=[
-                    "Least-to-Most Decomposition",
-                    "Plan-and-Solve Strategy",
-                    "Progressive Task Refinement",
-                    "Dependency-Based Planning",
-                    "Hierarchical Task Planning"
-                ],
-                key=f"{version}_planning_method",
-                help="Select the planning method that best fits your task complexity"
-            )
-            
-            # Planning Details
-            st.text_area(
-                "Planning Details",
-                value="""Implementation of Least-to-Most Decomposition:
-
-1. Field-level Tasks
-   - Identify required fields (order_number, dates, emails, etc.)
-   - Define validation rules for each field
-   - Create field-specific extraction functions
-
-2. Document-level Tasks
-   - Parse email body structure
-   - Extract attachment content
-   - Create document traversal strategy
-
-3. Integration Tasks
-   - Combine data from multiple sources
-   - Apply business rules and constraints
-   - Generate final output structure
-
-4. Validation Tasks
-   - Verify data completeness
-   - Check format compliance
-   - Validate business rules""" if version == "Solution A" else "",
-                key=f"{version}_planning_details",
-                height=150
-            )
-            
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             
