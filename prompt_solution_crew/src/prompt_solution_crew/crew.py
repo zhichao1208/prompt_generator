@@ -37,8 +37,13 @@ class BaseCrew():
 		
 		# 初始化模型名称和配置
 		model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
+		# 如果是 o1-preview，转换为 gpt-4-1106-preview
+		if model_name == "gpt-o1-preview":
+			model_name = "gpt-4-1106-preview"
+			
 		self.llm_config = {
-			"config_list": [{"model": model_name}]
+			"temperature": 0.7,
+			"model": model_name
 		}
 
 	def _format_task_description(self, task_name: str, inputs: dict, direction: OptimizationDirection = None) -> str:
