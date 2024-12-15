@@ -1235,7 +1235,7 @@ with eval_tab1:
 
 with eval_tab2:
     
-    # 首先显示评估结���
+    # 首先显示评估结果
     st.markdown("### Evaluation Results")
     metric_col1, metric_col2, metric_col3 = st.columns(3)
     
@@ -1264,7 +1264,7 @@ with eval_tab2:
         }
     }
     
-    # 使用Plotly建雷达图
+    # 使用Plotly��建雷达图
     import plotly.graph_objects as go
     
     categories = list(metrics_data["JARVIS"].keys())
@@ -1312,16 +1312,36 @@ with eval_tab2:
         # 第一行：准确性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs", delta_color="green")  # 最高
+            st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs")
         with col2:
-            st.metric("Goal Achievement", "100%", help="Completion rate of required tasks", delta_color="green")  # 最高
+            st.metric("Goal Achievement", "100%", help="Completion rate of required tasks")
         
         # 第二行：效率和逻辑性
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "95%", help="Overall efficiency score", delta_color="normal")  # 中间值
+            st.metric("Efficiency", "95%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>2,500</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>2.5s</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.05</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "97%", help="Quality of reasoning process", delta_color="green")  # 最高
+            st.metric("Logic Score", "97%", help="Quality of reasoning process")
         
         # 高级维度（展示区）
         with st.expander("Advanced Dimensions"):
@@ -1329,11 +1349,11 @@ with eval_tab2:
             st.markdown("**Stability Analysis**")
             stab_col1, stab_col2 = st.columns(2)
             with stab_col1:
-                st.metric("Format Compatibility", "96%", help="Ability to handle different document formats", delta_color="normal")
-                st.metric("Error Handling", "98%", help="Effectiveness in handling exceptions", delta_color="green")
+                st.metric("Format Compatibility", "96%", help="Ability to handle different document formats")
+                st.metric("Error Handling", "98%", help="Effectiveness in handling exceptions")
             with stab_col2:
-                st.metric("Cross-platform", "95%", help="Consistency across different platforms", delta_color="normal")
-                st.metric("System Stability", "97%", help="Overall system stability", delta_color="green")
+                st.metric("Cross-platform", "95%", help="Consistency across different platforms")
+                st.metric("System Stability", "97%", help="Overall system stability")
             
             # 可解释性
             st.markdown("**Explainability**")
@@ -1374,15 +1394,35 @@ with eval_tab2:
         
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "95%", help="Match rate between expected and actual outputs", delta_color="normal")  # 中间值
+            st.metric("Accuracy", "95%", help="Match rate between expected and actual outputs")
         with col2:
-            st.metric("Goal Achievement", "98%", help="Completion rate of required tasks", delta_color="normal")  # 中间值
+            st.metric("Goal Achievement", "98%", help="Completion rate of required tasks")
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "97%", help="Overall efficiency score", delta_color="normal")  # 中间值
+            st.metric("Efficiency", "97%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>1,800</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>1.8s</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.035</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "96%", help="Quality of reasoning process", delta_color="normal")  # 中间值
+            st.metric("Logic Score", "96%", help="Quality of reasoning process")
         
         # SHERLOCK Advanced Dimensions
         with st.expander("Advanced Dimensions"):
@@ -1390,11 +1430,11 @@ with eval_tab2:
             st.markdown("**Stability Analysis**")
             stab_col1, stab_col2 = st.columns(2)
             with stab_col1:
-                st.metric("Format Compatibility", "97%", help="Ability to handle different document formats", delta_color="normal")
-                st.metric("Error Handling", "96%", help="Effectiveness in handling exceptions", delta_color="normal")
+                st.metric("Format Compatibility", "97%", help="Ability to handle different document formats")
+                st.metric("Error Handling", "96%", help="Effectiveness in handling exceptions")
             with stab_col2:
-                st.metric("Cross-platform", "97%", help="Consistency across different platforms", delta_color="normal")
-                st.metric("System Stability", "97%", help="Overall system stability", delta_color="normal")
+                st.metric("Cross-platform", "97%", help="Consistency across different platforms")
+                st.metric("System Stability", "97%", help="Overall system stability")
             
             # 可解释性
             st.markdown("**Explainability**")
@@ -1435,15 +1475,35 @@ with eval_tab2:
         
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "92%", help="Match rate between expected and actual outputs", delta_color="red")  # 最低
+            st.metric("Accuracy", "92%", help="Match rate between expected and actual outputs")
         with col2:
-            st.metric("Goal Achievement", "95%", help="Completion rate of required tasks", delta_color="red")  # 最低
+            st.metric("Goal Achievement", "95%", help="Completion rate of required tasks")
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "99%", help="Overall efficiency score", delta_color="green")  # 最高
+            st.metric("Efficiency", "99%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>1,200</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>1.2s</span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.025</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "93%", help="Quality of reasoning process", delta_color="red")  # 最低
+            st.metric("Logic Score", "93%", help="Quality of reasoning process")
         
         # FLASH Advanced Dimensions
         with st.expander("Advanced Dimensions"):
@@ -1451,11 +1511,11 @@ with eval_tab2:
             st.markdown("**Stability Analysis**")
             stab_col1, stab_col2 = st.columns(2)
             with stab_col1:
-                st.metric("Format Compatibility", "94%", help="Ability to handle different document formats", delta_color="normal")
-                st.metric("Error Handling", "93%", help="Effectiveness in handling exceptions", delta_color="normal")
+                st.metric("Format Compatibility", "94%", help="Ability to handle different document formats")
+                st.metric("Error Handling", "93%", help="Effectiveness in handling exceptions")
             with stab_col2:
-                st.metric("Cross-platform", "92%", help="Consistency across different platforms", delta_color="normal")
-                st.metric("System Stability", "90%", help="Overall system stability", delta_color="red")
+                st.metric("Cross-platform", "92%", help="Consistency across different platforms")
+                st.metric("System Stability", "90%", help="Overall system stability")
             
             # 可解释性
             st.markdown("**Explainability**")
