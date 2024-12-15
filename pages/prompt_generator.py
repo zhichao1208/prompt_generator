@@ -143,11 +143,36 @@ Order Number: ORD-2024-001''',
     with col2:
         generate_button = st.button("Generate Prompt", type="primary")
         if generate_button:
-            # 直接启动 PromptSolutionCrew
-            crew = PromptSolutionCrew()
-            with st.spinner('Generating prompts...'):
-                crew.kickoff()
-            st.success('Prompts generated successfully!')
+            try:
+                # 创建状态容器
+                status_container = st.empty()
+                result_container = st.empty()
+                
+                # 显示初始状态
+                status_container.info("正在初始化 PromptSolutionCrew...")
+                
+                # 创建 PromptSolutionCrew 实例
+                crew = PromptSolutionCrew()
+                
+                # 更新状态
+                status_container.info("开始生成提示词...")
+                
+                # 使用 spinner 显示生成过程
+                with st.spinner('正在生成...'):
+                    results = crew.kickoff()
+                    
+                    # 更新状态
+                    status_container.success("✅ 提示词生成成功!")
+                    
+                    # 显示结果
+                    if results:
+                        result_container.json(results)
+                    else:
+                        result_container.info("生成完成，请查看上方结果。")
+                        
+            except Exception as e:
+                st.error(f"生成过程中出现错误: {str(e)}")
+                st.error("请检查配置并重试")
 
 # Main Content Area
 st.title("Prompt Generator")
