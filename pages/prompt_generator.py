@@ -172,8 +172,8 @@ Order Number: ORD-2024-001''',
                 # 使用 spinner 显示生成过程
                 with st.spinner('正在生成...'):
                     try:
-                        results = crew.kickoff()
-                        st.write("Crew kickoff 完成")
+                        results = crew.run()
+                        st.write("Crew run 完成")
                         
                         # 更新状态
                         status_container.success("✅ 提示词生成成功!")
@@ -184,7 +184,7 @@ Order Number: ORD-2024-001''',
                         else:
                             result_container.info("生成完成，请查看上方结果。")
                     except Exception as e:
-                        st.error(f"Crew kickoff 过程中出现错误: {str(e)}")
+                        st.error(f"Crew run 过程中出现错误: {str(e)}")
                         st.error("详细错误信息:")
                         st.exception(e)
                         
@@ -1297,7 +1297,7 @@ with eval_tab2:
     st.markdown("### Evaluation Results")
     metric_col1, metric_col2, metric_col3 = st.columns(3)
     
-    # 创建核心指标对比可视化
+    # 创建核心指标对比可���化
     st.markdown("### Core Metrics Comparison")
     
     # 准备数据
