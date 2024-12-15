@@ -1,5 +1,8 @@
 import streamlit as st
 from datetime import datetime
+__import__('pysqlite3') # This is a workaround to fix the error "sqlite3 module is not found" on live streamlit.
+import sys 
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3') # This is a workaround to fix the error "sqlite3 module is not found" on live streamlit.
 
 # Function definitions
 def render_preferences_section(selected_model, cost_pref, output_pref, flow_pref):
