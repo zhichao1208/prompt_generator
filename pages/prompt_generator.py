@@ -1257,14 +1257,27 @@ with eval_tab2:
         # 第二行：效率和逻辑性
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "95%", "+2%", help="Click for detailed metrics")
-            if st.button("View Details", key="jarvis_efficiency"):
-                st.info("""
-                Efficiency Breakdown:
-                • Token Usage: 2,500 (-200)
-                • Response Time: 2.5s (-0.5s)
-                • Cost per Run: $0.05 (-$0.01)
-                """)
+            st.metric("Efficiency", "95%", "+2%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
+                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; border: 1px solid #cce5ff;'>
+                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
+                        <strong>Efficiency Breakdown</strong>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Token Usage:</span>
+                        <span>2,500 <span style='color: #28a745'>(-200)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
+                        <span>Response Time:</span>
+                        <span>2.5s <span style='color: #28a745'>(-0.5s)</span></span>
+                    </div>
+                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
+                        <span>Cost per Run:</span>
+                        <span>$0.05 <span style='color: #28a745'>(-$0.01)</span></span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         with col4:
             st.metric("Logic Score", "97%", "+4%", help="Quality of reasoning process")
         
