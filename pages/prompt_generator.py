@@ -313,7 +313,6 @@ Error Logging:
         st.markdown("""
             <div style='display: flex; align-items: center; gap: 8px;'>
                 <div class='section-label'>Context</div>
-                <div class='icon-button show-original' title='Show Original Context'>📄</div>
             </div>
         """, unsafe_allow_html=True)
         
@@ -763,7 +762,6 @@ Performance Focus:
             
             # Model Settings
             st.markdown("##### Model Settings")
-            st.markdown(f"**{selected_model}**")
             cols = st.columns(2)
             
             with cols[0]:
@@ -1238,387 +1236,149 @@ with eval_tab2:
     
     # 首先显示评估结果
     st.markdown("### Evaluation Results")
-    metric_col1, metric_col2, metric_col3 = st.columns(3)
     
-    # 创建核心指标对比可视化
-    st.markdown("### Core Metrics Comparison")
+    # 添加横向对比图表
+    st.markdown("#### Performance Comparison")
     
     # 准备数据
     metrics_data = {
-        "JARVIS": {
-            "Accuracy": 98,
-            "Goal Achievement": 100,
-            "Efficiency": 95,
-            "Logic Score": 97
-        },
-        "SHERLOCK": {
-            "Accuracy": 95,
-            "Goal Achievement": 95,
-            "Efficiency": 93,
-            "Logic Score": 93
-        },
-        "FLASH": {
-            "Accuracy": 92,
-            "Goal Achievement": 90,
-            "Efficiency": 98,
-            "Logic Score": 90
-        }
+        "Metrics": ["Accuracy", "Goal Achievement", "Efficiency", "Logic Score"],
+        "JARVIS": [98, 100, 95, 97],
+        "SHERLOCK": [95, 98, 97, 96],
+        "FLASH": [92, 95, 99, 93]
     }
     
-    # 使用Plotly创建雷达图
-    import plotly.graph_objects as go
-    
-    categories = list(metrics_data["JARVIS"].keys())
-    
+    # 创建横向条形图
     fig = go.Figure()
     
-    colors = {"JARVIS": "#1f77b4", "SHERLOCK": "#ff7f0e", "FLASH": "#2ca02c"}
+    colors = {
+        "JARVIS": "#1f77b4",
+        "SHERLOCK": "#ff7f0e", 
+        "FLASH": "#2ca02c"
+    }
     
-    for solution in metrics_data:
-        values = list(metrics_data[solution].values())
-        # 添加首个值到末尾以闭合图形
-        values.append(values[0])
-        
-        fig.add_trace(go.Scatterpolar(
-            r=values,
-            theta=categories + [categories[0]],
+    bar_width = 0.25
+    positions = {
+        "JARVIS": -bar_width,
+        "SHERLOCK": 0,
+        "FLASH": bar_width
+    }
+    
+    for solution in ["JARVIS", "SHERLOCK", "FLASH"]:
+        fig.add_trace(go.Bar(
             name=solution,
-            line=dict(color=colors[solution]),
-            fill='toself',
-            opacity=0.4
+            y=metrics_data["Metrics"],
+            x=metrics_data[solution],
+            orientation='h',
+            marker_color=colors[solution],
+            offsetgroup=solution,
+            text=[f"{x}%" for x in metrics_data[solution]],
+            textposition='outside',
         ))
     
     fig.update_layout(
-        polar=dict(
-            radialaxis=dict(
-                visible=True,
-                range=[0, 100]
-            )
+        barmode='group',
+        height=250,
+        margin=dict(l=20, r=20, t=20, b=20),
+        xaxis=dict(
+            title="Score (%)",
+            range=[85, 105],
+            gridcolor='lightgray',
+            griddash='dot'
         ),
+        yaxis=dict(
+            title=None,
+            gridcolor='lightgray',
+            griddash='dot'
+        ),
+        plot_bgcolor='white',
         showlegend=True,
-        height=400,
-        margin=dict(l=80, r=80, t=20, b=20)
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
     )
     
     st.plotly_chart(fig, use_container_width=True)
-
     
-    # JARVIS Results
-    with metric_col1:
-        st.markdown("#### JARVIS Analysis")
-        
-        # 核心维度（大数字对比区）
-        st.markdown("**Core Metrics**")
-        
-        # 第一行：准确性和目标达成度
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Accuracy", "98%", "+3%", help="Match rate between expected and actual outputs")
-        with col2:
-            st.metric("Goal Achievement", "100%", "+5%", help="Completion rate of required tasks")
-        
-        # 第二行：效率和逻辑性
-        col3, col4 = st.columns(2)
-        with col3:
-            st.metric("Efficiency", "95%", "+2%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
-            st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>2,500 <span style='color: #28a745'>(-200)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>2.5s <span style='color: #28a745'>(-0.5s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.05 <span style='color: #28a745'>(-$0.01)</span></span>
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
-        with col4:
-            st.metric("Logic Score", "97%", "+4%", help="Quality of reasoning process")
-        
-        # 高级维度（展��区）
-        with st.expander("Advanced Dimensions"):
-            # 稳定性
-            st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 96% (+2%)
-            • Error Handling: 98% (+3%)
-            • Cross-platform Consistency: 95% (+2%)
-            """)
-            
-            # 可解释性
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 98% (+4%)
-            • Decision Clarity: 97% (+3%)
-            • Reasoning Documentation: 96% (+2%)
-            """)
-            
-            # 创造力
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 94% (+2%)
-            • Format Flexibility: 93% (+3%)
-            • Edge Case Handling: 92% (+1%)
-            """)
-            
-            # 安全性
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 99% (+1%)
-            • Bias Prevention: 98% (+2%)
-            • Standard Compliance: 97% (+1%)
-            """)
+    # 添加差异分析表格
+    st.markdown("#### Comparative Analysis")
     
-    # SHERLOCK Results
-    with metric_col2:
-        st.markdown("#### SHERLOCK Analysis")
-        
-        # 核心维度
-        st.markdown("**Core Metrics**")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Accuracy", "95%", "+2%", help="Match rate between expected and actual outputs")
-        with col2:
-            st.metric("Goal Achievement", "98%", "+3%", help="Completion rate of required tasks")
-        
-        col3, col4 = st.columns(2)
-        with col3:
-            st.metric("Efficiency", "97%", "+3%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
-            st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>1,800 <span style='color: #28a745'>(-150)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>1.8s <span style='color: #28a745'>(-0.3s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.035 <span style='color: #28a745'>(-$0.005)</span></span>
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
-        with col4:
-            st.metric("Logic Score", "96%", "+2%", help="Quality of reasoning process")
-        
-        # 高级维度
-        with st.expander("Advanced Dimensions"):
-            st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 97% (+3%)
-            • Error Handling: 96% (+2%)
-            • Cross-platform Consistency: 97% (+3%)
-            """)
-            
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 96% (+2%)
-            • Decision Clarity: 95% (+2%)
-            • Reasoning Documentation: 97% (+3%)
-            """)
-            
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 92% (+1%)
-            • Format Flexibility: 91% (+2%)
-            • Edge Case Handling: 93% (+2%)
-            """)
-            
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 98% (+2%)
-            • Bias Prevention: 97% (+1%)
-            • Standard Compliance: 98% (+2%)
-            """)
+    analysis_data = {
+        "Metric": metrics_data["Metrics"],
+        "Best Performance": [
+            f"JARVIS (98%)",
+            f"JARVIS (100%)",
+            f"FLASH (99%)",
+            f"JARVIS (97%)"
+        ],
+        "Performance Gap": [
+            "JARVIS leads by 3-6%",
+            "JARVIS leads by 2-5%",
+            "FLASH leads by 2-4%",
+            "JARVIS leads by 1-4%"
+        ],
+        "Key Differentiator": [
+            "Comprehensive validation",
+            "Complete task coverage",
+            "Optimized processing",
+            "Advanced reasoning"
+        ]
+    }
     
-    # FLASH Results
-    with metric_col3:
-        st.markdown("#### FLASH Analysis")
+    st.markdown("""
+        <style>
+        .comparison-table {
+            font-size: 0.9em;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th {
+            background-color: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        </style>
         
-        # 核心维度
-        st.markdown("**Core Metrics**")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Accuracy", "92%", "+1%", help="Match rate between expected and actual outputs")
-        with col2:
-            st.metric("Goal Achievement", "95%", "+2%", help="Completion rate of required tasks")
-        
-        col3, col4 = st.columns(2)
-        with col3:
-            st.metric("Efficiency", "99%", "+4%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
-            st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>1,200 <span style='color: #28a745'>(-100)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>1.2s <span style='color: #28a745'>(-0.2s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.025 <span style='color: #28a745'>(-$0.003)</span></span>
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
-        with col4:
-            st.metric("Logic Score", "93%", "+1%", help="Quality of reasoning process")
-        
-        # 高级维度
-        with st.expander("Advanced Dimensions"):
-            st.markdown("**Stability Analysis**")
-            st.markdown("""
-            • Format Compatibility: 94% (+2%)
-            • Error Handling: 93% (+1%)
-            • Cross-platform Consistency: 92% (+1%)
-            """)
-            
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 91% (+1%)
-            • Decision Clarity: 92% (+1%)
-            • Reasoning Documentation: 90% (+1%)
-            """)
-            
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 89% (+1%)
-            • Format Flexibility: 88% (+1%)
-            • Edge Case Handling: 87% (+1%)
-            """)
-            
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 96% (+1%)
-            • Bias Prevention: 95% (+1%)
-            • Standard Compliance: 94% (+1%)
-            """)
+        <table class="comparison-table">
+            <tr>
+                <th>Metric</th>
+                <th>Best Performance</th>
+                <th>Performance Gap</th>
+                <th>Key Differentiator</th>
+            </tr>
+    """, unsafe_allow_html=True)
     
-    # 维度权重调整
-    st.markdown("### Dimension Weights")
+    for i in range(len(analysis_data["Metric"])):
+        st.markdown(f"""
+            <tr>
+                <td>{analysis_data["Metric"][i]}</td>
+                <td>{analysis_data["Best Performance"][i]}</td>
+                <td>{analysis_data["Performance Gap"][i]}</td>
+                <td>{analysis_data["Key Differentiator"][i]}</td>
+            </tr>
+        """, unsafe_allow_html=True)
     
-    # 创建选项卡用于不同方案的权重调整
-    weight_tabs = st.tabs(["JARVIS Weights", "SHERLOCK Weights", "FLASH Weights"])
+    st.markdown("</table>", unsafe_allow_html=True)
     
-    for idx, tab in enumerate(weight_tabs):
-        with tab:
-            solution_name = ["JARVIS", "SHERLOCK", "FLASH"][idx]
-            st.markdown(f"#### {solution_name} Dimension Weights")
-            
-            # 核心维度
-            st.markdown("**Core Dimensions**")
-            core_col1, core_col2 = st.columns(2)
-            with core_col1:
-                accuracy_weight = st.slider(
-                    "Accuracy Weight", 0.0, 1.0, 0.3, 0.1,
-                    help="Measures the match between expected and actual outputs",
-                    key=f"{solution_name}_accuracy"
-                )
-                efficiency_weight = st.slider(
-                    "Efficiency Weight", 0.0, 1.0, 0.2, 0.1,
-                    help="Evaluates token usage, response time, and cost",
-                    key=f"{solution_name}_efficiency"
-                )
-            with core_col2:
-                logic_weight = st.slider(
-                    "Logic Weight", 0.0, 1.0, 0.3, 0.1,
-                    help="Assesses reasoning path and process clarity",
-                    key=f"{solution_name}_logic"
-                )
-                goal_weight = st.slider(
-                    "Goal Achievement Weight", 0.0, 1.0, 0.2, 0.1,
-                    help="Checks if all required tasks are completed",
-                    key=f"{solution_name}_goal"
-                )
-            
-            # 高级维度
-            st.markdown("**Advanced Dimensions**")
-            adv_col1, adv_col2 = st.columns(2)
-            with adv_col1:
-                stability_weight = st.slider(
-                    "Stability Weight", 0.0, 1.0, 0.1, 0.1,
-                    help="Tests robustness across different inputs",
-                    key=f"{solution_name}_stability"
-                )
-                explain_weight = st.slider(
-                    "Explainability Weight", 0.0, 1.0, 0.1, 0.1,
-                    help="Evaluates clarity of reasoning process",
-                    key=f"{solution_name}_explain"
-                )
-            with adv_col2:
-                creative_weight = st.slider(
-                    "Creativity Weight", 0.0, 1.0, 0.1, 0.1,
-                    help="Assesses flexibility and adaptability",
-                    key=f"{solution_name}_creative"
-                )
-                safety_weight = st.slider(
-                    "Safety Weight", 0.0, 1.0, 0.1, 0.1,
-                    help="Checks for bias and harmful content",
-                    key=f"{solution_name}_safety"
-                )
-            
-            # 重新生成按钮
-            if st.button(f"Regenerate {solution_name} Prompt", type="primary", key=f"regenerate_{solution_name}"):
-                # 版本号管理
-                if f'{solution_name}_version' not in st.session_state:
-                    st.session_state[f'{solution_name}_version'] = 1.0
-                else:
-                    st.session_state[f'{solution_name}_version'] += 0.1
-                
-                st.success(f"""
-                Prompt regenerated successfully!
-                New version: {st.session_state[f'{solution_name}_version']:.1f}
-                
-                Weight Configuration:
-                - Accuracy: {accuracy_weight}
-                - Efficiency: {efficiency_weight}
-                - Logic: {logic_weight}
-                - Goal Achievement: {goal_weight}
-                - Stability: {stability_weight}
-                - Explainability: {explain_weight}
-                - Creativity: {creative_weight}
-                - Safety: {safety_weight}
-                """)
+    # 添加见解总结
+    st.markdown("#### Key Insights")
+    st.markdown("""
+        - **JARVIS** excels in accuracy and goal achievement, making it ideal for critical tasks requiring high precision
+        - **FLASH** leads in efficiency, suitable for high-volume, time-sensitive operations
+        - **SHERLOCK** maintains balanced performance across all metrics, offering good all-round capability
+    """)
     
-    # 权重调整建议
-    with st.expander("Weight Adjustment Tips"):
-        st.markdown("""
-        **How to Adjust Weights:**
-        
-        1. **Task-Specific Focus:**
-           - Data Extraction: Prioritize accuracy and efficiency
-           - Creative Tasks: Increase creativity and stability weights
-           - Critical Applications: Emphasize safety and explainability
-        
-        2. **Use Case Considerations:**
-           - Production Environment: Higher weights for stability and efficiency
-           - Development Phase: Focus on accuracy and explainability
-           - User-Facing Applications: Balance all dimensions
-        
-        3. **Performance Optimization:**
-           - Identify bottlenecks in current results
-           - Adjust weights to focus on improvement areas
-           - Monitor impact on overall performance
-        """)
+    metric_col1, metric_col2, metric_col3 = st.columns(3)
