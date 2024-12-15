@@ -48,7 +48,6 @@ class PromptSolutionCrew():
 			role=self.agents_config['architect']['role'],
 			goal=self.agents_config['architect']['goal'],
 			backstory=self.agents_config['architect']['backstory'],
-			llm=self.agents_config['architect']['llm'],
 			verbose=True
 		)
 
@@ -59,7 +58,6 @@ class PromptSolutionCrew():
 			role=self.agents_config['prompt_engineer_1']['role'],
 			goal=self.agents_config['prompt_engineer_1']['goal'],
 			backstory=self.agents_config['prompt_engineer_1']['backstory'],
-			llm=self.agents_config['prompt_engineer_1']['llm'],
 			verbose=True
 		)
 
@@ -70,7 +68,6 @@ class PromptSolutionCrew():
 			role=self.agents_config['prompt_engineer_2']['role'],
 			goal=self.agents_config['prompt_engineer_2']['goal'],
 			backstory=self.agents_config['prompt_engineer_2']['backstory'],
-			llm=self.agents_config['prompt_engineer_2']['llm'],
 			verbose=True
 		)
 
@@ -81,7 +78,6 @@ class PromptSolutionCrew():
 			role=self.agents_config['prompt_engineer_3']['role'],
 			goal=self.agents_config['prompt_engineer_3']['goal'],
 			backstory=self.agents_config['prompt_engineer_3']['backstory'],
-			llm=self.agents_config['prompt_engineer_3']['llm'],
 			verbose=True
 		)
 
