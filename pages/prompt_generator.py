@@ -151,13 +151,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        if version == "Solution A":
-            default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction."""
-        elif version == "Solution B":
-            default_role = """You are an expert Data Validation Analyst specializing in product specifications and technical documentation. Your expertise lies in analyzing structured data formats, validating technical specifications against established standards, and ensuring data consistency across multiple product variants. You excel at identifying discrepancies and maintaining data integrity in complex technical datasets."""
-        else:
-            default_role = ""
-            
+        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ""
         st.text_area(
             "Define the role",
             value=default_role,
@@ -168,24 +162,13 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
-        if version == "Solution A":
-            default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
+        default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.
 
 Data
 Email Content:
 {Email}
 Attachments:
-{Attachments}"""
-        elif version == "Solution B":
-            default_task = """Your task is to analyze and validate technical specifications for iPhone models, ensuring consistency and accuracy across all feature comparisons. You will process the provided specification data and generate a structured comparison report highlighting key differences and potential inconsistencies.
-
-Input Data:
-{Specifications_JSON}
-Reference Standards:
-{Technical_Standards}"""
-        else:
-            default_task = ""
-            
+{Attachments}""" if version == "Solution A" else ""
         st.text_area(
             "Define the task",
             value=default_task,
@@ -196,8 +179,7 @@ Reference Standards:
         
         # Rules Section
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
-        if version == "Solution A":
-            default_rules = """General Rules
+        default_rules = """General Rules
 Accuracy First:
 - Extract only explicitly stated information.
 - Do not infer or generate information that is not directly present in the email or attachments.
@@ -214,36 +196,21 @@ Article Code Processing:
 - If multiple product codes exist, ensure they are presented as a comma-separated list.
 
 Output Format Consistency:
-- Follow the predefined JSON structure for outputs without deviation."""
-        elif version == "Solution B":
-            default_rules = """Data Validation Rules:
-1. Feature Consistency
-   - All feature names must match the official product documentation
-   - Feature values must be in standardized units
-   - Compare features across all product variants
+- Follow the predefined JSON structure for outputs without deviation.
 
-2. Technical Accuracy
-   - Validate specifications against official technical standards
-   - Ensure numerical values are within acceptable ranges
-   - Flag any deviations from expected specifications
+Advanced Constraints
+Reasoning for Ambiguities:
+- If multiple possible values exist for a field, justify the selected value in the Reasoning section.
 
-3. Version Control
-   - Track specification changes across product iterations
-   - Maintain history of specification updates
-   - Document reasoning for specification changes
+Contextual Priority:
+- Prioritize data found in the email body over data in attachments.
+- If duplicate information exists, retain the most recent and complete entry.
 
-4. Data Format Standards
-   - Use standardized measurement units
-   - Follow consistent naming conventions
-   - Maintain structured data hierarchy
+Time Zone Standardization:
+- Normalize all dates to the YYYY-MM-DD format.
 
-5. Comparison Requirements
-   - Generate feature-by-feature comparison matrices
-   - Highlight key differentiating features
-   - Document feature availability across models"""
-        else:
-            default_rules = ""
-            
+Error Logging:
+- Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ""
         st.text_area(
             "Define rules",
             value=default_rules,
@@ -254,8 +221,7 @@ Output Format Consistency:
         
         # Planning Section
         st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
-        if version == "Solution A":
-            default_planning = """To ensure accuracy and completeness, the task is divided into the following steps:
+        default_planning = """To ensure accuracy and completeness, the task is divided into the following steps:
 
 1. Identify Relevant Fields:
    - Extract required fields (order_number, buyer_email_address, etc.) from the email body.
@@ -268,32 +234,7 @@ Output Format Consistency:
    - Ensure all extracted fields meet the rules.
 
 4. Reasoning Generation:
-   - For ambiguous data points, document the logic behind decisions."""
-        elif version == "Solution B":
-            default_planning = """Specification Analysis Approach:
-
-1. Data Collection and Preprocessing
-   - Gather technical specifications from all sources
-   - Standardize data formats and units
-   - Create normalized comparison matrices
-
-2. Feature Analysis
-   - Compare features across product variants
-   - Identify key differentiators
-   - Document feature dependencies
-
-3. Validation Process
-   - Cross-reference with technical standards
-   - Verify measurement accuracy
-   - Check for specification consistency
-
-4. Report Generation
-   - Create structured comparison tables
-   - Generate feature availability matrices
-   - Document specification anomalies"""
-        else:
-            default_planning = ""
-            
+   - For ambiguous data points, document the logic behind decisions.""" if version == "Solution A" else ""
         st.text_area(
             "Define planning",
             value=default_planning,
@@ -304,24 +245,16 @@ Output Format Consistency:
         
         # Reasoning Section
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-        if version == "Solution A":
-            default_reasoning = """1. The buyer_email_address was validated to ensure it belongs to an individual and not a generic email.
+        default_reasoning = """1. The buyer_email_address was validated to ensure it belongs to an individual and not a generic email.
 2. The order_date was normalized to YYYY-MM-DD from the email's header section.
-3. Ambiguity in product codes was resolved by extracting only TechHeroes' product identifiers from the attachment and removing invalid characters."""
-        elif version == "Solution B":
-            default_reasoning = """1. Specification data was validated against official technical documentation to ensure accuracy.
-2. Feature comparisons were normalized to ensure consistent measurement units across all models.
-3. Version-specific features were clearly identified and documented.
-4. Technical standards compliance was verified for each specification.
-5. Feature dependencies were analyzed and documented.
-6. Measurement ranges were validated against acceptable tolerances.
-7. Specification changes were tracked and documented with justifications.
-8. Comparison matrices were generated with standardized formatting.
-9. Feature availability was verified across all product variants.
-10. Data hierarchy was maintained according to technical documentation standards."""
-        else:
-            default_reasoning = ""
-            
+3. Ambiguity in product codes was resolved by extracting only TechHeroes' product identifiers from the attachment and removing invalid characters.
+4. Missing delivery instructions were logged as "unknown" for manual follow-up.
+5. Duplicate entries for order_number were detected in the email and attachment, and the most recent version was retained.
+6. All extracted fields were cross-validated between the email body and attachments for consistency.
+7. Time zones were unified across all date fields.
+8. Errors in attachment parsing (e.g., corrupted files) were flagged for review.
+9. Special characters in product codes were removed as per the constraints.
+10. The final output format strictly adhered to the JSON structure.""" if version == "Solution A" else ""
         st.text_area(
             "Define reasoning",
             value=default_reasoning,
@@ -341,8 +274,7 @@ Output Format Consistency:
             help="Select the desired output format for the response"
         )
         
-        if version == "Solution A":
-            default_output = """{
+        default_output = """{
   "Reasoning": [
     "Reasoning statements documenting decision-making processes and resolving ambiguities."
   ],
@@ -350,55 +282,29 @@ Output Format Consistency:
     "buyer_company_name": "string",
     "buyer_person_name": "string",
     "buyer_email_address": "string"
-  }
-}"""
-        elif version == "Solution B":
-            default_output = """{
-  "specification_analysis": {
-    "model_comparison": {
-      "iPhone_16_Pro_Max": {
-        "camera_features": {
-          "night_mode": true,
-          "portrait_mode": true,
-          "macro_photography": true,
-          "resolution": "48MP"
-        },
-        "video_features": {
-          "4k_recording": {
-            "supported": true,
-            "max_fps": 60,
-            "formats": ["Dolby Vision", "ProRes"]
-          }
-        }
-      },
-      "iPhone_16_Pro": {
-        "camera_features": {
-          "night_mode": true,
-          "portrait_mode": true,
-          "macro_photography": true,
-          "resolution": "48MP"
-        }
-      },
-      "iPhone_16": {
-        "camera_features": {
-          "night_mode": true,
-          "portrait_mode": true,
-          "macro_photography": false,
-          "resolution": "12MP"
-        }
-      }
+  },
+  "Order": {
+    "order_number": "string",
+    "order_date": "YYYY-MM-DD",
+    "delivery_address_street": "string",
+    "delivery_address_city": "string",
+    "delivery_address_postal_code": "string",
+    "delivery_address_country": "string",
+    "delivery_additional_details": "string"
+  },
+  "Product": [
+    {
+      "product_1_position": 1,
+      "product_1_article_code": "string",
+      "product_1_quantity": "integer"
     },
-    "validation_results": {
-      "compliance_status": "PASSED",
-      "specification_accuracy": "100%",
-      "data_consistency": "VERIFIED",
-      "standards_conformity": "COMPLIANT"
+    {
+      "product_n_position": "integer",
+      "product_n_article_code": "string",
+      "product_n_quantity": "integer"
     }
-  }
-}"""
-        else:
-            default_output = ""
-            
+  ]
+}""" if version == "Solution A" else ""
         st.text_area(
             "Define output format",
             value=default_output,
