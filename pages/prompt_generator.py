@@ -159,6 +159,25 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Version info
         st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
+        # Solution Introduction
+        intro_text = """A comprehensive data extraction solution that prioritizes accuracy and completeness. 
+Features extensive validation rules, cross-reference checking, and detailed reasoning for each decision. 
+Best suited for complex documents where data quality and completeness are critical.""" if version == "Solution A" else (
+            """A validation-focused approach that emphasizes data quality and standardization. 
+Specializes in robust error detection, format validation, and correction suggestions. 
+Ideal for scenarios requiring strict data validation and standardized outputs.""" if version == "Solution B" else 
+            """A lightweight, speed-optimized solution for targeted data extraction. 
+Focuses on extracting only essential fields with minimal processing overhead. 
+Perfect for high-volume, time-sensitive scenarios where basic extraction is sufficient.""")
+        
+        st.markdown(f"""
+            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin: 12px 0;'>
+                <div style='font-size: 0.9em; color: #444; line-height: 1.5;'>
+                    {intro_text}
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
         # Prompt Structure
         st.markdown("<h4 style='margin-top: 20px;'>Prompt Structure</h4>", unsafe_allow_html=True)
         
