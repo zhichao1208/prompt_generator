@@ -1302,7 +1302,6 @@ with eval_tab2:
     
     st.plotly_chart(fig, use_container_width=True)
 
-
     
     # JARVIS Results
     with metric_col1:
@@ -1394,9 +1393,9 @@ with eval_tab2:
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "97%", "+3%", help="Click for detailed metrics")
-            if st.button("View Details", key="sherlock_efficiency"):
-                st.markdown("""
+            st.metric("Efficiency", "97%", "+3%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
                 <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
                     <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
                         <strong>Efficiency Breakdown</strong>
@@ -1414,7 +1413,7 @@ with eval_tab2:
                         <span>$0.035 <span style='color: #28a745'>(-$0.005)</span></span>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         with col4:
             st.metric("Logic Score", "96%", "+2%", help="Quality of reasoning process")
         
@@ -1463,9 +1462,9 @@ with eval_tab2:
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "99%", "+4%", help="Click for detailed metrics")
-            if st.button("View Details", key="flash_efficiency"):
-                st.markdown("""
+            st.metric("Efficiency", "99%", "+4%", help="Overall efficiency score")
+            # Efficiency Breakdown Box
+            st.markdown("""
                 <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
                     <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
                         <strong>Efficiency Breakdown</strong>
@@ -1483,7 +1482,7 @@ with eval_tab2:
                         <span>$0.025 <span style='color: #28a745'>(-$0.003)</span></span>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         with col4:
             st.metric("Logic Score", "93%", "+1%", help="Quality of reasoning process")
         
