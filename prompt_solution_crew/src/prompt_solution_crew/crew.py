@@ -1,51 +1,84 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from pathlib import Path
+import yaml
+from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
+from crewai.parsers import JsonOutputParser
 
-# If you want to run a snippet of code before or after the crew starts, 
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+class RequirementsAnalysis(BaseModel):
+	summary: str
+	constraints: List[str]
+	success_factors: List[str]
+	risks: List[Dict[str, str]]
+	context: Dict[str, str]
+
+class Strategy(BaseModel):
+	name: str
+	core_focus: str
+	priorities: List[str]
+	implementation: Dict[str, Any]
+	benefits: List[str]
+	trade_offs: List[str]
+	resources: Dict[str, Any]
+	risk_mitigation: List[str]
+	success_metrics: List[str]
+
+class StrategicApproaches(BaseModel):
+	strategies: List[Strategy]
 
 @CrewBase
 class PromptSolutionCrew():
 	"""PromptSolutionCrew crew"""
 
-	# Learn more about YAML configuration files here:
-	# Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-	# Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-	agents_config = 'config/agents.yaml'
-	tasks_config = 'config/tasks.yaml'
+	def __init__(self):
+		# 使用绝对路径
+		self.config_dir = Path(__file__).parent / "config"
+		
+		# 读取配置文件
+		with open(self.config_dir / 'agents.yaml', 'r') as f:
+			self.agents_config = yaml.safe_load(f)
+		with open(self.config_dir / 'tasks.yaml', 'r') as f:
+			self.tasks_config = yaml.safe_load(f)
 
-	# If you would like to add tools to your agents, you can learn more about it here:
-	# https://docs.crewai.com/concepts/agents#agent-tools
 	@agent
 	def architect(self) -> Agent:
+		"""Create an architect agent."""
 		return Agent(
-			config=self.agents_config['architect'],
+			role=self.agents_config['architect']['role'],
+			goal=self.agents_config['architect']['goal'],
+			backstory=self.agents_config['architect']['backstory'],
+			llm=self.agents_config['architect']['llm'],
 			verbose=True
 		)
 
 	@task
 	def analyze_requirements_task(self) -> Task:
+		"""Create an analyze requirements task."""
 		return Task(
-			config=self.tasks_config['analyze_requirements_task']
+			description=self.tasks_config['analyze_requirements_task']['description'],
+			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
+			agent=self.architect(),
+			output_parser=JsonOutputParser(pydantic_model=RequirementsAnalysis)
 		)
 
 	@task
 	def develop_strategies_task(self) -> Task:
+		"""Create a develop strategies task."""
 		return Task(
-			config=self.tasks_config['develop_strategies_task']
+			description=self.tasks_config['develop_strategies_task']['description'],
+			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
+			agent=self.architect(),
+			output_parser=JsonOutputParser(pydantic_model=StrategicApproaches),
+			context=[self.analyze_requirements_task()]
 		)
 
 	@crew
 	def crew(self) -> Crew:
 		"""Creates the PromptSolutionCrew crew"""
-		# To learn how to add knowledge sources to your crew, check out the documentation:
-		# https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
 		return Crew(
-			agents=self.agents, # Automatically created by the @agent decorator
-			tasks=self.tasks, # Automatically created by the @task decorator
+			agents=self.agents,
+			tasks=self.tasks,
 			process=Process.sequential,
-			verbose=True,
-			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+			verbose=True
 		)

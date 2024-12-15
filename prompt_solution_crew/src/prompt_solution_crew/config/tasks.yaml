@@ -19,31 +19,6 @@ analyze_requirements_task:
     5. Technical and business context
 
     Respond exactly in the following perfectly formatted JSON structure with no missing fields.
-    Example output:
-    {
-      "summary": "Extract order date, buyer name and email address from order PDF",
-      "constraints": [
-        "Must handle different PDF formats and structures",
-        "Must extract three specific fields: date, name, email",
-        "Must validate email format"
-      ],
-      "success_factors": [
-        "Accurate field extraction with >95% success rate",
-        "Proper validation of email format",
-        "Consistent date format conversion"
-      ],
-      "risks": [
-        {
-          "risk": "Inconsistent PDF formats leading to extraction errors",
-          "impact": "High - Could result in missing or incorrect data",
-          "mitigation": "Implement robust PDF parsing with format detection"
-        }
-      ],
-      "context": {
-        "technical": "System uses GPT-4 API with PDF processing capabilities",
-        "business": "Part of order processing automation, requires high accuracy"
-      }
-    }
   expected_output: >
     {
       "summary": "string // Comprehensive summary of all key requirements, must include all aspects from user input",
@@ -65,7 +40,7 @@ analyze_requirements_task:
         "business": "string // Comprehensive business context including stakeholder considerations"
       }
     }
-  output_json: RequirementsAnalysis
+  output_json: true
   agent: architect
   async_execution: false
 
@@ -99,57 +74,6 @@ develop_strategies_task:
     Make sure each strategy is fully detailed and actionable.
 
     Respond exactly in the following perfectly formatted JSON structure with no missing fields.
-    Example output:
-    {
-      "strategies": [
-        {
-          "name": "High-Accuracy Focus",
-          "core_focus": "Maximize extraction accuracy and validation",
-          "priorities": [
-            "Accuracy - Ensure 99.9% accurate field extraction",
-            "Robustness - Comprehensive PDF format handling",
-            "Explainability - Detailed extraction process tracking"
-          ],
-          "implementation": {
-            "approach": "Multi-stage validation pipeline with format detection",
-            "steps": [
-              "Implement PDF structure analysis",
-              "Add field pattern recognition",
-              "Integrate format validation",
-              "Set up error handling for edge cases"
-            ]
-          },
-          "benefits": [
-            "Highest possible accuracy in field extraction",
-            "Robust handling of different PDF formats",
-            "Clear audit trail for validation process"
-          ],
-          "trade_offs": [
-            "Higher processing time per document",
-            "Increased computational cost",
-            "More complex implementation"
-          ],
-          "resources": {
-            "required": [
-              "PDF processing library",
-              "Pattern matching system",
-              "Validation framework"
-            ],
-            "estimated_cost": "High - $0.05 per document processed"
-          },
-          "risk_mitigation": [
-            "Implement format detection",
-            "Set up comprehensive validation",
-            "Establish error handling"
-          ],
-          "success_metrics": [
-            "Field extraction accuracy > 99.9%",
-            "Format compatibility rate",
-            "Validation success rate"
-          ]
-        }
-      ]
-    }
   expected_output: >
     {
       "strategies": [
@@ -186,7 +110,7 @@ develop_strategies_task:
         }
       ]
     }
-  output_json: StrategicApproaches
+  output_json: true
   agent: architect
   context: [analyze_requirements_task]
   async_execution: false
