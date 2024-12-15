@@ -159,10 +159,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             </div>
         """, unsafe_allow_html=True)
         
-        # Version info
-        st.markdown("<div style='color: #666; margin-bottom: 10px;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
-        
-        # Solution Introduction
+        # Version info and Solution Introduction
         intro_text = """•Comprehensive Approach
 •Complete data validation and error handling
 •Resource Consumption: high""" if version == "Solution A" else (
@@ -174,19 +171,14 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 •Resource Consumption: low""")
         
         st.markdown("""
-<div style='color: #666; padding-bottom: 4px;'>Version 1.0 (2024-12-14)</div>
+<div style='margin-top: 0; color: #666; padding-bottom: 4px;'>Version 1.0 (2024-12-14)</div>
 <div style='
     background-color: #f8f9fa;
     padding: 12px;
     border-radius: 4px;
-    margin: 0;             # 移除所有外边距
+    margin: 0;
     border: 1px solid #e9ecef;
 '>
-    <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
-        {intro_text}
-    </div>
-</div>
-""", unsafe_allow_html=True)
         
         # Prompt Structure
         st.markdown("<h4 style='margin-top: 20px;'>Prompt Structure</h4>", unsafe_allow_html=True)
