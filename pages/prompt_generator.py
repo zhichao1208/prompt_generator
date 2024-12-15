@@ -611,149 +611,134 @@ Quality Requirements:
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             
-            # Model Selection
-            models_to_evaluate = st.multiselect(
-                "Select Models to Evaluate",
-                options=[
-                    "GPT-4 Turbo",
-                    "GPT-4",
-                    "Claude 3 Opus",
-                    "Claude 3 Sonnet",
-                    "Claude 3 Haiku",
-                    "GPT-3.5 Turbo",
-                    "Gemini Pro",
-                    "Mixtral",
-                    "LLaMA 2"
-                ],
-                default=["GPT-4 Turbo", "Claude 3 Opus"],
-                key=f"{version}_model_selection",
-                help="Select the models you want to evaluate for this prompt"
-            )
+            # Get user's model preference (use the first selected GPT model)
+            selected_model = None
+            for model, versions in model_options.items():
+                if model == "GPT" and st.session_state.get(f"checkbox_{model}", False):
+                    selected_versions = st.session_state.get(f"multiselect_{model}", [])
+                    if selected_versions:
+                        selected_model = selected_versions[0]
+                        break
             
-            # Get user's model preferences from sidebar
-            user_models = model_preference if 'model_preference' in locals() else []
+            if not selected_model:
+                selected_model = "gpt-4-turbo"  # 默认模型
             
-            # Display model status labels
+            # Display selected model status
             st.markdown("##### Model Status")
-            for model in models_to_evaluate:
-                status_color = "#28a745" if model in user_models else "#dc3545"  # Green for match, Red for mismatch
-                status_text = "✓ Matches User Preference" if model in user_models else "× Not in User Preference"
-                st.markdown(f"""
-                    <div style='display: flex; align-items: center; gap: 8px; margin-bottom: 4px;'>
-                        <div style='color: {status_color};'>●</div>
-                        <div style='font-weight: 500;'>{model}</div>
-                        <div style='color: {status_color}; font-size: 0.9em;'>({status_text})</div>
-                    </div>
-                """, unsafe_allow_html=True)
+            st.markdown(f"""
+                <div style='display: flex; align-items: center; gap: 8px; margin-bottom: 4px;'>
+                    <div style='color: #28a745;'>●</div>
+                    <div style='font-weight: 500;'>{selected_model}</div>
+                    <div style='color: #28a745; font-size: 0.9em;'>(User Preferred Model)</div>
+                </div>
+            """, unsafe_allow_html=True)
             
             # Model Selection Rationale
             st.markdown("##### Selection Rationale")
             default_rationale = """This prompt configuration is optimized for data extraction tasks with the following considerations:
 
-1. Model Capabilities:
-   - GPT-4 Turbo: Excellent at handling complex data structures and validation rules
-   - Claude 3 Opus: Strong in natural language understanding and format consistency
+1. Model Selection:
+   - Using GPT-4 Turbo as the primary model for its superior performance in structured data extraction
+   - Optimized for accuracy and consistency in field identification
 
-2. Task Requirements:
-   - Structured data extraction from unstructured text
-   - Multiple format handling (email, PDF, attachments)
-   - Complex validation rules and error handling
+2. Task Alignment:
+   - Perfect match for PDF parsing and data normalization
+   - Strong capability in handling multiple date formats
+   - Excellent at email validation and formatting
 
-3. Performance Factors:
-   - Response accuracy and consistency
-   - Processing speed for real-time requirements
-   - Cost-effectiveness for production deployment""" if version == "Solution A" else ("""This prompt configuration is optimized for data validation tasks with the following considerations:
+3. Performance Benefits:
+   - High accuracy in field extraction
+   - Fast processing speed
+   - Cost-effective for production use""" if version == "Solution A" else ("""This prompt configuration is optimized for validation tasks with the following considerations:
 
-1. Model Capabilities:
-   - GPT-4 Turbo: Excellent at pattern recognition and validation
-   - Claude 3 Opus: Strong in format standardization and error detection
+1. Model Selection:
+   - Using GPT-4 Turbo for its robust validation capabilities
+   - Excellent at pattern recognition and error detection
 
-2. Task Requirements:
-   - Field-level validation and standardization
-   - Format consistency across documents
-   - Error detection and correction
+2. Task Alignment:
+   - Specialized in data validation and standardization
+   - Strong in identifying format inconsistencies
+   - Built-in error correction suggestions
 
-3. Performance Factors:
-   - Validation accuracy and reliability
-   - Real-time processing capability
-   - Scalability for high-volume processing""" if version == "Solution B" else """This prompt configuration is optimized for minimal data extraction with the following considerations:
+3. Performance Benefits:
+   - High validation accuracy
+   - Real-time processing
+   - Efficient error handling""" if version == "Solution B" else """This prompt configuration is optimized for minimal extraction with the following considerations:
 
-1. Model Capabilities:
-   - GPT-4 Turbo: Efficient at targeted data extraction
-   - Claude 3 Opus: Precise in specific field identification
+1. Model Selection:
+   - Using GPT-4 Turbo for its precise extraction capabilities
+   - Focused on efficiency and accuracy
 
-2. Task Requirements:
-   - Focused extraction of key fields
-   - Simple format standardization
-   - Basic validation checks
+2. Task Alignment:
+   - Specialized in key field extraction
+   - Minimal but essential validation
+   - Streamlined processing
 
-3. Performance Factors:
-   - Speed and efficiency
-   - Resource optimization
-   - Cost minimization""")
+3. Performance Benefits:
+   - Quick response time
+   - Resource efficient
+   - Cost optimized""")
             
             st.text_area(
                 "Model Selection Reasoning",
                 value=default_rationale,
                 height=200,
                 key=f"{version}_model_rationale",
-                help="Explanation of why these models were selected for this prompt"
+                help="Explanation of why this model was selected for this prompt"
             )
             
-            # Model-specific settings
-            if models_to_evaluate:
-                st.markdown("##### Model Settings")
-                for model in models_to_evaluate:
-                    st.markdown(f"**{model}**")
-                    cols = st.columns(2)
-                    
-                    with cols[0]:
-                        # Temperature
-                        st.slider(
-                            "Temperature",
-                            min_value=0.0,
-                            max_value=1.0,
-                            value=0.7,
-                            step=0.1,
-                            key=f"{version}_{model}_temp",
-                            help="Controls randomness in the output"
-                        )
-                        
-                        # Top P
-                        st.slider(
-                            "Top P",
-                            min_value=0.0,
-                            max_value=1.0,
-                            value=0.9,
-                            step=0.1,
-                            key=f"{version}_{model}_top_p",
-                            help="Controls diversity via nucleus sampling"
-                        )
-                    
-                    with cols[1]:
-                        # Max tokens
-                        st.number_input(
-                            "Max Tokens",
-                            min_value=1,
-                            max_value=4096,
-                            value=2048,
-                            step=1,
-                            key=f"{version}_{model}_max_tokens",
-                            help="Maximum number of tokens to generate"
-                        )
-                        
-                        # Frequency Penalty
-                        st.slider(
-                            "Frequency Penalty",
-                            min_value=-2.0,
-                            max_value=2.0,
-                            value=0.0,
-                            step=0.1,
-                            key=f"{version}_{model}_freq_penalty",
-                            help="Adjusts likelihood based on frequency"
-                        )
-                    
-                    st.markdown("---")
+            # Model Settings
+            st.markdown("##### Model Settings")
+            st.markdown(f"**{selected_model}**")
+            cols = st.columns(2)
+            
+            with cols[0]:
+                # Temperature
+                st.slider(
+                    "Temperature",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.7,
+                    step=0.1,
+                    key=f"{version}_temp",
+                    help="Controls randomness in the output"
+                )
+                
+                # Top P
+                st.slider(
+                    "Top P",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.9,
+                    step=0.1,
+                    key=f"{version}_top_p",
+                    help="Controls diversity via nucleus sampling"
+                )
+            
+            with cols[1]:
+                # Max tokens
+                st.number_input(
+                    "Max Tokens",
+                    min_value=1,
+                    max_value=4096,
+                    value=2048,
+                    step=1,
+                    key=f"{version}_max_tokens",
+                    help="Maximum number of tokens to generate"
+                )
+                
+                # Frequency Penalty
+                st.slider(
+                    "Frequency Penalty",
+                    min_value=-2.0,
+                    max_value=2.0,
+                    value=0.0,
+                    step=0.1,
+                    key=f"{version}_freq_penalty",
+                    help="Adjusts likelihood based on frequency"
+                )
+            
+            st.markdown("---")
             
             # Dynamic Prompt Optimization
             st.markdown("<div class='section-label'>Dynamic Prompt Optimization</div>", unsafe_allow_html=True)
