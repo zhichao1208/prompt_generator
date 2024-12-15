@@ -7,7 +7,7 @@ architect:
     You excel at understanding user needs and determining which approaches will provide the most value.
   tools: []
 
-engineer:
+prompt_engineer:
   role: "Prompt Engineer - Direction 1"
   goal: "Optimize prompt based on the first strategic direction from the architect"
   backstory: >
