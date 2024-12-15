@@ -160,15 +160,18 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
         # Solution Introduction
-        intro_text = """• Comprehensive Approach
-• Complete data validation and error handling
-• Resource Consumption: high""" if version == "Solution A" else (
-            """• Validation Focus
-• Strong error detection and correction
-• Resource Consumption: medium""" if version == "Solution B" else 
-            """• Lightweight Design
-• Fast processing speed
-• Resource Consumption: low""")
+        intro_text = """[JARVIS - Your All-Seeing Assistant]
+•Comprehensive Approach
+•Complete data validation and error handling
+•Resource Consumption: high""" if version == "Solution A" else (
+            """[SHERLOCK - The Meticulous Detective]
+•Validation Focus
+•Strong error detection and correction
+•Resource Consumption: medium""" if version == "Solution B" else 
+            """[FLASH - The Speed Force]
+•Lightweight Design
+•Fast processing speed
+•Resource Consumption: low""")
         
         st.markdown(f"""
             <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin: 12px 0;'>
