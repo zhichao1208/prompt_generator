@@ -4,7 +4,6 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
-from crewai.parsers import JsonOutputParser
 
 class RequirementsAnalysis(BaseModel):
 	summary: str
@@ -58,8 +57,7 @@ class PromptSolutionCrew():
 		return Task(
 			description=self.tasks_config['analyze_requirements_task']['description'],
 			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
-			agent=self.architect(),
-			output_parser=JsonOutputParser(pydantic_model=RequirementsAnalysis)
+			agent=self.architect()
 		)
 
 	@task
@@ -69,7 +67,6 @@ class PromptSolutionCrew():
 			description=self.tasks_config['develop_strategies_task']['description'],
 			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
 			agent=self.architect(),
-			output_parser=JsonOutputParser(pydantic_model=StrategicApproaches),
 			context=[self.analyze_requirements_task()]
 		)
 
