@@ -15,6 +15,7 @@ with st.sidebar:
     st.subheader("Task Description")
     task_description = st.text_area(
         "Task Description",
+        value="Extract order date, buyer name and email address from my order pdf",
         placeholder="Enter task description, e.g., 'Extract date and buyer email from order PDF', or input your prompt for optimization.",
         help="Describe the specific task you need to complete"
     )
@@ -24,6 +25,7 @@ with st.sidebar:
     task_type = st.radio(
         "Select Task Type",
         options=["Recommended", "Data Extraction", "Decision Support", "Content Generation", "Data Analysis"],
+        index=1,  # 选择 "Data Extraction"
         help="Select task type, the system will optimize generation strategy accordingly"
     )
     
@@ -31,17 +33,22 @@ with st.sidebar:
     st.subheader("Language Model")
     model_options = {
         "Recommended": ["Recommended"],
-        "Claude": ["claude-3-5-sonnet-202410", "claude-3-opus", "claude-3.5-haiku", "claude-3.5-sonnet"],
-        "GPT": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo-2024-04-09", "gpt-4o", "gpt-4o-mini"],
-        "Other": ["cursor-small", "gemini-exp-1206", "o1-mini", "o1-preview"]
+        "Claude": ["claude-3-opus", "claude-3-sonnet", "claude-3-haiku"],
+        "GPT": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"],
+        "Other": ["gemini-pro", "mixtral", "llama-2"]
     }
     
     model_preference = []
     for model, versions in model_options.items():
-        if st.checkbox(model, value=model=="Recommended"):
-            if model == "Recommended":
+        if model == "Recommended":
+            if st.checkbox(model, value=True):
                 model_preference.extend(["Recommended"])
-            else:
+        elif model == "GPT":
+            if st.checkbox(model, value=True):
+                selected_versions = st.multiselect(f"Select {model} versions", versions, default=["gpt-4-turbo"])
+                model_preference.extend(selected_versions)
+        else:
+            if st.checkbox(model):
                 selected_versions = st.multiselect(f"Select {model} versions", versions)
                 model_preference.extend(selected_versions)
     
@@ -50,6 +57,7 @@ with st.sidebar:
     tone = st.radio(
         "Communication Tone",
         options=["Professional", "Friendly", "Formal", "Casual"],
+        index=0,  # 选择 "Professional"
         help="Choose the tone style for output content"
     )
     
@@ -63,7 +71,12 @@ with st.sidebar:
     with st.expander("Data Input (Optional)"):
         data_input = st.text_area(
             "Sample Data",
-            placeholder='{\n  "order_date": "2024-12-15",\n  "buyer_name": "John Doe",\n  "buyer_email": "john.doe@example.com"\n}',
+            value='''Order Details
+Date: 2024-03-20
+Customer Information:
+Name: John Smith
+Email: john.smith@example.com
+Order Number: ORD-2024-001''',
             help="Paste or upload related data (supports JSON or CSV)"
         )
     
