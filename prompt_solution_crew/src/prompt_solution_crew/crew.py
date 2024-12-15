@@ -38,18 +38,20 @@ class BaseCrew():
 		# 获取模型名称并添加提供商前缀
 		model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
 		
-		# 根据模型名称添加相应的提供商前缀
-		if model_name.startswith('gpt-'):
-			self.model_name = f"openai/{model_name}"
-		elif model_name.startswith('claude-'):
-			self.model_name = f"anthropic/{model_name}"
-		elif model_name.startswith('gemini-'):
-			self.model_name = f"google/{model_name}"
-		elif model_name.startswith('o1-'):
-			self.model_name = f"openai/{model_name}"
-		else:
-			# 默认使用 OpenAI
-			self.model_name = f"openai/{model_name}"
+		# 模型名称映射
+		model_mapping = {
+			'gpt-4-turbo': 'gpt-4-1106-preview',  # gpt-4-turbo 的实际标识符
+			'gpt-4': 'gpt-4',
+			'gpt-3.5-turbo': 'gpt-3.5-turbo',
+			'o1-preview': 'gpt-4-1106-preview'  # o1-preview 映射到 gpt-4-turbo
+		}
+		
+		# 如果模型名称在映射中，使用映射后的名称
+		if model_name in model_mapping:
+			model_name = model_mapping[model_name]
+			
+		# 添加提供商前缀
+		self.model_name = f"openai/{model_name}"
 
 	def _format_task_description(self, task_name: str, inputs: dict, direction: OptimizationDirection = None) -> str:
 		"""Format task description with all required variables."""
