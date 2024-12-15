@@ -1240,6 +1240,70 @@ with eval_tab2:
     st.markdown("### Evaluation Results")
     metric_col1, metric_col2, metric_col3 = st.columns(3)
     
+    # 创建核心指标对比可视化
+    st.markdown("### Core Metrics Comparison")
+    
+    # 准备数据
+    metrics_data = {
+        "JARVIS": {
+            "Accuracy": 98,
+            "Goal Achievement": 100,
+            "Efficiency": 95,
+            "Logic Score": 97
+        },
+        "SHERLOCK": {
+            "Accuracy": 95,
+            "Goal Achievement": 95,
+            "Efficiency": 93,
+            "Logic Score": 93
+        },
+        "FLASH": {
+            "Accuracy": 92,
+            "Goal Achievement": 90,
+            "Efficiency": 98,
+            "Logic Score": 90
+        }
+    }
+    
+    # 使用Plotly创建雷达图
+    import plotly.graph_objects as go
+    
+    categories = list(metrics_data["JARVIS"].keys())
+    
+    fig = go.Figure()
+    
+    colors = {"JARVIS": "#1f77b4", "SHERLOCK": "#ff7f0e", "FLASH": "#2ca02c"}
+    
+    for solution in metrics_data:
+        values = list(metrics_data[solution].values())
+        # 添加首个值到末尾以闭合图形
+        values.append(values[0])
+        
+        fig.add_trace(go.Scatterpolar(
+            r=values,
+            theta=categories + [categories[0]],
+            name=solution,
+            line=dict(color=colors[solution]),
+            fill='toself',
+            opacity=0.4
+        ))
+    
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100]
+            )
+        ),
+        showlegend=True,
+        height=400,
+        margin=dict(l=80, r=80, t=20, b=20)
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    
     # JARVIS Results
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
