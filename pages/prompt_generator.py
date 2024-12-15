@@ -144,10 +144,8 @@ Order Number: ORD-2024-001''',
                 st.button("➖ Remove Example", on_click=remove_example)
     
     # Action Buttons
-    col1, col2 = st.columns(2)
+    col1 = st.columns(1)
     with col1:
-        st.empty()  # 保留空间以保持布局平衡
-    with col2:
         generate_button = st.button("Generate Prompt", type="primary")
         if generate_button:
             try:
