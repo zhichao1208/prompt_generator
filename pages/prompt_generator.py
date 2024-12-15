@@ -164,7 +164,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ("""You are a Data Validation Expert specializing in PDF document analysis and structured information extraction. Your focus is on maintaining data accuracy, implementing robust validation rules, and ensuring data consistency across different document formats. You excel at pattern recognition and data standardization.""" if version == "Solution B" else "")
+        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ("""You are a Data Validation Expert specializing in PDF document analysis and structured information extraction. Your focus is on maintaining data accuracy, implementing robust validation rules, and ensuring data consistency across different document formats. You excel at pattern recognition and data standardization.""" if version == "Solution B" else """You are a Focused Data Parser with expertise in minimal, targeted information extraction. Your specialty lies in quickly identifying and extracting specific data points from documents while maintaining high accuracy. You excel at efficient processing and streamlined output generation.""")
         st.text_area(
             "Define the role",
             value=default_role,
@@ -184,7 +184,16 @@ You will:
 - Scan the PDF for these specific data points
 - Apply validation rules to each field
 - Standardize the format of extracted information
-- Report any validation issues or missing data""" if version == "Solution B" else "")
+- Report any validation issues or missing data""" if version == "Solution B" else """Your task is to perform targeted extraction of three essential fields from PDF documents:
+1. Order date
+2. Buyer name
+3. Email address
+
+Focus Areas:
+- Direct field extraction without additional validation
+- Quick identification of target information
+- Simple format standardization
+- Minimal processing overhead""")
         st.text_area(
             "Define the task",
             value=default_task,
@@ -250,7 +259,26 @@ Error Logging:
 5. Error Handling
    - Log all validation failures
    - Provide specific error messages
-   - Suggest possible corrections""" if version == "Solution B" else "")
+   - Suggest possible corrections""" if version == "Solution B" else """Essential Rules:
+1. Extraction Focus
+   - Extract only the three required fields
+   - Skip all other information
+   - No complex validation required
+
+2. Basic Formatting
+   - Date: Convert to YYYY-MM-DD
+   - Name: Keep original format
+   - Email: Convert to lowercase
+
+3. Processing Rules
+   - Single-pass extraction only
+   - No cross-validation required
+   - Skip ambiguous data
+
+4. Output Requirements
+   - Minimal JSON structure
+   - No additional metadata
+   - Empty string for missing fields""")
         st.text_area(
             "Define rules",
             value=default_rules,
@@ -307,7 +335,25 @@ Technical Setup:
 Quality Requirements:
 - 99.9% accuracy target
 - Real-time validation
-- Automated error reporting""" if version == "Solution B" else "")
+- Automated error reporting""" if version == "Solution B" else """Processing Setup:
+- Basic PDF text extraction
+- Single-thread processing
+- Minimal memory usage
+
+Current Workflow:
+- Direct field extraction
+- No preprocessing required
+- Simple output generation
+
+Technical Environment:
+- Basic text parser
+- Minimal dependencies
+- Lightweight processing
+
+Performance Focus:
+- Speed over complexity
+- Resource efficiency
+- Minimal overhead""")
 
         # Display context with user input override
         display_context = user_context if user_context else default_context
@@ -597,7 +643,13 @@ Quality Requirements:
       "suggestion": "correction_suggestion"
     }
   ]
-}""" if version == "Solution B" else "")
+}""" if version == "Solution B" else """{
+  "extracted_data": {
+    "date": "YYYY-MM-DD",
+    "name": "string",
+    "email": "string"
+  }
+}""")
         st.text_area(
             "Define output format",
             value=default_output,
