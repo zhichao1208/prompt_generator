@@ -151,12 +151,17 @@ Order Number: ORD-2024-001''',
         generate_button = st.button("Generate Prompt", type="primary")
         if generate_button:
             try:
-                # 创���状态容器
+                # 创建状态容器
                 status_container = st.empty()
                 result_container = st.empty()
                 
                 # 显示初始状态
                 status_container.info("正在初始化 PromptSolutionCrew...")
+                
+                # 获取配置文件路径
+                config_dir = project_root / "prompt_solution_crew" / "src" / "prompt_solution_crew" / "config"
+                st.write(f"配置文件目录: {config_dir}")
+                st.write(f"配置文件是否存在: {(config_dir / 'agents.yaml').exists()} (agents.yaml), {(config_dir / 'tasks.yaml').exists()} (tasks.yaml)")
                 
                 # 创建 PromptSolutionCrew 实例
                 crew = PromptSolutionCrew()
@@ -166,19 +171,27 @@ Order Number: ORD-2024-001''',
                 
                 # 使用 spinner 显示生成过程
                 with st.spinner('正在生成...'):
-                    results = crew.kickoff()
-                    
-                    # 更新状态
-                    status_container.success("✅ 提示词生成成功!")
-                    
-                    # 显示结果
-                    if results:
-                        result_container.json(results)
-                    else:
-                        result_container.info("生成完成，请查看上方结果。")
+                    try:
+                        results = crew.kickoff()
+                        st.write("Crew kickoff 完成")
+                        
+                        # 更新状态
+                        status_container.success("✅ 提示词生成成功!")
+                        
+                        # 显示结果
+                        if results:
+                            result_container.json(results)
+                        else:
+                            result_container.info("生成完成，请查看上方结果。")
+                    except Exception as e:
+                        st.error(f"Crew kickoff 过程中出现错误: {str(e)}")
+                        st.error("详细错误信息:")
+                        st.exception(e)
                         
             except Exception as e:
-                st.error(f"生成过程中出现错误: {str(e)}")
+                st.error(f"初始化过程中出现错误: {str(e)}")
+                st.error("详细错误信息:")
+                st.exception(e)
                 st.error("请检查配置并重试")
 
 # Main Content Area
