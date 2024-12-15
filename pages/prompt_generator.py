@@ -2,12 +2,13 @@ import streamlit as st
 import sys
 import os
 from pathlib import Path
+import traceback
 
 # 添加 prompt_solution_crew 到 Python 路径
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
-from prompt_solution_crew.crew import PromptSolutionCrew
+from prompt_solution_crew.crew import run_optimization_process
 
 # 设置 OpenAI API 密钥（从 Streamlit secrets 获取）
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -152,7 +153,7 @@ Order Number: ORD-2024-001''',
             result_container = st.empty()
             
             # 显示初始状态
-            status_container.info("正在初始化 PromptSolutionCrew...")
+            status_container.info("正在初始化优化流程...")
             
             # 从Task Configuration收集用户设置
             inputs = {
@@ -177,24 +178,48 @@ Order Number: ORD-2024-001''',
             inputs['examples'] = examples
             
             # 更新状态
-            status_container.info("开始生成提示词...")
+            status_container.info("架构师正在分析需求...")
             
             # 使用 spinner 显示生成过程
-            with st.spinner('正在生成...'):
+            with st.spinner('正在生成优化方案...'):
                 try:
-                    # 创建 PromptSolutionCrew 实例并运行
-                    crew_instance = PromptSolutionCrew()
-                    crew = crew_instance.crew()
-                    results = crew.kickoff(inputs=inputs)
+                    # 运行优化流程
+                    results = run_optimization_process(inputs)
                     
                     # 更新状态
-                    status_container.success("✅ 提示词生成成功!")
+                    status_container.success("✅ 提示词优化完成!")
                     
                     # 显示结果
                     if results:
-                        result_container.json(results)
+                        # 显示架构师的分析结果
+                        st.write("### 架构师分析完成，生成了三个优化方向")
+                        
+                        for i, result in enumerate(results, 1):
+                            st.write(f"### 优化方向 {i} 的提示词结构")
+                            
+                            # 使用 expander 来组织内容
+                            with st.expander("查看详细结构", expanded=True):
+                                st.write("#### 角色定义")
+                                st.json(result.role)
+                                
+                                st.write("#### 任务定义")
+                                st.json(result.task)
+                                
+                                st.write("#### 规则定义")
+                                st.json(result.rules)
+                                
+                                st.write("#### 方法选择")
+                                st.json(result.methods)
+                                
+                                st.write("#### 优化说明")
+                                st.write(result.explanation)
+                                
+                                st.write("#### 使用指南")
+                                st.write("\n".join(f"- {guideline}" for guideline in result.guidelines))
+                            
+                            st.write("---")
                     else:
-                        result_container.info("生成完成，请查看上方结果。")
+                        result_container.warning("未能生成优化方案，请检查输入并重试。")
                         
                 except Exception as e:
                     st.error(f"生成过程中出现错误: {str(e)}")
@@ -224,7 +249,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                     "FLASH"}</h3>
                 <div style='display: flex; gap: 8px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>📥 </div>
+                    <div class='icon-button'>��� </div>
                     <div class='icon-button'>🔍 </div>
                 </div>
             </div>
@@ -1750,3 +1775,53 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+def generate_prompt():
+    if st.session_state.get('generating', False):
+        return
+
+    st.session_state['generating'] = True
+    
+    try:
+        inputs = {
+            'task_description': st.session_state.get('task_description', ''),
+            'task_type': st.session_state.get('task_type', ''),
+            'model_preference': st.session_state.get('model_preference', ''),
+            'tone': st.session_state.get('tone', ''),
+            'context': st.session_state.get('context', ''),
+            'data_input': st.session_state.get('data_input', ''),
+            'examples': st.session_state.get('examples', '')
+        }
+
+        # 运行优化流程
+        results = run_optimization_process(inputs)
+        
+        # 显示结果
+        st.write("### 架构师分析完成，生成了三个优化方向")
+        
+        for i, result in enumerate(results, 1):
+            st.write(f"### 优化方向 {i} 的提示词结构")
+            st.write("#### 角色定义")
+            st.json(result.role)
+            
+            st.write("#### 任务定义")
+            st.json(result.task)
+            
+            st.write("#### 规则定义")
+            st.json(result.rules)
+            
+            st.write("#### 方法选择")
+            st.json(result.methods)
+            
+            st.write("#### 优化说明")
+            st.write(result.explanation)
+            
+            st.write("#### 使用指南")
+            st.write("\n".join(f"- {guideline}" for guideline in result.guidelines))
+            
+            st.write("---")
+
+    except Exception as e:
+        st.error(f"生成过程中出现错误: {str(e)}\n\n详细错误信息:\n\n{traceback.format_exc()}")
+    finally:
+        st.session_state['generating'] = False

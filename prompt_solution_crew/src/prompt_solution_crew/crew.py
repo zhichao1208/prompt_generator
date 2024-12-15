@@ -6,36 +6,30 @@ from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import json
 
-class RequirementsAnalysis(BaseModel):
-	summary: str
-	constraints: List[str]
-	success_factors: List[str]
-	risks: List[Dict[str, str]]
-	context: Dict[str, str]
-
-class Strategy(BaseModel):
-	name: str
-	core_focus: str
-	priorities: List[str]
-	implementation: Dict[str, Any]
+class OptimizationDirection(BaseModel):
+	focus: str
+	relevance: str
 	benefits: List[str]
-	trade_offs: List[str]
-	resources: Dict[str, Any]
-	risk_mitigation: List[str]
-	success_metrics: List[str]
+	implementation: Dict[str, Any]
 
-class StrategicApproaches(BaseModel):
-	strategies: List[Strategy]
+class ArchitectOutput(BaseModel):
+	optimization_directions: List[OptimizationDirection]
+
+class PromptStructure(BaseModel):
+	role: Dict[str, Any]
+	task: Dict[str, Any]
+	rules: Dict[str, Any]
+	methods: Dict[str, str]
+	explanation: str
+	guidelines: List[str]
 
 @CrewBase
-class PromptSolutionCrew():
-	"""PromptSolutionCrew crew"""
+class ArchitectCrew():
+	"""Architect crew for analyzing requirements"""
 
 	def __init__(self):
-		# 使用绝对路径
 		self.config_dir = Path(__file__).parent / "config"
 		
-		# 读取配置文件
 		with open(self.config_dir / 'agents.yaml', 'r') as f:
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
@@ -51,72 +45,12 @@ class PromptSolutionCrew():
 			verbose=True
 		)
 
-	@agent
-	def prompt_engineer_1(self) -> Agent:
-		"""Create first prompt engineer agent."""
-		return Agent(
-			role=self.agents_config['prompt_engineer_1']['role'],
-			goal=self.agents_config['prompt_engineer_1']['goal'],
-			backstory=self.agents_config['prompt_engineer_1']['backstory'],
-			verbose=True
-		)
-
-	@agent
-	def prompt_engineer_2(self) -> Agent:
-		"""Create second prompt engineer agent."""
-		return Agent(
-			role=self.agents_config['prompt_engineer_2']['role'],
-			goal=self.agents_config['prompt_engineer_2']['goal'],
-			backstory=self.agents_config['prompt_engineer_2']['backstory'],
-			verbose=True
-		)
-
-	@agent
-	def prompt_engineer_3(self) -> Agent:
-		"""Create third prompt engineer agent."""
-		return Agent(
-			role=self.agents_config['prompt_engineer_3']['role'],
-			goal=self.agents_config['prompt_engineer_3']['goal'],
-			backstory=self.agents_config['prompt_engineer_3']['backstory'],
-			verbose=True
-		)
-
-	@task
-	def analyze_requirements_task(self, **inputs) -> Task:
-		"""Create an analyze requirements task."""
-		description = self._format_task_description('analyze_requirements_task', inputs)
-		return Task(
-			description=description,
-			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
-			agent=self.architect()
-		)
-
-	def _get_direction_from_output(self, output: str, index: int) -> str:
-		"""Extract a specific direction from the architect's output."""
-		try:
-			output_dict = json.loads(output)
-			return output_dict["optimization_directions"][index]
-		except (json.JSONDecodeError, KeyError, IndexError) as e:
-			print(f"Error extracting direction {index + 1}: {e}")
-			return f"Error extracting direction {index + 1}"
-
-	def _format_task_description(self, task_name: str, inputs: dict, direction: str = None) -> str:
+	def _format_task_description(self, task_name: str, inputs: dict) -> str:
 		"""Format task description with all required variables."""
 		description = self.tasks_config[task_name]['description']
 		
-		# Create a copy of inputs to avoid modifying the original
 		format_vars = inputs.copy() if inputs else {}
 		
-		# Add direction if provided
-		if direction is not None:
-			if "direction_1" in description:
-				format_vars["direction_1"] = direction
-			elif "direction_2" in description:
-				format_vars["direction_2"] = direction
-			elif "direction_3" in description:
-				format_vars["direction_3"] = direction
-		
-		# Add default values for missing required fields
 		required_fields = [
 			'task_description', 'task_type', 'model_preference',
 			'tone', 'context', 'data_input', 'examples'
@@ -132,63 +66,112 @@ class PromptSolutionCrew():
 			return description
 
 	@task
-	def optimize_prompt_direction_1(self, architect_output: str = "", **inputs) -> Task:
-		"""Create task for first optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 0) if architect_output else None
-		description = self._format_task_description('optimize_prompt_direction_1', inputs, direction)
+	def analyze_requirements_task(self, **inputs) -> Task:
+		"""Create an analyze requirements task."""
+		description = self._format_task_description('analyze_requirements_task', inputs)
 		return Task(
 			description=description,
-			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
-			agent=self.prompt_engineer_1(),
-			context=[self.analyze_requirements_task(**inputs)]
-		)
-
-	@task
-	def optimize_prompt_direction_2(self, architect_output: str = "", **inputs) -> Task:
-		"""Create task for second optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 1) if architect_output else None
-		description = self._format_task_description('optimize_prompt_direction_2', inputs, direction)
-		return Task(
-			description=description,
-			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
-			agent=self.prompt_engineer_2(),
-			context=[self.analyze_requirements_task(**inputs)]
-		)
-
-	@task
-	def optimize_prompt_direction_3(self, architect_output: str = "", **inputs) -> Task:
-		"""Create task for third optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 2) if architect_output else None
-		description = self._format_task_description('optimize_prompt_direction_3', inputs, direction)
-		return Task(
-			description=description,
-			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
-			agent=self.prompt_engineer_3(),
-			context=[self.analyze_requirements_task(**inputs)]
+			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
+			agent=self.architect(),
+			output_json=ArchitectOutput
 		)
 
 	@crew
 	def crew(self, inputs: dict = None) -> Crew:
-		"""Creates the PromptSolutionCrew crew"""
+		"""Creates the Architect crew"""
 		if inputs is None:
 			inputs = {}
-
-		analyze_task = self.analyze_requirements_task(**inputs)
 		
 		return Crew(
-			agents=[
-				self.architect(),
-				self.prompt_engineer_1(),
-				self.prompt_engineer_2(),
-				self.prompt_engineer_3()
-			],
-			tasks=[
-				analyze_task,
-				self.optimize_prompt_direction_1(architect_output=analyze_task.output, **inputs),
-				self.optimize_prompt_direction_2(architect_output=analyze_task.output, **inputs),
-				self.optimize_prompt_direction_3(architect_output=analyze_task.output, **inputs)
-			],
+			agents=[self.architect()],
+			tasks=[self.analyze_requirements_task(**inputs)],
 			process=Process.sequential,
-			verbose=True,
-			planning=True
+			verbose=True
 		)
+
+@CrewBase
+class PromptEngineerCrew():
+	"""Prompt Engineer crew for implementing optimization direction"""
+
+	def __init__(self):
+		self.config_dir = Path(__file__).parent / "config"
+		
+		with open(self.config_dir / 'agents.yaml', 'r') as f:
+			self.agents_config = yaml.safe_load(f)
+		with open(self.config_dir / 'tasks.yaml', 'r') as f:
+			self.tasks_config = yaml.safe_load(f)
+
+	@agent
+	def prompt_engineer(self) -> Agent:
+		"""Create a prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer']['role'],
+			goal=self.agents_config['prompt_engineer']['goal'],
+			backstory=self.agents_config['prompt_engineer']['backstory'],
+			verbose=True
+		)
+
+	def _format_task_description(self, inputs: dict, direction: OptimizationDirection) -> str:
+		"""Format task description with all required variables."""
+		description = self.tasks_config['optimize_prompt_direction']['description']
+		
+		format_vars = inputs.copy() if inputs else {}
+		format_vars['direction'] = json.dumps(direction.dict(), indent=2)
+		
+		required_fields = [
+			'task_description', 'task_type', 'model_preference',
+			'tone', 'context', 'data_input', 'examples'
+		]
+		for field in required_fields:
+			if field not in format_vars:
+				format_vars[field] = f"[No {field} provided]"
+		
+		try:
+			return description.format(**format_vars)
+		except KeyError as e:
+			print(f"Missing required input: {e}")
+			return description
+
+	@task
+	def optimize_prompt_task(self, direction: OptimizationDirection, **inputs) -> Task:
+		"""Create an optimize prompt task."""
+		description = self._format_task_description(inputs, direction)
+		return Task(
+			description=description,
+			expected_output=self.tasks_config['optimize_prompt_direction']['expected_output'],
+			agent=self.prompt_engineer(),
+			output_json=PromptStructure
+		)
+
+	@crew
+	def crew(self, direction: OptimizationDirection, inputs: dict = None) -> Crew:
+		"""Creates the Prompt Engineer crew"""
+		if inputs is None:
+			inputs = {}
+		
+		return Crew(
+			agents=[self.prompt_engineer()],
+			tasks=[self.optimize_prompt_task(direction, **inputs)],
+			process=Process.sequential,
+			verbose=True
+		)
+
+def run_optimization_process(inputs: dict = None) -> List[PromptStructure]:
+	"""Run the complete optimization process with all crews."""
+	if inputs is None:
+		inputs = {}
+
+	# 1. Run architect crew to get optimization directions
+	architect_crew = ArchitectCrew()
+	architect_result = architect_crew.crew(inputs).kickoff()
+	
+	# 2. Create prompt engineer crews for each direction
+	prompt_engineer_crews = []
+	results = []
+	
+	for direction in architect_result.optimization_directions:
+		crew = PromptEngineerCrew()
+		result = crew.crew(direction, inputs).kickoff()
+		results.append(result)
+	
+	return results
