@@ -1235,7 +1235,7 @@ with eval_tab1:
 
 with eval_tab2:
     
-    # 首先显示评估结果
+    # 首先显示评估结���
     st.markdown("### Evaluation Results")
     metric_col1, metric_col2, metric_col3 = st.columns(3)
     
@@ -1264,7 +1264,7 @@ with eval_tab2:
         }
     }
     
-    # 使用Plotly雷达图
+    # 使用Plotly建雷达图
     import plotly.graph_objects as go
     
     categories = list(metrics_data["JARVIS"].keys())
@@ -1305,101 +1305,187 @@ with eval_tab2:
     # JARVIS Results
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
+        
+        # 核心维度（大数字对比区）
         st.markdown("**Core Metrics**")
         
+        # 第一行：准确性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(
-                display_metric("Accuracy", metrics_data["Core"]["Accuracy"]["JARVIS"],
-                             metrics_data["Core"]["Accuracy"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs", delta_color="green")  # 最高
         with col2:
-            st.markdown(
-                display_metric("Goal Achievement", metrics_data["Core"]["Goal Achievement"]["JARVIS"],
-                             metrics_data["Core"]["Goal Achievement"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Goal Achievement", "100%", help="Completion rate of required tasks", delta_color="green")  # 最高
         
+        # 第二行：效率和逻辑性
         col3, col4 = st.columns(2)
         with col3:
-            st.markdown(
-                display_metric("Efficiency", metrics_data["Core"]["Efficiency"]["JARVIS"],
-                             metrics_data["Core"]["Efficiency"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Efficiency", "95%", help="Overall efficiency score", delta_color="normal")  # 中间值
         with col4:
-            st.markdown(
-                display_metric("Logic Score", metrics_data["Core"]["Logic Score"]["JARVIS"],
-                             metrics_data["Core"]["Logic Score"]),
-                unsafe_allow_html=True
-            )
-
+            st.metric("Logic Score", "97%", help="Quality of reasoning process", delta_color="green")  # 最高
+        
+        # 高级维度（展示区）
+        with st.expander("Advanced Dimensions"):
+            # 稳定性分析
+            st.markdown("**Stability Analysis**")
+            stab_col1, stab_col2 = st.columns(2)
+            with stab_col1:
+                st.metric("Format Compatibility", "96%", help="Ability to handle different document formats", delta_color="normal")
+                st.metric("Error Handling", "98%", help="Effectiveness in handling exceptions", delta_color="green")
+            with stab_col2:
+                st.metric("Cross-platform", "95%", help="Consistency across different platforms", delta_color="normal")
+                st.metric("System Stability", "97%", help="Overall system stability", delta_color="green")
+            
+            # 可解释性
+            st.markdown("**Explainability**")
+            exp_col1, exp_col2 = st.columns(2)
+            with exp_col1:
+                st.metric("Process Transparency", "98%", help="Clarity of the extraction process")
+                st.metric("Decision Clarity", "97%", help="Clarity of decision making")
+            with exp_col2:
+                st.metric("Documentation", "96%", help="Quality of reasoning documentation")
+                st.metric("Reasoning Path", "95%", help="Clarity of reasoning steps")
+            
+            # 创造力
+            st.markdown("**Creativity & Adaptability**")
+            cre_col1, cre_col2 = st.columns(2)
+            with cre_col1:
+                st.metric("Pattern Recognition", "94%", help="Ability to identify data patterns")
+                st.metric("Format Flexibility", "93%", help="Adaptability to format changes")
+            with cre_col2:
+                st.metric("Edge Case Handling", "92%", help="Handling of unusual scenarios")
+                st.metric("Learning Ability", "91%", help="Capability to learn from new cases")
+            
+            # 安全性
+            st.markdown("**Safety & Compliance**")
+            saf_col1, saf_col2 = st.columns(2)
+            with saf_col1:
+                st.metric("Data Protection", "99%", help="Security of data handling")
+                st.metric("Bias Prevention", "98%", help="Prevention of biased results")
+            with saf_col2:
+                st.metric("Compliance", "97%", help="Adherence to standards")
+                st.metric("Risk Control", "96%", help="Effectiveness of risk management")
+    
     # SHERLOCK Results
     with metric_col2:
         st.markdown("#### SHERLOCK Analysis")
+        
+        # 核心维度
         st.markdown("**Core Metrics**")
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(
-                display_metric("Accuracy", metrics_data["Core"]["Accuracy"]["SHERLOCK"],
-                             metrics_data["Core"]["Accuracy"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Accuracy", "95%", help="Match rate between expected and actual outputs", delta_color="normal")  # 中间值
         with col2:
-            st.markdown(
-                display_metric("Goal Achievement", metrics_data["Core"]["Goal Achievement"]["SHERLOCK"],
-                             metrics_data["Core"]["Goal Achievement"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Goal Achievement", "98%", help="Completion rate of required tasks", delta_color="normal")  # 中间值
         
         col3, col4 = st.columns(2)
         with col3:
-            st.markdown(
-                display_metric("Efficiency", metrics_data["Core"]["Efficiency"]["SHERLOCK"],
-                             metrics_data["Core"]["Efficiency"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Efficiency", "97%", help="Overall efficiency score", delta_color="normal")  # 中间值
         with col4:
-            st.markdown(
-                display_metric("Logic Score", metrics_data["Core"]["Logic Score"]["SHERLOCK"],
-                             metrics_data["Core"]["Logic Score"]),
-                unsafe_allow_html=True
-            )
-
+            st.metric("Logic Score", "96%", help="Quality of reasoning process", delta_color="normal")  # 中间值
+        
+        # SHERLOCK Advanced Dimensions
+        with st.expander("Advanced Dimensions"):
+            # 稳定性分析
+            st.markdown("**Stability Analysis**")
+            stab_col1, stab_col2 = st.columns(2)
+            with stab_col1:
+                st.metric("Format Compatibility", "97%", help="Ability to handle different document formats", delta_color="normal")
+                st.metric("Error Handling", "96%", help="Effectiveness in handling exceptions", delta_color="normal")
+            with stab_col2:
+                st.metric("Cross-platform", "97%", help="Consistency across different platforms", delta_color="normal")
+                st.metric("System Stability", "97%", help="Overall system stability", delta_color="normal")
+            
+            # 可解释性
+            st.markdown("**Explainability**")
+            exp_col1, exp_col2 = st.columns(2)
+            with exp_col1:
+                st.metric("Process Transparency", "96%", help="Clarity of the extraction process")
+                st.metric("Decision Clarity", "95%", help="Clarity of decision making")
+            with exp_col2:
+                st.metric("Documentation", "97%", help="Quality of reasoning documentation")
+                st.metric("Reasoning Path", "95%", help="Clarity of reasoning steps")
+            
+            # 创造力
+            st.markdown("**Creativity & Adaptability**")
+            cre_col1, cre_col2 = st.columns(2)
+            with cre_col1:
+                st.metric("Pattern Recognition", "92%", help="Ability to identify data patterns")
+                st.metric("Format Flexibility", "91%", help="Adaptability to format changes")
+            with cre_col2:
+                st.metric("Edge Case Handling", "93%", help="Handling of unusual scenarios")
+                st.metric("Learning Ability", "91%", help="Capability to learn from new cases")
+            
+            # 安全性
+            st.markdown("**Safety & Compliance**")
+            saf_col1, saf_col2 = st.columns(2)
+            with saf_col1:
+                st.metric("Data Protection", "98%", help="Security of data handling")
+                st.metric("Bias Prevention", "97%", help="Prevention of biased results")
+            with saf_col2:
+                st.metric("Compliance", "98%", help="Adherence to standards")
+                st.metric("Risk Control", "96%", help="Effectiveness of risk management")
+    
     # FLASH Results
     with metric_col3:
         st.markdown("#### FLASH Analysis")
+        
+        # 核心维度
         st.markdown("**Core Metrics**")
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(
-                display_metric("Accuracy", metrics_data["Core"]["Accuracy"]["FLASH"],
-                             metrics_data["Core"]["Accuracy"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Accuracy", "92%", help="Match rate between expected and actual outputs", delta_color="red")  # 最低
         with col2:
-            st.markdown(
-                display_metric("Goal Achievement", metrics_data["Core"]["Goal Achievement"]["FLASH"],
-                             metrics_data["Core"]["Goal Achievement"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Goal Achievement", "95%", help="Completion rate of required tasks", delta_color="red")  # 最低
         
         col3, col4 = st.columns(2)
         with col3:
-            st.markdown(
-                display_metric("Efficiency", metrics_data["Core"]["Efficiency"]["FLASH"],
-                             metrics_data["Core"]["Efficiency"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Efficiency", "99%", help="Overall efficiency score", delta_color="green")  # 最高
         with col4:
-            st.markdown(
-                display_metric("Logic Score", metrics_data["Core"]["Logic Score"]["FLASH"],
-                             metrics_data["Core"]["Logic Score"]),
-                unsafe_allow_html=True
-            )
+            st.metric("Logic Score", "93%", help="Quality of reasoning process", delta_color="red")  # 最低
+        
+        # FLASH Advanced Dimensions
+        with st.expander("Advanced Dimensions"):
+            # 稳定性分析
+            st.markdown("**Stability Analysis**")
+            stab_col1, stab_col2 = st.columns(2)
+            with stab_col1:
+                st.metric("Format Compatibility", "94%", help="Ability to handle different document formats", delta_color="normal")
+                st.metric("Error Handling", "93%", help="Effectiveness in handling exceptions", delta_color="normal")
+            with stab_col2:
+                st.metric("Cross-platform", "92%", help="Consistency across different platforms", delta_color="normal")
+                st.metric("System Stability", "90%", help="Overall system stability", delta_color="red")
+            
+            # 可解释性
+            st.markdown("**Explainability**")
+            exp_col1, exp_col2 = st.columns(2)
+            with exp_col1:
+                st.metric("Process Transparency", "91%", help="Clarity of the extraction process")
+                st.metric("Decision Clarity", "92%", help="Clarity of decision making")
+            with exp_col2:
+                st.metric("Documentation", "90%", help="Quality of reasoning documentation")
+                st.metric("Reasoning Path", "89%", help="Clarity of reasoning steps")
+            
+            # 创造力
+            st.markdown("**Creativity & Adaptability**")
+            cre_col1, cre_col2 = st.columns(2)
+            with cre_col1:
+                st.metric("Pattern Recognition", "88%", help="Ability to identify data patterns")
+                st.metric("Format Flexibility", "87%", help="Adaptability to format changes")
+            with cre_col2:
+                st.metric("Edge Case Handling", "87%", help="Handling of unusual scenarios")
+                st.metric("Learning Ability", "86%", help="Capability to learn from new cases")
+            
+            # 安全性
+            st.markdown("**Safety & Compliance**")
+            saf_col1, saf_col2 = st.columns(2)
+            with saf_col1:
+                st.metric("Data Protection", "96%", help="Security of data handling")
+                st.metric("Bias Prevention", "95%", help="Prevention of biased results")
+            with saf_col2:
+                st.metric("Compliance", "94%", help="Adherence to standards")
+                st.metric("Risk Control", "93%", help="Effectiveness of risk management")
     
     # 维度权重调整
     st.markdown("### Dimension Weights")
@@ -1438,7 +1524,7 @@ with eval_tab2:
                     key=f"{solution_name}_goal"
                 )
             
-            # Advanced Dimensions
+            # 高级维度
             st.markdown("**Advanced Dimensions**")
             adv_col1, adv_col2 = st.columns(2)
             with adv_col1:
@@ -1527,74 +1613,9 @@ st.markdown("""
         margin: 5px 0;
     }
     
-    /* 最高值样式 */
-    .highest-value {
-        color: #28a745 !important;
-    }
-    
-    /* 最低值样式 */
-    .lowest-value {
-        color: #dc3545 !important;
-    }
-    
     /* 调整列间距 */
     .row-widget.stHorizontal > div {
         padding: 10px 5px;
     }
 </style>
 """, unsafe_allow_html=True)
-
-def get_metric_style(value, values_dict):
-    """
-    比较指标值并返回相应的样式
-    :param value: 当前值
-    :param values_dict: 包含所有方案该指标值的字典
-    :return: 样式类名
-    """
-    values = list(values_dict.values())
-    max_val = max(values)
-    min_val = min(values)
-    
-    if value == max_val:
-        return "highest-value"
-    elif value == min_val:
-        return "lowest-value"
-    return ""
-
-# 准备所有指标的数据
-metrics_data = {
-    "Core": {
-        "Accuracy": {"JARVIS": 98, "SHERLOCK": 95, "FLASH": 92},
-        "Goal Achievement": {"JARVIS": 100, "SHERLOCK": 98, "FLASH": 95},
-        "Efficiency": {"JARVIS": 95, "SHERLOCK": 97, "FLASH": 99},
-        "Logic Score": {"JARVIS": 97, "SHERLOCK": 96, "FLASH": 93}
-    },
-    "Advanced": {
-        "Format Compatibility": {"JARVIS": 96, "SHERLOCK": 97, "FLASH": 94},
-        "Error Handling": {"JARVIS": 98, "SHERLOCK": 96, "FLASH": 93},
-        "Cross-platform": {"JARVIS": 95, "SHERLOCK": 97, "FLASH": 92},
-        "System Stability": {"JARVIS": 97, "SHERLOCK": 97, "FLASH": 90},
-        "Process Transparency": {"JARVIS": 98, "SHERLOCK": 96, "FLASH": 91},
-        "Decision Clarity": {"JARVIS": 97, "SHERLOCK": 95, "FLASH": 92},
-        "Documentation": {"JARVIS": 96, "SHERLOCK": 97, "FLASH": 90},
-        "Reasoning Path": {"JARVIS": 95, "SHERLOCK": 95, "FLASH": 89},
-        "Pattern Recognition": {"JARVIS": 94, "SHERLOCK": 92, "FLASH": 88},
-        "Format Flexibility": {"JARVIS": 93, "SHERLOCK": 91, "FLASH": 87},
-        "Edge Case Handling": {"JARVIS": 92, "SHERLOCK": 93, "FLASH": 87},
-        "Learning Ability": {"JARVIS": 91, "SHERLOCK": 91, "FLASH": 86},
-        "Data Protection": {"JARVIS": 99, "SHERLOCK": 98, "FLASH": 96},
-        "Bias Prevention": {"JARVIS": 98, "SHERLOCK": 97, "FLASH": 95},
-        "Compliance": {"JARVIS": 97, "SHERLOCK": 98, "FLASH": 94},
-        "Risk Control": {"JARVIS": 96, "SHERLOCK": 96, "FLASH": 93}
-    }
-}
-
-# 修改指标显示函数
-def display_metric(name, value, values_dict):
-    style = get_metric_style(value, values_dict)
-    return f"""
-        <div style='font-size: 24px; font-weight: 500; margin-bottom: 4px;' class='{style}'>
-            {value}%
-        </div>
-        <div style='color: #666; font-size: 14px;'>{name}</div>
-    """
