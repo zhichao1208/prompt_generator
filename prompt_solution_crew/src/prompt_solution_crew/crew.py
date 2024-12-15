@@ -35,23 +35,11 @@ class BaseCrew():
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
 		
-		# 获取模型名称并添加提供商前缀
+		# 初始化模型名称和配置
 		model_name = os.environ.get("OPENAI_MODEL_NAME", "gpt-4")
-		
-		# 模型名称映射
-		model_mapping = {
-			'gpt-4-turbo': 'gpt-4-1106-preview',  # gpt-4-turbo 的实际标识符
-			'gpt-4': 'gpt-4',
-			'gpt-3.5-turbo': 'gpt-3.5-turbo',
-			'o1-preview': 'gpt-4-1106-preview'  # o1-preview 映射到 gpt-4-turbo
+		self.llm_config = {
+			"config_list": [{"model": model_name}]
 		}
-		
-		# 如果模型名称在映射中，使用映射后的名称
-		if model_name in model_mapping:
-			model_name = model_mapping[model_name]
-			
-		# 添加提供商前缀
-		self.model_name = f"openai/{model_name}"
 
 	def _format_task_description(self, task_name: str, inputs: dict, direction: OptimizationDirection = None) -> str:
 		"""Format task description with all required variables."""
@@ -89,7 +77,7 @@ class ArchitectCrew(BaseCrew):
 			goal=self.agents_config['architect']['goal'],
 			backstory=self.agents_config['architect']['backstory'],
 			verbose=True,
-			llm=self.model_name
+			llm_config=self.llm_config
 		)
 
 	def analyze_requirements_task(self, **inputs) -> Task:
@@ -129,7 +117,7 @@ class PromptEngineerCrew(BaseCrew):
 			goal=self.agents_config['prompt_engineer']['goal'],
 			backstory=self.agents_config['prompt_engineer']['backstory'],
 			verbose=True,
-			llm=self.model_name
+			llm_config=self.llm_config
 		)
 
 	def optimize_prompt_task(self, direction: OptimizationDirection, **inputs) -> Task:
