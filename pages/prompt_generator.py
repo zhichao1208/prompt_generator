@@ -1313,71 +1313,37 @@ with eval_tab2:
         # 第一行：准确性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Accuracy</div>
+                    <div style='color: #28a745; font-size: 2em; font-weight: 500;'>98%</div>
+                </div>
+            """, unsafe_allow_html=True)
         with col2:
-            st.metric("Goal Achievement", "100%", help="Completion rate of required tasks")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Goal Achievement</div>
+                    <div style='color: #28a745; font-size: 2em; font-weight: 500;'>100%</div>
+                </div>
+            """, unsafe_allow_html=True)
         
         # 第二行：效率和逻辑性
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "95%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
             st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>2,500 <span style='color: #28a745'>(-200)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>2.5s <span style='color: #28a745'>(-0.5s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.05 <span style='color: #28a745'>(-$0.01)</span></span>
-                    </div>
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Efficiency</div>
+                    <div style='color: #dc3545; font-size: 2em; font-weight: 500;'>95%</div>
                 </div>
             """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "97%", help="Quality of reasoning process")
-        
-        # 高级维度（展示区）
-        with st.expander("Advanced Dimensions"):
-            # 稳定性
-            st.markdown("**Stability Analysis**")
             st.markdown("""
-            • Format Compatibility: 96% (+2%)
-            • Error Handling: 98% (+3%)
-            • Cross-platform Consistency: 95% (+2%)
-            """)
-            
-            # 可解释性
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 98% (+4%)
-            • Decision Clarity: 97% (+3%)
-            • Reasoning Documentation: 96% (+2%)
-            """)
-            
-            # 创造力
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 94% (+2%)
-            • Format Flexibility: 93% (+3%)
-            • Edge Case Handling: 92% (+1%)
-            """)
-            
-            # 安全性
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 99% (+1%)
-            • Bias Prevention: 98% (+2%)
-            • Standard Compliance: 97% (+1%)
-            """)
-    
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Logic Score</div>
+                    <div style='color: #28a745; font-size: 2em; font-weight: 500;'>97%</div>
+                </div>
+            """, unsafe_allow_html=True)
+
     # SHERLOCK Results
     with metric_col2:
         st.markdown("#### SHERLOCK Analysis")
@@ -1387,66 +1353,36 @@ with eval_tab2:
         
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "95%", help="Match rate between expected and actual outputs")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Accuracy</div>
+                    <div style='color: #666; font-size: 2em; font-weight: 500;'>95%</div>
+                </div>
+            """, unsafe_allow_html=True)
         with col2:
-            st.metric("Goal Achievement", "98%", help="Completion rate of required tasks")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Goal Achievement</div>
+                    <div style='color: #666; font-size: 2em; font-weight: 500;'>98%</div>
+                </div>
+            """, unsafe_allow_html=True)
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "97%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
             st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>1,800 <span style='color: #28a745'>(-150)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>1.8s <span style='color: #28a745'>(-0.3s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.035 <span style='color: #28a745'>(-$0.005)</span></span>
-                    </div>
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Efficiency</div>
+                    <div style='color: #666; font-size: 2em; font-weight: 500;'>97%</div>
                 </div>
             """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "96%", help="Quality of reasoning process")
-        
-        # 高级维度
-        with st.expander("Advanced Dimensions"):
-            st.markdown("**Stability Analysis**")
             st.markdown("""
-            • Format Compatibility: 97% (+3%)
-            • Error Handling: 96% (+2%)
-            • Cross-platform Consistency: 97% (+3%)
-            """)
-            
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 96% (+2%)
-            • Decision Clarity: 95% (+2%)
-            • Reasoning Documentation: 97% (+3%)
-            """)
-            
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 92% (+1%)
-            • Format Flexibility: 91% (+2%)
-            • Edge Case Handling: 93% (+2%)
-            """)
-            
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 98% (+2%)
-            • Bias Prevention: 97% (+1%)
-            • Standard Compliance: 98% (+2%)
-            """)
-    
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Logic Score</div>
+                    <div style='color: #666; font-size: 2em; font-weight: 500;'>96%</div>
+                </div>
+            """, unsafe_allow_html=True)
+
     # FLASH Results
     with metric_col3:
         st.markdown("#### FLASH Analysis")
@@ -1456,65 +1392,35 @@ with eval_tab2:
         
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Accuracy", "92%", help="Match rate between expected and actual outputs")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Accuracy</div>
+                    <div style='color: #dc3545; font-size: 2em; font-weight: 500;'>92%</div>
+                </div>
+            """, unsafe_allow_html=True)
         with col2:
-            st.metric("Goal Achievement", "95%", help="Completion rate of required tasks")
+            st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Goal Achievement</div>
+                    <div style='color: #dc3545; font-size: 2em; font-weight: 500;'>95%</div>
+                </div>
+            """, unsafe_allow_html=True)
         
         col3, col4 = st.columns(2)
         with col3:
-            st.metric("Efficiency", "99%", help="Overall efficiency score")
-            # Efficiency Breakdown Box
             st.markdown("""
-                <div style='background-color: #f1f8ff; padding: 10px; border-radius: 4px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #cce5ff;'>
-                    <div style='font-size: 0.9em; color: #004085; margin-bottom: 5px;'>
-                        <strong>Efficiency Breakdown</strong>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Token Usage:</span>
-                        <span>1,200 <span style='color: #28a745'>(-100)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085; margin-bottom: 3px;'>
-                        <span>Response Time:</span>
-                        <span>1.2s <span style='color: #28a745'>(-0.2s)</span></span>
-                    </div>
-                    <div style='display: flex; justify-content: space-between; font-size: 0.85em; color: #004085;'>
-                        <span>Cost per Run:</span>
-                        <span>$0.025 <span style='color: #28a745'>(-$0.003)</span></span>
-                    </div>
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Efficiency</div>
+                    <div style='color: #28a745; font-size: 2em; font-weight: 500;'>99%</div>
                 </div>
             """, unsafe_allow_html=True)
         with col4:
-            st.metric("Logic Score", "93%", help="Quality of reasoning process")
-        
-        # 高级维度
-        with st.expander("Advanced Dimensions"):
-            st.markdown("**Stability Analysis**")
             st.markdown("""
-            • Format Compatibility: 94% (+2%)
-            • Error Handling: 93% (+1%)
-            • Cross-platform Consistency: 92% (+1%)
-            """)
-            
-            st.markdown("**Explainability**")
-            st.markdown("""
-            • Process Transparency: 91% (+1%)
-            • Decision Clarity: 92% (+1%)
-            • Reasoning Documentation: 90% (+1%)
-            """)
-            
-            st.markdown("**Creativity & Adaptability**")
-            st.markdown("""
-            • Pattern Recognition: 89% (+1%)
-            • Format Flexibility: 88% (+1%)
-            • Edge Case Handling: 87% (+1%)
-            """)
-            
-            st.markdown("**Safety & Compliance**")
-            st.markdown("""
-            • Data Protection: 96% (+1%)
-            • Bias Prevention: 95% (+1%)
-            • Standard Compliance: 94% (+1%)
-            """)
+                <div style='text-align: center;'>
+                    <div style='color: #666; font-size: 0.9em;'>Logic Score</div>
+                    <div style='color: #dc3545; font-size: 2em; font-weight: 500;'>93%</div>
+                </div>
+            """, unsafe_allow_html=True)
     
     # 维度权重调整
     st.markdown("### Dimension Weights")
@@ -1579,7 +1485,7 @@ with eval_tab2:
                     key=f"{solution_name}_safety"
                 )
             
-            # ��新生成按钮
+            # 新生成按钮
             if st.button(f"Regenerate {solution_name} Prompt", type="primary", key=f"regenerate_{solution_name}"):
                 # 版本号管理
                 if f'{solution_name}_version' not in st.session_state:
