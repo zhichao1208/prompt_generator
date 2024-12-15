@@ -160,19 +160,52 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<div style='color: #666;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
         
         # Solution Introduction
-        intro_text = """A comprehensive data extraction solution that prioritizes accuracy and completeness. 
-Features extensive validation rules, cross-reference checking, and detailed reasoning for each decision. 
-Best suited for complex documents where data quality and completeness are critical.""" if version == "Solution A" else (
-            """A validation-focused approach that emphasizes data quality and standardization. 
-Specializes in robust error detection, format validation, and correction suggestions. 
-Ideal for scenarios requiring strict data validation and standardized outputs.""" if version == "Solution B" else 
-            """A lightweight, speed-optimized solution for targeted data extraction. 
-Focuses on extracting only essential fields with minimal processing overhead. 
-Perfect for high-volume, time-sensitive scenarios where basic extraction is sufficient.""")
+        intro_text = """• Comprehensive Approach:
+  - Full data extraction with extensive validation
+  - Cross-reference checking and detailed reasoning
+  - Best for complex documents requiring high accuracy
+
+• Key Advantages:
+  - Complete data validation and error handling
+  - Detailed documentation of decision process
+  - Robust handling of edge cases
+
+• Resource Consumption:
+  - Token Usage: ~2000-2500 tokens per request
+  - Estimated Cost: $0.06-0.08 per request
+  - Processing Time: 2-3 seconds""" if version == "Solution A" else (
+            """• Validation Focus:
+  - Specialized in data quality and standardization
+  - Strong error detection and correction
+  - Ideal for strict validation requirements
+
+• Key Advantages:
+  - Robust format validation
+  - Detailed error reporting
+  - Correction suggestions included
+
+• Resource Consumption:
+  - Token Usage: ~1500-2000 tokens per request
+  - Estimated Cost: $0.04-0.06 per request
+  - Processing Time: 1.5-2 seconds""" if version == "Solution B" else 
+            """• Lightweight Design:
+  - Minimal, targeted data extraction
+  - Streamlined processing workflow
+  - Perfect for high-volume basic extraction
+
+• Key Advantages:
+  - Fast processing speed
+  - Minimal resource usage
+  - Cost-effective solution
+
+• Resource Consumption:
+  - Token Usage: ~800-1200 tokens per request
+  - Estimated Cost: $0.02-0.03 per request
+  - Processing Time: <1 second""")
         
         st.markdown(f"""
             <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin: 12px 0;'>
-                <div style='font-size: 0.9em; color: #444; line-height: 1.5;'>
+                <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
                     {intro_text}
                 </div>
             </div>
