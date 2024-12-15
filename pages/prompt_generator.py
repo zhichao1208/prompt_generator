@@ -173,13 +173,20 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 •Fast processing speed
 •Resource Consumption: low""")
         
-        st.markdown(f"""
-            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
-                <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
-                    {intro_text}
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""
+<div style='color: #666; padding-bottom: 4px;'>Version 1.0 (2024-12-14)</div>
+<div style='
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 0;             # 移除所有外边距
+    border: 1px solid #e9ecef;
+'>
+    <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
+        {intro_text}
+    </div>
+</div>
+""", unsafe_allow_html=True)
         
         # Prompt Structure
         st.markdown("<h4 style='margin-top: 20px;'>Prompt Structure</h4>", unsafe_allow_html=True)
