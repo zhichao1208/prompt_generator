@@ -82,10 +82,11 @@ class PromptSolutionCrew():
 		)
 
 	@task
-	def analyze_requirements_task(self) -> Task:
+	def analyze_requirements_task(self, **inputs) -> Task:
 		"""Create an analyze requirements task."""
+		description = self._format_task_description('analyze_requirements_task', inputs)
 		return Task(
-			description=self.tasks_config['analyze_requirements_task']['description'],
+			description=description,
 			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
 			agent=self.architect()
 		)
@@ -104,7 +105,7 @@ class PromptSolutionCrew():
 		description = self.tasks_config[task_name]['description']
 		
 		# Create a copy of inputs to avoid modifying the original
-		format_vars = inputs.copy()
+		format_vars = inputs.copy() if inputs else {}
 		
 		# Add direction if provided
 		if direction is not None:
@@ -115,6 +116,15 @@ class PromptSolutionCrew():
 			elif "direction_3" in description:
 				format_vars["direction_3"] = direction
 		
+		# Add default values for missing required fields
+		required_fields = [
+			'task_description', 'task_type', 'model_preference',
+			'tone', 'context', 'data_input', 'examples'
+		]
+		for field in required_fields:
+			if field not in format_vars:
+				format_vars[field] = f"[No {field} provided]"
+		
 		try:
 			return description.format(**format_vars)
 		except KeyError as e:
@@ -124,42 +134,47 @@ class PromptSolutionCrew():
 	@task
 	def optimize_prompt_direction_1(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for first optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 0)
+		direction = self._get_direction_from_output(architect_output, 0) if architect_output else None
 		description = self._format_task_description('optimize_prompt_direction_1', inputs, direction)
 		return Task(
 			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
 			agent=self.prompt_engineer_1(),
-			context=[self.analyze_requirements_task()]
+			context=[self.analyze_requirements_task(**inputs)]
 		)
 
 	@task
 	def optimize_prompt_direction_2(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for second optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 1)
+		direction = self._get_direction_from_output(architect_output, 1) if architect_output else None
 		description = self._format_task_description('optimize_prompt_direction_2', inputs, direction)
 		return Task(
 			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
 			agent=self.prompt_engineer_2(),
-			context=[self.analyze_requirements_task()]
+			context=[self.analyze_requirements_task(**inputs)]
 		)
 
 	@task
 	def optimize_prompt_direction_3(self, architect_output: str = "", **inputs) -> Task:
 		"""Create task for third optimization direction."""
-		direction = self._get_direction_from_output(architect_output, 2)
+		direction = self._get_direction_from_output(architect_output, 2) if architect_output else None
 		description = self._format_task_description('optimize_prompt_direction_3', inputs, direction)
 		return Task(
 			description=description,
 			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
 			agent=self.prompt_engineer_3(),
-			context=[self.analyze_requirements_task()]
+			context=[self.analyze_requirements_task(**inputs)]
 		)
 
 	@crew
-	def crew(self) -> Crew:
+	def crew(self, inputs: dict = None) -> Crew:
 		"""Creates the PromptSolutionCrew crew"""
+		if inputs is None:
+			inputs = {}
+
+		analyze_task = self.analyze_requirements_task(**inputs)
+		
 		return Crew(
 			agents=[
 				self.architect(),
@@ -168,11 +183,12 @@ class PromptSolutionCrew():
 				self.prompt_engineer_3()
 			],
 			tasks=[
-				self.analyze_requirements_task(),
-				self.optimize_prompt_direction_1(),
-				self.optimize_prompt_direction_2(),
-				self.optimize_prompt_direction_3()
+				analyze_task,
+				self.optimize_prompt_direction_1(architect_output=analyze_task.output, **inputs),
+				self.optimize_prompt_direction_2(architect_output=analyze_task.output, **inputs),
+				self.optimize_prompt_direction_3(architect_output=analyze_task.output, **inputs)
 			],
 			process=Process.sequential,
-			verbose=True
+			verbose=True,
+			planning=True
 		)
