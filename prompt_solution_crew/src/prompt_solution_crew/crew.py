@@ -4,6 +4,7 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
+import json
 
 class RequirementsAnalysis(BaseModel):
 	summary: str
@@ -51,6 +52,39 @@ class PromptSolutionCrew():
 			verbose=True
 		)
 
+	@agent
+	def prompt_engineer_1(self) -> Agent:
+		"""Create first prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer_1']['role'],
+			goal=self.agents_config['prompt_engineer_1']['goal'],
+			backstory=self.agents_config['prompt_engineer_1']['backstory'],
+			llm=self.agents_config['prompt_engineer_1']['llm'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_2(self) -> Agent:
+		"""Create second prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer_2']['role'],
+			goal=self.agents_config['prompt_engineer_2']['goal'],
+			backstory=self.agents_config['prompt_engineer_2']['backstory'],
+			llm=self.agents_config['prompt_engineer_2']['llm'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_3(self) -> Agent:
+		"""Create third prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer_3']['role'],
+			goal=self.agents_config['prompt_engineer_3']['goal'],
+			backstory=self.agents_config['prompt_engineer_3']['backstory'],
+			llm=self.agents_config['prompt_engineer_3']['llm'],
+			verbose=True
+		)
+
 	@task
 	def analyze_requirements_task(self) -> Task:
 		"""Create an analyze requirements task."""
@@ -60,13 +94,50 @@ class PromptSolutionCrew():
 			agent=self.architect()
 		)
 
+	def _extract_directions(self, architect_output: str) -> Dict[str, str]:
+		"""Extract the three directions from architect's JSON output."""
+		try:
+			output_dict = json.loads(architect_output)
+			return {
+				"direction_1": output_dict["optimization_directions"][0],
+				"direction_2": output_dict["optimization_directions"][1],
+				"direction_3": output_dict["optimization_directions"][2]
+			}
+		except (json.JSONDecodeError, KeyError, IndexError) as e:
+			print(f"Error extracting directions: {e}")
+			return {
+				"direction_1": "Error extracting direction 1",
+				"direction_2": "Error extracting direction 2", 
+				"direction_3": "Error extracting direction 3"
+			}
+
 	@task
-	def develop_strategies_task(self) -> Task:
-		"""Create a develop strategies task."""
+	def optimize_prompt_direction_1(self) -> Task:
+		"""Create task for first optimization direction."""
 		return Task(
-			description=self.tasks_config['develop_strategies_task']['description'],
-			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
-			agent=self.architect(),
+			description=self.tasks_config['optimize_prompt_direction_1']['description'],
+			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
+			agent=self.prompt_engineer_1(),
+			context=[self.analyze_requirements_task()]
+		)
+
+	@task
+	def optimize_prompt_direction_2(self) -> Task:
+		"""Create task for second optimization direction."""
+		return Task(
+			description=self.tasks_config['optimize_prompt_direction_2']['description'],
+			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
+			agent=self.prompt_engineer_2(),
+			context=[self.analyze_requirements_task()]
+		)
+
+	@task
+	def optimize_prompt_direction_3(self) -> Task:
+		"""Create task for third optimization direction."""
+		return Task(
+			description=self.tasks_config['optimize_prompt_direction_3']['description'],
+			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
+			agent=self.prompt_engineer_3(),
 			context=[self.analyze_requirements_task()]
 		)
 
@@ -74,8 +145,18 @@ class PromptSolutionCrew():
 	def crew(self) -> Crew:
 		"""Creates the PromptSolutionCrew crew"""
 		return Crew(
-			agents=self.agents,
-			tasks=self.tasks,
+			agents=[
+				self.architect(),
+				self.prompt_engineer_1(),
+				self.prompt_engineer_2(),
+				self.prompt_engineer_3()
+			],
+			tasks=[
+				self.analyze_requirements_task(),
+				self.optimize_prompt_direction_1(),
+				self.optimize_prompt_direction_2(),
+				self.optimize_prompt_direction_3()
+			],
 			process=Process.sequential,
 			verbose=True
 		)
