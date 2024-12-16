@@ -127,6 +127,7 @@ optimize_prompt_direction_1:
     4. Reasoning Method:
     Purpose: Define how the LLM should approach problem-solving and logical thinking.
     Impact: The chosen method will influence how the LLM processes information and reaches conclusions.
+    Reason:Why you choose this method
     
     Available Methods:
     a) Chain-of-Thought (CoT)
@@ -162,6 +163,7 @@ optimize_prompt_direction_1:
     5. Planning Method:
     Purpose: Structure how the LLM organizes and approaches the overall task.
     Impact: The chosen method will determine how the task is broken down and executed.
+    Reason:Why you choose this method
 
     Available Methods:
     a) Least-to-Most Decomposition
@@ -236,7 +238,7 @@ optimize_prompt_direction_1:
     3. Explanation of optimization choices
     4. Usage guidelines
   expected_output: >
-    A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
+    A JSON object containing the Role, Task, Rules & Constraints, Reasoning Method, Planning Method, Output Format, Explanation of Optimization Choices, and Usage Guidelines.
   agent: prompt_engineer_1
   context: [analyze_requirements_task]
 
@@ -344,6 +346,7 @@ optimize_prompt_direction_2:
     4. Reasoning Method:
     Purpose: Define how the LLM should approach problem-solving and logical thinking.
     Impact: The chosen method will influence how the LLM processes information and reaches conclusions.
+    Reason:Why you choose this method
     
     Available Methods:
     a) Chain-of-Thought (CoT)
@@ -379,6 +382,7 @@ optimize_prompt_direction_2:
     5. Planning Method:
     Purpose: Structure how the LLM organizes and approaches the overall task.
     Impact: The chosen method will determine how the task is broken down and executed.
+    Reason:Why you choose this method
 
     Available Methods:
     a) Least-to-Most Decomposition
@@ -453,7 +457,7 @@ optimize_prompt_direction_2:
     3. Explanation of optimization choices
     4. Usage guidelines
   expected_output: >
-    A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
+    A JSON object containing the Role, Task, Rules & Constraints, Reasoning Method, Planning Method, Output Format, Explanation of Optimization Choices, and Usage Guidelines.
   agent: prompt_engineer_2
   context: [analyze_requirements_task]
 
@@ -671,7 +675,7 @@ optimize_prompt_direction_3:
     3. Explanation of optimization choices
     4. Usage guidelines
   expected_output: >
-    A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
+    A JSON object containing the Role, Task, Rules & Constraints, Reasoning Method, Planning Method, Output Format, Explanation of Optimization Choices, and Usage Guidelines.
   agent: prompt_engineer_3
   context: [analyze_requirements_task]
 
