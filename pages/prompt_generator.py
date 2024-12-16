@@ -343,7 +343,6 @@ if st.session_state.get("prompt_result_1"):
 st.title("Prompt Generator")
 
 
-
 # Top Section: Prompt Comparison
 
 # Function to render prompt card
