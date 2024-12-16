@@ -67,8 +67,9 @@ optimize_prompt_direction_1:
     - Example: "Your primary goal is to transform complex data into actionable business insights"
 
     2. Task Component:
-    Purpose: Define what needs to be done and how it should be accomplished.
+    Purpose: Define what needs to be done and how it should be accomplished. Stay close to the user's Task Description!
     Impact: Clear task definition ensures accurate and focused execution.
+    Important: if user input specific data, please make include all of them in the task description!
 
     Required Elements:
     a) Objective Statement
@@ -287,8 +288,9 @@ optimize_prompt_direction_2:
     - Example: "Your primary goal is to transform complex data into actionable business insights"
 
     2. Task Component:
-    Purpose: Define what needs to be done and how it should be accomplished.
+    Purpose: Define what needs to be done and how it should be accomplished. Stay close to the user's Task Description!
     Impact: Clear task definition ensures accurate and focused execution.
+    Important: if user input specific data, please make include all of them in the task description!
 
     Required Elements:
     a) Objective Statement
@@ -506,11 +508,10 @@ optimize_prompt_direction_3:
     - Purpose: State the main goal or responsibility
     - Structure: Clear statement of primary function
     - Example: "Your primary goal is to transform complex data into actionable business insights"
-
     2. Task Component:
-    Purpose: Define what needs to be done and how it should be accomplished.
+    Purpose: Define what needs to be done and how it should be accomplished. Stay close to the user's Task Description!
     Impact: Clear task definition ensures accurate and focused execution.
-
+    Important: if user input specific data, please make include all of them in the task description!
     Required Elements:
     a) Objective Statement
     - Purpose: Clear statement of what needs to be achieved
