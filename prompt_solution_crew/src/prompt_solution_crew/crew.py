@@ -47,6 +47,31 @@ class PromptSolutionCrew():
 			config=self.agents_config['architect'],
 			verbose=True
 		)
+	
+	@agent
+	def prompt_engineer_1(self) -> Agent:
+		"""Create an architect agent."""
+		return Agent(
+			config=self.agents_config['prompt_engineer_1'],
+			verbose=True
+		)
+	
+	@agent
+	def prompt_engineer_2(self) -> Agent:
+		"""Create an architect agent."""
+		return Agent(
+			config=self.agents_config['prompt_engineer_2'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_3(self) -> Agent:
+		"""Create an architect agent."""
+		return Agent(
+			config=self.agents_config['prompt_engineer_3'],
+			verbose=True
+		)
+
 
 	@task
 	def analyze_requirements_task(self) -> Task:
@@ -57,12 +82,28 @@ class PromptSolutionCrew():
 		)
 
 	@task
-	def develop_strategies_task(self) -> Task:
+	def optimize_prompt_direction_1(self) -> Task:
 		"""Create a develop strategies task."""
 		return Task(
-			 config=self.tasks_config['develop_strategies_task'],
-			 agent=self.architect()
+			 config=self.tasks_config['optimize_prompt_direction_1'],
+			 agent=self.prompt_engineer_1()
 		)
+
+	@task
+	def optimize_prompt_direction_2(self) -> Task:
+		"""Create a develop strategies task."""
+		return Task(
+			 config=self.tasks_config['optimize_prompt_direction_2'],
+			 agent=self.prompt_engineer_2()
+		)	
+
+	@task
+	def optimize_prompt_direction_3(self) -> Task:
+		"""Create a develop strategies task."""
+		return Task(
+			 config=self.tasks_config['optimize_prompt_direction_3'],
+			 agent=self.prompt_engineer_3()
+		)		
 
 	@crew
 	def crew(self) -> Crew:
