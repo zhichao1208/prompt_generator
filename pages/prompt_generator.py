@@ -365,12 +365,12 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown(f"""
             <div style='
                 background-color: #f8f9fa; 
-                padding: 12px; 
+                padding: 5px; 
                 border-radius: 4px; 
-                margin-top: 8px; 
-                margin-bottom: 12px; 
+                margin-top: 5px; 
+                margin-bottom: 5px; 
                 border: 1px solid #e9ecef;
-                height: 200px;           /* 固定高度 */
+                height: 120px;           /* 固定高度 */
                 overflow-y: auto;        /* 内容超出时显示滚动条 */
             '>
                 <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
@@ -393,12 +393,12 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown(f"""
             <div style='
                 background-color: #f8f9fa; 
-                padding: 12px; 
+                padding: 5px; 
                 border-radius: 4px; 
-                margin-top: 8px; 
-                margin-bottom: 12px; 
+                margin-top: 5px; 
+                margin-bottom: 5px; 
                 border: 1px solid #e9ecef;
-                height: 200px;           /* 固定高度 */
+                height: 120px;           /* 固定高度 */
                 overflow-y: auto;        /* 内容超出时显示滚动条 */
             '>
                 <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
