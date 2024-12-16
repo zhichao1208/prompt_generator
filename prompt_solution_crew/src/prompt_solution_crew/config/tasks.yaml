@@ -24,10 +24,7 @@ analyze_requirements_task:
 
 optimize_prompt_direction_1:
   description: >
-    Architect's Analysis for Direction 1:
-    {direction_1}
-
-    Based on the above analysis from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the FIRST direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements:
     Task Description: {task_description}
@@ -242,10 +239,7 @@ optimize_prompt_direction_1:
 
 optimize_prompt_direction_2:
   description: >
-    Architect's Analysis for Direction 2:
-    {direction_2}
-
-    Based on the above analysis from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the SECOND direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements:
     Task Description: {task_description}
@@ -460,10 +454,7 @@ optimize_prompt_direction_2:
 
 optimize_prompt_direction_3:
   description: >
-    Architect's Analysis for Direction 3:
-    {direction_3}
-
-    Based on the above analysis from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the THIRD direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements:
     Task Description: {task_description}
