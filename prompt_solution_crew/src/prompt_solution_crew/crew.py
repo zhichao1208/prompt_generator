@@ -43,6 +43,9 @@ class PromptSolutionCrew():
 		# 初始化agents和tasks列表
 		self.agents = []
 		self.tasks = []
+		
+		# 存储分析任务的结果
+		self.analysis_task = None
 
 	@agent
 	def architect(self) -> Agent:
@@ -88,7 +91,7 @@ class PromptSolutionCrew():
 	def analyze_requirements_task(self, task_description: str, task_type: str, model_preference: str, 
 							  tone: str, context: str, data_input: str, examples: str) -> Task:
 		"""Create an analyze requirements task."""
-		return Task(
+		task = Task(
 			description=self.tasks_config['analyze_requirements_task']['description'].format(
 				task_description=task_description,
 				task_type=task_type,
@@ -101,6 +104,8 @@ class PromptSolutionCrew():
 			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
 			agent=self.architect()
 		)
+		self.analysis_task = task
+		return task
 
 	@task
 	def optimize_prompt_direction_1(self, task_description: str, task_type: str, model_preference: str,
@@ -118,8 +123,7 @@ class PromptSolutionCrew():
 			),
 			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
 			agent=self.prompt_engineer_1(),
-			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
-												tone, context, data_input, examples)]
+			context=[self.analysis_task] if self.analysis_task else []
 		)
 
 	@task
@@ -138,8 +142,7 @@ class PromptSolutionCrew():
 			),
 			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
 			agent=self.prompt_engineer_2(),
-			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
-												tone, context, data_input, examples)]
+			context=[self.analysis_task] if self.analysis_task else []
 		)
 
 	@task
@@ -158,17 +161,20 @@ class PromptSolutionCrew():
 			),
 			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
 			agent=self.prompt_engineer_3(),
-			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
-												tone, context, data_input, examples)]
+			context=[self.analysis_task] if self.analysis_task else []
 		)
 
 	@crew
 	def get_crew(self, task_description: str, task_type: str, model_preference: str,
 			   tone: str, context: str, data_input: str, examples: str) -> Crew:
 		"""Creates the PromptSolutionCrew crew with all tasks"""
+		# 首先创建分析任务
+		analysis_task = self.analyze_requirements_task(task_description, task_type, model_preference,
+										tone, context, data_input, examples)
+		
+		# 然后创建优化任务
 		tasks = [
-			self.analyze_requirements_task(task_description, task_type, model_preference,
-										tone, context, data_input, examples),
+			analysis_task,
 			self.optimize_prompt_direction_1(task_description, task_type, model_preference,
 										 tone, context, data_input, examples),
 			self.optimize_prompt_direction_2(task_description, task_type, model_preference,
