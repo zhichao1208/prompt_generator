@@ -1,5 +1,5 @@
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task
+from crewai.project import CrewBase, agent, crew, task, before_kickoff
 from pathlib import Path
 import yaml
 from pydantic import BaseModel
@@ -40,8 +40,29 @@ class PromptSolutionCrew():
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
 		
-		# 存储分析���务的结果
+		# 存储分析任务的结果
 		self.analysis_task = None
+
+	@before_kickoff
+	def prepare_inputs(self, inputs):
+		"""在crew开始执行前处理输入参数"""
+		# 确保所有必需的参数都存在
+		required_params = [
+			'task_description',
+			'task_type',
+			'model_preference',
+			'tone',
+			'context',
+			'data_input',
+			'examples'
+		]
+		
+		# 如果没有提供某个参数，使用空字符串
+		for param in required_params:
+			if param not in inputs:
+				inputs[param] = ''
+		
+		return inputs
 
 	@agent
 	def architect(self) -> Agent:
