@@ -7,7 +7,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
-from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Strategy,StrategicApproaches
+from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,DirectionsList,PromptTemplate
 
 # 存储和处理 crew 结果
 def process_crew_results(results):
