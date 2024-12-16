@@ -200,7 +200,18 @@ class PromptSolutionCrew():
 			context=[self.analysis_task] if self.analysis_task else []
 		)
 
-	def create_crew(self, task_description: str, task_type: str, model_preference: str,
+	@crew
+	def crew(self) -> Crew:
+		"""Creates the PromptSolutionCrew crew with default empty tasks"""
+		return Crew(
+			agents=[self.architect(), self.prompt_engineer_1(), 
+					self.prompt_engineer_2(), self.prompt_engineer_3()],
+			tasks=[],
+			process=Process.sequential,
+			verbose=True
+		)
+
+	def create_crew_with_tasks(self, task_description: str, task_type: str, model_preference: str,
 				 tone: str, context: str, data_input: str, examples: str) -> Crew:
 		"""Creates and returns a new crew instance with the given parameters"""
 		# 设置用户输入
