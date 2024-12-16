@@ -1,5 +1,5 @@
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task, before_kickoff
+from crewai.project import CrewBase, agent, crew, task
 from pathlib import Path
 import yaml
 from pydantic import BaseModel
@@ -39,115 +39,43 @@ class PromptSolutionCrew():
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
-		
-		# 存储分析任务的结果
-		self.analysis_task = None
-
-	@before_kickoff
-	def prepare_inputs(self, inputs):
-		"""在crew开始执行前处理输入参数"""
-		# 确保所有必需的参数都存在
-		required_params = [
-			'task_description',
-			'task_type',
-			'model_preference',
-			'tone',
-			'context',
-			'data_input',
-			'examples'
-		]
-		
-		# 如果没有提供某个参数，使用空字符串
-		for param in required_params:
-			if param not in inputs:
-				inputs[param] = ''
-		
-		return inputs
 
 	@agent
 	def architect(self) -> Agent:
 		"""Create an architect agent."""
 		return Agent(
-			config=self.agents_config['architect'],
-			verbose=True
-		)
-
-	@agent
-	def prompt_engineer_1(self) -> Agent:
-		"""Create the first prompt engineer agent."""
-		return Agent(
-			config=self.agents_config['prompt_engineer_1'],
-			verbose=True
-		)
-
-	@agent
-	def prompt_engineer_2(self) -> Agent:
-		"""Create the second prompt engineer agent."""
-		return Agent(
-			config=self.agents_config['prompt_engineer_2'],
-			verbose=True
-		)
-
-	@agent
-	def prompt_engineer_3(self) -> Agent:
-		"""Create the third prompt engineer agent."""
-		return Agent(
-			config=self.agents_config['prompt_engineer_3'],
+			role=self.agents_config['architect']['role'],
+			goal=self.agents_config['architect']['goal'],
+			backstory=self.agents_config['architect']['backstory'],
+			llm=self.agents_config['architect']['llm'],
 			verbose=True
 		)
 
 	@task
 	def analyze_requirements_task(self) -> Task:
 		"""Create an analyze requirements task."""
-		task = Task(
-			config=self.tasks_config['analyze_requirements_task'],
+		return Task(
+			description=self.tasks_config['analyze_requirements_task']['description'],
+			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
 			agent=self.architect()
 		)
-		self.analysis_task = task
-		return task
 
 	@task
-	def optimize_prompt_direction_1(self) -> Task:
-		"""Create the first prompt optimization task."""
+	def develop_strategies_task(self) -> Task:
+		"""Create a develop strategies task."""
 		return Task(
-			config=self.tasks_config['optimize_prompt_direction_1'],
-			agent=self.prompt_engineer_1(),
-			context=[self.analysis_task] if self.analysis_task else []
-		)
-
-	@task
-	def optimize_prompt_direction_2(self) -> Task:
-		"""Create the second prompt optimization task."""
-		return Task(
-			config=self.tasks_config['optimize_prompt_direction_2'],
-			agent=self.prompt_engineer_2(),
-			context=[self.analysis_task] if self.analysis_task else []
-		)
-
-	@task
-	def optimize_prompt_direction_3(self) -> Task:
-		"""Create the third prompt optimization task."""
-		return Task(
-			config=self.tasks_config['optimize_prompt_direction_3'],
-			agent=self.prompt_engineer_3(),
-			context=[self.analysis_task] if self.analysis_task else []
+			description=self.tasks_config['develop_strategies_task']['description'],
+			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
+			agent=self.architect(),
+			context=[self.analyze_requirements_task()]
 		)
 
 	@crew
 	def crew(self) -> Crew:
 		"""Creates the PromptSolutionCrew crew"""
 		return Crew(
-			agents=[self.architect(), self.prompt_engineer_1(), 
-					self.prompt_engineer_2(), self.prompt_engineer_3()],
-			tasks=[
-				self.analyze_requirements_task(),
-				self.optimize_prompt_direction_1(),
-				self.optimize_prompt_direction_2(),
-				self.optimize_prompt_direction_3()
-			],
+			agents=self.agents,
+			tasks=self.tasks,
 			process=Process.sequential,
 			verbose=True
 		)
-
-# Export the PromptSolutionCrew class
-__all__ = ['PromptSolutionCrew']
