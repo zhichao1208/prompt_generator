@@ -17,9 +17,31 @@ st.set_page_config(
 )
 
 # Left Sidebar: User Input Section
+
+
 with st.sidebar:
     st.header("Task Configuration")
+    # API 状态检查
+    st.subheader("API 状态")
     
+    # 安全地检查配置（同时检查 secrets 和环境变量）
+    def check_config(key):
+        try:
+            return bool(st.secrets.get(key)) or bool(os.getenv(key))
+        except Exception:
+            return bool(os.getenv(key))
+
+    api_status = {
+        "OpenAI KEY": check_config("OPENAI_API_KEY"),
+        "OpenAI Model": check_config("OPENAI_MODEL_NAME")
+    }
+    
+    for api, status in api_status.items():
+        if status:
+            st.success(f"{api} ✓")
+        else:
+            st.error(f"{api} ✗")
+
     # Task Description
     st.subheader("Task Description")
     task_description = st.text_area(
@@ -206,26 +228,6 @@ Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
             st.error("请检查配置并重试")
 st.subheader("⚙️ 配置")
     
-    # API 状态检查
-st.subheader("API 状态")
-    
-    # 安全地检查配置（同时检查 secrets 和环境变量）
-def check_config(key):
-    try:
-        return bool(st.secrets.get(key)) or bool(os.getenv(key))
-    except Exception:
-            return bool(os.getenv(key))
-    
-    api_status = {
-        "OpenAI KEY": check_config("OPENAI_API_KEY"),
-        "OpenAI Model": check_config("OPENAI_MODEL_NAME")
-    }
-    
-    for api, status in api_status.items():
-        if status:
-            st.success(f"{api} ✓")
-        else:
-            st.error(f"{api} ✗")
 
 # Main Content Area
 st.title("Prompt Generator")
