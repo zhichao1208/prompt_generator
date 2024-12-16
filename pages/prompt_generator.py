@@ -12,31 +12,23 @@ from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,St
 # 存储和处理 crew 结果
 def process_crew_results(results):
     try:
-        # 直接获取结果中的优化方向
+        # 直接返回完整的分析结果
         if isinstance(results, dict):
-            return results.get("optimizationDirections", [])
-        elif hasattr(results, "optimizationDirections"):
-            return results.optimizationDirections
-        return []
+            return results
+        return {}
     except Exception as e:
         st.error(f"处理结果时出错: {str(e)}")
-        return []
+        return {}
 
-# 创建三个 session state 变量来存储方向
-if "direction_1" not in st.session_state:
-    st.session_state.direction_1 = None
-if "direction_2" not in st.session_state:
-    st.session_state.direction_2 = None
-if "direction_3" not in st.session_state:
-    st.session_state.direction_3 = None
+# 创建 session state 变量来存储架构师分析
+if "architect_analysis" not in st.session_state:
+    st.session_state.architect_analysis = None
 
 # 处理结果并存储到 session state
-def store_directions(results):
-    directions = process_crew_results(results)
-    if len(directions) >= 3:
-        st.session_state.direction_1 = directions[0]
-        st.session_state.direction_2 = directions[1]
-        st.session_state.direction_3 = directions[2]
+def store_analysis(results):
+    analysis = process_crew_results(results)
+    if analysis:
+        st.session_state.architect_analysis = analysis
 
 # Page Configuration
 st.set_page_config(
@@ -238,42 +230,36 @@ Order Number: ORD-2024-001''',
                     architect_results = architect_crew.kickoff(inputs=inputs)
                     
                     # 更新状态
-                    status_container.success("✅ 架构生成成功!")
+                    status_container.success("✅ 架构分析完成!")
                     
                     # 显示架构分析结果
                     if architect_results:
                         result_container.json(architect_results)
                         
-                        # 处理架构分析结果
-                        directions = process_crew_results(architect_results)
-                        if len(directions) >= 3:
-                            store_directions(architect_results)
+                        # 存储架构分析结果
+                        store_analysis(architect_results)
+                        
+                        # 准备 prompt engineer 的输入
+                        prompt_inputs = {
+                            **inputs,  # 包含原始输入
+                            "architect_analysis": architect_results  # 传递完整的架构分析
+                        }
+                        
+                        # 运行 prompt engineer crew
+                        status_container.info("开始生成优化提示词...")
+                        with st.spinner('正在生成优化提示词...'):
+                            prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
+                            engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
                             
-                            # 准备 prompt engineer 的输入
-                            prompt_inputs = {
-                                **inputs,  # 包含原始输入
-                                "direction_1": directions[0],
-                                "direction_2": directions[1],
-                                "direction_3": directions[2]
-                            }
+                            # 更新状态
+                            status_container.success("✅ 提示词生成成功!")
                             
-                            # 运行 prompt engineer crew
-                            status_container.info("开始生成优化提示词...")
-                            with st.spinner('正在生成优化提示词...'):
-                                prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
-                                engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
-                                
-                                # 更新状态
-                                status_container.success("✅ 提示词生成成功!")
-                                
-                                # 存储结果
-                                st.session_state.prompt_result_1 = engineer_results
-                                
-                                # 显示优化后的提示词
-                                st.subheader("🎯 优化后的提示词结构")
-                                st.json(engineer_results)
-                        else:
-                            st.warning("架构分析未能生成足够的优化方向")
+                            # 存储结果
+                            st.session_state.prompt_result_1 = engineer_results
+                            
+                            # 显示优化后的提示词
+                            st.subheader("🎯 优化后的提示词结构")
+                            st.json(engineer_results)
                     else:
                         result_container.info("生成完成，但未返回结果。")
                         
@@ -288,20 +274,8 @@ Order Number: ORD-2024-001''',
             st.exception(e)
             st.error("请检查配置并重试")
     
-    # 优化方向区域
-    st.markdown("---")  # 添加分隔线提高可见性
-    st.subheader("🔄 优化方向")
 
-    # 显示当前选择的优化方向
-    if st.session_state.direction_1:
-        st.info(f"""
-        **优化重点**: {st.session_state.direction_1.get('focus', '未指定')}
-        **相关性**: {st.session_state.direction_1.get('relevance', '未指定')}
-        **预期收益**: {st.session_state.direction_1.get('benefits', '未指定')}
-        **实施考虑**: {st.session_state.direction_1.get('implementation_considerations', '未指定')}
-        """)
-    else:
-        st.warning("请先运行分析以获取优化方向")
+
 
 # Main Content Area
 st.title("Prompt Generator")
@@ -1443,7 +1417,7 @@ with eval_tab2:
     
     for solution in metrics_data:
         values = list(metrics_data[solution].values())
-        # 添加首个值到末尾以闭合图形
+        # 添��首个值到末尾以闭合图形
         values.append(values[0])
         
         fig.add_trace(go.Scatterpolar(
@@ -1511,7 +1485,7 @@ with eval_tab2:
         with col4:
             st.metric("Logic Score", "97%", help="Quality of reasoning process")
         
-        # 高级维度（展示区）
+        # 高级维度（展���区）
         with st.expander("Advanced Dimensions"):
             # 稳定性分析
             st.markdown("**Stability Analysis**")
@@ -1834,7 +1808,7 @@ st.markdown("""
         font-size: 14px !important;
     }
     
-    /* 调整指标值的样式 */
+    /* 调整指标��的样式 */
     .metric-value {
         font-size: 24px !important;
         line-height: 1.2;
