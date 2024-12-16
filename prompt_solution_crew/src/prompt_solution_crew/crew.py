@@ -35,6 +35,16 @@ class ArchitectCrew():
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
+		
+		# 创建 agents 字典
+		self.agents = {
+			'architect': self.architect
+		}
+		
+		# 创建 tasks 字典
+		self.tasks = {
+			'analyze_requirements_task': self.analyze_requirements_task
+		}
 
 	@agent
 	def architect(self) -> Agent:
@@ -101,6 +111,16 @@ class PromptEngineerCrew():
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
+		
+		# 创建 agents 字典
+		self.agents = {
+			'prompt_engineer': self.prompt_engineer
+		}
+		
+		# 创建 tasks 字典
+		self.tasks = {
+			'optimize_prompt_direction': self.optimize_prompt_task
+		}
 
 	@agent
 	def prompt_engineer(self) -> Agent:
