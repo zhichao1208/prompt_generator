@@ -75,9 +75,7 @@ class PromptSolutionCrew():
 	def architect(self) -> Agent:
 		"""Create an architect agent."""
 		return Agent(
-			role=self.agents_config['architect']['role'],
-			goal=self.agents_config['architect']['goal'],
-			backstory=self.agents_config['architect']['backstory'],
+			config=self.agents_config['architect'],
 			verbose=True
 		)
 
@@ -85,9 +83,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_1(self) -> Agent:
 		"""Create the first prompt engineer agent."""
 		return Agent(
-			role=self.agents_config['prompt_engineer']['role'],
-			goal=self.agents_config['prompt_engineer']['goal'],
-			backstory=self.agents_config['prompt_engineer']['backstory'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
@@ -95,9 +91,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_2(self) -> Agent:
 		"""Create the second prompt engineer agent."""
 		return Agent(
-			role=self.agents_config['prompt_engineer']['role'],
-			goal=self.agents_config['prompt_engineer']['goal'],
-			backstory=self.agents_config['prompt_engineer']['backstory'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
@@ -105,9 +99,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_3(self) -> Agent:
 		"""Create the third prompt engineer agent."""
 		return Agent(
-			role=self.agents_config['prompt_engineer']['role'],
-			goal=self.agents_config['prompt_engineer']['goal'],
-			backstory=self.agents_config['prompt_engineer']['backstory'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
