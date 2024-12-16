@@ -479,9 +479,19 @@ Project Link: [https://github.com/yourusername/prompt_generator](https://github.
 
 ## 🙏 Acknowledgments
 
-- OpenAI for providing the GPT models
-- Streamlit team for the amazing framework
-- All contributors who have helped shape this project
+- [Beamai](https://beamai.ai) and Dorian Schlede for inspiration
+
+### Research Inspirations
+- [Cognitive Architectures for Language Agents](https://arxiv.org/pdf/2406.06608)
+- [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2303.18223)
+- [A Survey on Language Agents: Recent Advances and Future Directions](https://arxiv.org/pdf/2407.12994)
+- [Constitutional AI: A Survey](https://arxiv.org/abs/2302.11382)
+
+### Listen to the Podcast and learn from these papers
+<iframe title="AI Paper+" allowtransparency="true" height="315" width="100%" style="border: none; min-width: min(100%, 430px);height:315px;" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=t65yp-12d7e0b-pbblog-playlist&share=1&download=1&rtl=0&fonts=Arial&skin=1&font-color=auto&logo_link=episode_page&order=episodic&limit=10&filter=all&ss=a713390a017602015775e868a2cf26b0&btn-skin=3267a3&size=315" loading="lazy" allowfullscreen=""></iframe>
+
+
+These papers have provided valuable insights into language agents, cognitive architectures, and advanced prompt engineering techniques that have influenced the design and implementation of this project.
 
 ---
 
