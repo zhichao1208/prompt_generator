@@ -21,7 +21,8 @@ class RequirementsAnalysis(BaseModel):
 	context: Dict[str, str]
 
 class Direction(BaseModel):
-    name: str 
+    name: str
+    codename: str
     focus: str
     relevance: str
     benefits: List[str]

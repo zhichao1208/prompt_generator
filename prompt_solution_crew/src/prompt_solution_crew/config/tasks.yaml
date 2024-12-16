@@ -41,7 +41,7 @@ analyze_requirements_task:
 
     Provide the output in JSON format with three distinct optimization directions.
   expected_output: >
-    A JSON object containing three optimization directions, each with focus, relevance, benefits, implementation considerations and assigned prompt engineer.
+    A JSON object containing three optimization directions, each with name, codename (from movie, comic, or game or Myths and Legends based on the focus and direction feature or user's input),focus, relevance, benefits, implementation considerations and assigned prompt engineer.
   agent: architect
 
 
