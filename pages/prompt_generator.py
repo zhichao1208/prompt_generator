@@ -7,7 +7,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
-from crew import PromptSolutionCrew,RequirementsAnalysis,Strategy,StrategicApproaches
+from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Strategy,StrategicApproaches
 
 # 设置 OpenAI API 密钥（从 Streamlit secrets 获取）
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
