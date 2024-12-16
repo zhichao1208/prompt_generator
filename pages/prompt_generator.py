@@ -158,10 +158,11 @@ Order Number: ORD-2024-001''',
             inputs = {
                 'task_description': task_description,
                 'task_type': task_type,
-                'model_preference': model_preference,
+                'model_preference': str(model_preference),  # 预处理为字符串
                 'tone': tone,
-                'context': context,
-                'data_input': data_input
+                'context': context or 'Not specified',  # 预处理默认值
+                'data_input': data_input or 'Not specified',  # 预处理默认值
+                'examples': str(examples) if examples else 'Not specified'  # 预处理为字符串
             }
             
             # 收集Few-Shot Examples

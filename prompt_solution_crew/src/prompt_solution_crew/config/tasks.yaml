@@ -4,11 +4,11 @@ analyze_requirements_task:
     
     Primary Goal: {task_description}
     Task Type: {task_type}
-    Model Preference: {str(model_preference)}
+    Model Preference: {model_preference}
     Tone: {tone}
-    Context: {context or 'Not specified'}
-    Sample Data: {data_input or 'Not specified'}
-    Few-Shot Examples: {str(examples) if examples else 'Not specified'}
+    Context: {context}
+    Sample Data: {data_input}
+    Few-Shot Examples: {examples}
 
     Review the user preferences and identify THREE most relevant and helpful optimization directions.
     For each direction, provide:
