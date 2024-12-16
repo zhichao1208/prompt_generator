@@ -155,15 +155,6 @@ Order Number: ORD-2024-001''',
             status_container.info("正在初始化 PromptSolutionCrew...")
             
             # 从Task Configuration收集用户设置
-            inputs = {
-                'task_description': task_description,
-                'task_type': task_type,
-                'model_preference': str(model_preference),  # 预处理为字符串
-                'tone': tone,
-                'context': context or 'Not specified',  # 预处理默认值
-                'data_input': data_input or 'Not specified',  # 预处理默认值
-                'examples': str(examples) if examples else 'Not specified'  # 预处理为字符串
-            }
             
             # 收集Few-Shot Examples
             examples = []
@@ -175,7 +166,17 @@ Order Number: ORD-2024-001''',
                         "input": example_input,
                         "output": example_output
                     })
-            inputs['examples'] = examples
+
+            # 准备输入参数
+            inputs = {
+                'task_description': task_description,
+                'task_type': task_type,
+                'model_preference': str(model_preference),  # 预处理为字符串
+                'tone': tone,
+                'context': context or '用户未输入',  # 预处理默认值
+                'data_input': data_input or '用户未输入',  # 预处理默认值
+                'examples': str(examples) if examples else '用户未输入'  # 预处理为字符串
+            }
             
             # 更新状态
             status_container.info("开始生成提示词...")
