@@ -1,14 +1,8 @@
 analyze_requirements_task:
   description: >
-    Analyze the following user requirements {user_setup} for prompt engineering solution:
+    Analyze the following user requirements for prompt engineering solution:
     
-    Primary Goal: task_description
-    Task Type: task_type
-    Model Preference: model_preference
-    Tone: tone
-    Context: context
-    Sample Data: data_input
-    Few-Shot Examples: examples
+    {user_setup}
 
     Review the user preferences and identify THREE most relevant and helpful optimization directions.
     For each direction, provide:
@@ -28,8 +22,6 @@ optimize_prompt_direction_1:
     
     User Requirements: {user_setup}
 
-    Few-Shot Examples: examples
-  
     Your task is to generate a complete prompt structure following these components:
 
     1. Role Component:
@@ -237,7 +229,6 @@ optimize_prompt_direction_2:
     Based on the SECOND direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements: {user_setup}
-
 
     Your task is to generate a complete prompt structure following these components:
 

@@ -168,8 +168,16 @@ Order Number: ORD-2024-001''',
                     })
 
             # 准备输入参数
+            user_setup = f"""Primary Goal: {task_description}
+Task Type: {task_type}
+Model Preference: {str(model_preference)}
+Tone: {tone}
+Context: {context or '用户未输入'}
+Sample Data: {data_input or '用户未输入'}
+Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
+
             inputs = {
-                'user_setup': f"{task_description} {task_type} {str(model_preference)} {tone} {context} {data_input} {str(examples)}"
+                'user_setup': user_setup
             }
             
             # 更新状态
@@ -1376,7 +1384,7 @@ with eval_tab2:
         # 核心维度（大数字对比区）
         st.markdown("**Core Metrics**")
         
-        # 第一行：准确性和目标达成度
+        # 第一行：准���性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs")
