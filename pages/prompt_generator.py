@@ -597,7 +597,7 @@ Performance Focus:
         # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
 
-        default_output_content = st.session_state.get('selected_output_format_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('selected_output_format_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('selected_output_format_3', 'Not Generated...'))
+        default_output_content = st.session_state.get('output_format_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('output_format_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('output_format_3', 'Not Generated...'))
         st.text_area(
             "Define output format",
             value=default_output_content,
