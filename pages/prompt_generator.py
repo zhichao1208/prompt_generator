@@ -187,9 +187,8 @@ Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
             with st.spinner('正在生成...'):
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
-                    crew_instance = PromptSolutionCrew()
-                    crew = crew_instance.crew()
-                    results = crew.kickoff(inputs=inputs)
+                    architect_crew = PromptSolutionCrew().architect_crew()
+                    results = architect_crew.kickoff(inputs={"user_setup": user_setup})
                     
                     # 更新状态
                     status_container.success("✅ 提示词生成成功!")
