@@ -244,16 +244,34 @@ Order Number: ORD-2024-001''',
                             **inputs,  # 包含原始输入
                             "architect_direction": architect_results["directions"][0]  # 传递第一个方向
                         }
+
+                        # 准备 prompt engineer 1 的输入
+                        prompt_inputs_2 = {
+                            **inputs,  # 包含原始输入
+                            "architect_direction": architect_results["directions"][1]  # 传递第二个方向
+                        }
+
+                        # 准备 prompt engineer 1 的输入
+                        prompt_inputs_3 = {
+                            **inputs,  # 包含原始输入
+                            "architect_direction": architect_results["directions"][2]  # 传递第三个方向
+                        }
                         
                         # 运行 prompt engineer crew 1
                         status_container.info("Starting Prompt 1 Optimization...")
-                        with st.spinner('Generating Optimized Prompt 1...'):
+                        with st.spinner('Generating Optimized Prompts...'):
                             try:
                                 prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
                                 engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
                                 
+                                prompt_engineer_crew_2 = PromptSolutionCrew().prompt_engineer_crew_2()
+                                engineer_results_2 = prompt_engineer_crew_2.kickoff(inputs=prompt_inputs_2)
+                                
+                                prompt_engineer_crew_3 = PromptSolutionCrew().prompt_engineer_crew_3()
+                                engineer_results_3 = prompt_engineer_crew_3.kickoff(inputs=prompt_inputs_3)
+                                
                                 # 更新状态
-                                status_container.success("✅ Prompt 1 Generation Successful!")
+                                status_container.success("✅ Prompt 1, 2, 3 Generation Successful!")
                                 
                                 # 存储结果
                                 st.session_state.prompt_result_1 = engineer_results_1
@@ -264,13 +282,40 @@ Order Number: ORD-2024-001''',
                                 st.session_state.rules_1 = engineer_results_1['rules_constraints']
                                 st.session_state.selected_reasoning_methods_1 = engineer_results_1['reasoning_method']
                                 st.session_state.selected_planning_methods_1 = engineer_results_1['planning_method']
-                                st.session_state.selected_output_format_1 = engineer_results_1['output_format']
+                                st.session_state.output_format_1 = engineer_results_1['output_format']
+                                  # 存储结果
+                                st.session_state.prompt_result_2 = engineer_results_2
+                                st.session_state.direction_2 = architect_results["directions"][1]["focus"]
+                                st.session_state.overview_2 = engineer_results_2['explanation_of_optimization_choices']
+                                st.session_state.role_2 = engineer_results_2['role']
+                                st.session_state.task_2 = engineer_results_2['task']
+                                st.session_state.rules_2 = engineer_results_2['rules_constraints']
+                                st.session_state.selected_reasoning_methods_2 = engineer_results_2['reasoning_method']
+                                st.session_state.selected_planning_methods_2 = engineer_results_2['planning_method']
+                                st.session_state.output_format_2 = engineer_results_2['output_format']
+                                  # 存储结果
+                                st.session_state.prompt_result_3 = engineer_results_3
+                                st.session_state.direction_3 = architect_results["directions"][2]["focus"]
+                                st.session_state.overview_3 = engineer_results_3['explanation_of_optimization_choices']
+                                st.session_state.role_3 = engineer_results_3['role']
+                                st.session_state.task_3 = engineer_results_3['task']
+                                st.session_state.rules_3 = engineer_results_3['rules_constraints']
+                                st.session_state.selected_reasoning_methods_3 = engineer_results_3['reasoning_method']
+                                st.session_state.selected_planning_methods_3 = engineer_results_3['planning_method']
+                                st.session_state.output_format_3 = engineer_results_3['output_format']
                                 
+
                                 # 显示优化后的提示词
                                 st.subheader("🎯 Optimized Prompt 1 Structure")
                                 st.json(engineer_results_1)
+                                
+                                st.subheader("🎯 Optimized Prompt 2 Structure")
+                                st.json(engineer_results_2)
+                                
+                                st.subheader("🎯 Optimized Prompt 3 Structure")
+                                st.json(engineer_results_3)
                             except Exception as e:
-                                st.error(f"Error during Prompt 1 generation: {str(e)}")
+                                st.error(f"Error during Prompt 1, 2, 3 generation: {str(e)}")
                                 st.exception(e)
                     else:
                         result_container.info("Generation complete, but no results returned.")
