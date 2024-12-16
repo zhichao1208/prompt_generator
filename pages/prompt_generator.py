@@ -169,7 +169,7 @@ Order Number: ORD-2024-001''',
 
             # 准备输入参数
             inputs = {
-                'user_setup': f"{task_description},{task_type}, {str(model_preference)}, {tone}, {context}, {data_input}, {str(examples)}"
+                'user_setup': f"{task_description} {task_type} {str(model_preference)} {tone} {context} {data_input} {str(examples)}"
             }
             
             # 更新状态
