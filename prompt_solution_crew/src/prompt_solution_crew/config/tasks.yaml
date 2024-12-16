@@ -1,6 +1,6 @@
 analyze_requirements_task:
   description: >
-    Analyze the following user requirements for prompt engineering solution:
+    Analyze the following user requirements {user_setup} for prompt engineering solution:
     
 
     Review the user preferences and identify THREE most relevant and helpful optimization directions.
