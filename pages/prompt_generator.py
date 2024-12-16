@@ -264,6 +264,7 @@ Order Number: ORD-2024-001''',
                             
                             # 存储结果
                             st.session_state.prompt_result_1 = engineer_results
+                            print(engineer_results)
                             
                             # 显示优化后的提示词
                             st.subheader("🎯 优化后的提示词结构")
@@ -282,31 +283,6 @@ Order Number: ORD-2024-001''',
             st.exception(e)
             st.error("请检查配置并重试")
     
-# 存储 prompt engineer 结果到 JSON
-def store_engineer_results(results):
-    try:
-        # 获取当前时间作为文件名的一部分
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"engineer_results_{timestamp}.json"
-        
-        # 确保存储目录存在
-        os.makedirs("results", exist_ok=True)
-        
-        # 将结果写入 JSON 文件
-        with open(os.path.join("results", filename), "w", encoding="utf-8") as f:
-            json.dump(results, f, ensure_ascii=False, indent=2)
-            
-        st.success(f"结果已保存到: results/{filename}")
-        
-    except Exception as e:
-        st.error(f"保存结果时出错: {str(e)}")
-
-# 调用存储函数
-if engineer_results:
-    store_engineer_results(engineer_results)
-
-print(engineer_results)
-
 # Main Content Area
 st.title("Prompt Generator")
 
