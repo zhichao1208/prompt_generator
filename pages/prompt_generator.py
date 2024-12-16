@@ -12,17 +12,11 @@ from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,St
 # 存储和处理 crew 结果
 def process_crew_results(results):
     try:
-        # 从原始结果中提取 JSON 字符串
-        import json
-        import re
-        
-        # 使用正则表达式提取 JSON 字符串
-        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
-        if json_match:
-            json_str = json_match.group(1)
-            # 解析 JSON
-            directions = json.loads(json_str)
-            return directions.get("optimization_directions", [])
+        # 直接获取结果中的优化方向
+        if isinstance(results, dict):
+            return results.get("optimizationDirections", [])
+        elif hasattr(results, "optimizationDirections"):
+            return results.optimizationDirections
         return []
     except Exception as e:
         st.error(f"处理结果时出错: {str(e)}")
@@ -276,7 +270,7 @@ Order Number: ORD-2024-001''',
                                 st.session_state.prompt_result_1 = engineer_results
                                 
                                 # 显示优化后的提示词
-                                st.subheader("🎯 优化后���提示词结构")
+                                st.subheader("🎯 优化后的提示词结构")
                                 st.json(engineer_results)
                         else:
                             st.warning("架构分析未能生成足够的优化方向")
