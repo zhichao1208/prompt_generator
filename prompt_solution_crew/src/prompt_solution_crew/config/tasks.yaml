@@ -1,8 +1,12 @@
 analyze_requirements_task:
   description: >
-    Analyze the following user requirements for prompt engineering solution:
+    Analyze the following user requirements,
+    Understand the user's problem and identify three most relevant optimization directions for prompt engineering solution.
+    Remember: The goal is to identiy the direction for prompt engineer to generate an optimized prompt based on this direction and user requirements,
+    In order to help users to use your prompt in their automated process, not to use UI elements or other tools to solve the user's problem directly.
 
-    Task Description: {task_description}
+
+    User Input as TaskDescription: {task_description}
     Task Type: {task_type} 
     Model Preference: {model_preference}
     Tone: {tone}
@@ -10,7 +14,24 @@ analyze_requirements_task:
     Sample Data: {sample_data}
     Examples: {examples}
 
-    Review the user preferences and identify THREE most relevant and helpful optimization directions.
+    Review the user preferences and identify THREE most relevant and helpful optimization directions from the following list:
+
+    1. Maximum accuracy and precision
+    2. Cost efficiency and resource optimization 
+    3. Contextual understanding and relevance
+    4. Step-by-step reasoning clarity
+    5. Robustness and error handling
+    6. Output consistency and standardization
+    7. Task-specific specialization
+    8. Knowledge depth and expertise
+    9. Adaptability and flexibility
+    10. Response conciseness and brevity
+    11. Instruction following fidelity
+    12. Edge case handling capability
+    13. Domain-specific optimization
+    14. Multi-step task coordination
+    15. Input-output alignment optimization
+
     For each direction, provide:
     1. Clear description of the optimization focus
     2. Why this direction is particularly relevant to the user's needs
@@ -508,10 +529,12 @@ optimize_prompt_direction_3:
     - Purpose: State the main goal or responsibility
     - Structure: Clear statement of primary function
     - Example: "Your primary goal is to transform complex data into actionable business insights"
+
     2. Task Component:
     Purpose: Define what needs to be done and how it should be accomplished. Stay close to the user's Task Description!
     Impact: Clear task definition ensures accurate and focused execution.
-    Important: if user input specific data, please make include all of them in the task description!
+    Important: if user input specific data, please make include ALL of them in the task description!
+
     Required Elements:
     a) Objective Statement
     - Purpose: Clear statement of what needs to be achieved
@@ -672,7 +695,7 @@ optimize_prompt_direction_3:
 
     Remember: Your goal is to provide an optimized prompt based on architect direction and user requirements,
     in order to help users to use your prompt in their automated process, not to use UI elements or other tools to solve the user's problem directly.
-    
+
     Provide the output in JSON format including:
     1. Complete prompt structure (role, task, rules)
     2. Selected methods (reasoning_method, planning_method, output_format) with justification
