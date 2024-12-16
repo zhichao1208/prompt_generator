@@ -248,7 +248,7 @@ Order Number: ORD-2024-001''',
                             'context': context or 'not defined',
                             'sample_data': data_input or 'not defined',
                             'examples': str(examples) if examples else 'not defined',  # 包含原始输入
-                            "architect_direction": architect_results[0]  # 传递完整的架构分析
+                            "architect_direction": architect_results["directions"][0]  # 传递完整的架构分析
                         }
                         
                         # 运行 prompt engineer crew
@@ -263,6 +263,7 @@ Order Number: ORD-2024-001''',
                             # 存储结果
                             st.session_state.prompt_result_1 = engineer_results_1
 
+                            st.session_state.direction_1 = architect_results["directions"][0]["focus"] 
                             st.session_state.overview_1 = engineer_results_1['explanation_of_optimization_choices']   
                             st.session_state.role_1 = engineer_results_1['role']
                             st.session_state.task_1 = engineer_results_1['task']
@@ -313,6 +314,25 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Version info
         st.markdown("<div style='color: #666; margin-bottom: 10px;'>Version 1.0 (2024-12-14)</div>", unsafe_allow_html=True)
+
+        # Solution Introduction
+        st.markdown("<h4 style='margin-top: 20px;'>Direction</h4>", unsafe_allow_html=True)
+
+        # 从 session_state 获取概述文本
+        intro_text = (
+            st.session_state.get('overview_1', '等待生成...') if version == "Solution A" else
+            st.session_state.get('overview_2', '等待生成...') if version == "Solution B" else
+            st.session_state.get('overview_3', '等待生成...')
+        )
+        
+        st.markdown(f"""
+            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
+                <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
+                    {intro_text}
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
         
         # Solution Introduction
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
