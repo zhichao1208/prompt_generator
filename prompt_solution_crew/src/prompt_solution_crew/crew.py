@@ -31,8 +31,8 @@ class StrategicApproaches(BaseModel):
 class PromptSolutionCrew:
     """PromptSolutionCrew"""
 
-    agents_config = "config/aipaper_agents.yaml"
-    tasks_config = "config/aipaper_tasks.yaml"
+    agents_config = "prompt_solution_crew/src/prompt_solution_crew/config/agents.yaml"
+    tasks_config = "prompt_solution_crew/src/prompt_solution_crew/config/tasks.yaml"
 
 
     @agent
