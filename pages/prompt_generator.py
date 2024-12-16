@@ -159,45 +159,9 @@ Order Number: ORD-2024-001''',
         with col2:
             if st.session_state.num_examples > 1:
                 st.button("➖ Remove Example", on_click=remove_example)
-# 存储和处理 crew 结果
-def process_crew_results(results):
-    try:
-        # 从原始结果中提取 JSON 字符串
-        import json
-        import re
-        
-        # 使用正则表达式提取 JSON 字符串
-        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
-        if json_match:
-            json_str = json_match.group(1)
-            # 解 JSON
-            directions = json.loads(json_str)
-            return directions.get("optimization_directions", [])
-        return []
-    except Exception as e:
-        st.error(f"处理结果时出错: {str(e)}")
-        return []
-
-# 创建三个 session state 变量来存储方向
-if "direction_1" not in st.session_state:
-    st.session_state.direction_1 = None
-if "direction_2" not in st.session_state:
-    st.session_state.direction_2 = None
-if "direction_3" not in st.session_state:
-    st.session_state.direction_3 = None
-
-# 处理结果并存储到 session state
-def store_directions(results):
-    directions = process_crew_results(results)
-    if len(directions) >= 3:
-        st.session_state.direction_1 = directions[0]
-        st.session_state.direction_2 = directions[1]
-        st.session_state.direction_3 = directions[2]
-
 
     # Action Buttons
-    generate_button_2 = st.button("Generate Prompt", type="primary", key="generate_button_2")
-    if generate_button_2:
+    if st.button("Generate Prompt", type="primary"):
         try:
             # 创建状态容器
             status_container = st.empty()
@@ -236,6 +200,7 @@ def store_directions(results):
             # 显示用户输入的配置信息
             st.subheader("用户配置信息")
             st.code(inputs, language="text")
+            
             # 使用 spinner 显示生成过程
             with st.spinner('正在生成...'):
                 try:
@@ -293,51 +258,21 @@ def store_directions(results):
             st.error("详细错误信息:")
             st.exception(e)
             st.error("请检查配置并重试")
-
-
-st.subheader("⚙️ 配置")
     
-# 优化方向区域 - 确保这部分在主要内容区域内
-st.markdown("---")  # 添加分隔线提高可见性
-st.subheader("🔄 优化方向一")
+    # 优化方向区域
+    st.markdown("---")  # 添加分隔线提高可见性
+    st.subheader("🔄 优化方向")
 
-# 显示当前选择的优化方向
-if st.session_state.direction_1:
-    st.info(f"""
-    **优化重点**: {st.session_state.direction_1.get('focus', '未指定')}
-    **相关性**: {st.session_state.direction_1.get('relevance', '未指定')}
-    **预期收益**: {st.session_state.direction_1.get('benefits', '未指定')}
-    **实施考虑**: {st.session_state.direction_1.get('implementation_considerations', '未指定')}
-    """)
-
-    # 准备输入数据
-    prompt_inputs = {
-        "task_description": st.session_state.get("task_description", ""),
-        "task_type": st.session_state.get("task_type", ""),
-        "model_preference": st.session_state.get("model_preference", ""),
-        "tone": st.session_state.get("tone", ""),
-        "context": st.session_state.get("context", ""),
-        "sample_data": st.session_state.get("sample_data", ""),
-        "examples": st.session_state.get("examples", ""),
-        "direction_1": st.session_state.direction_1
-    }
-    
-    # 添加启动按钮 - 使用列布局使按钮更显眼
-    col1, col2 = st.columns([2, 1])
-    with col2:
-        if st.button("🚀 生成优化提示词", key="generate_prompt_1", type="primary"):
-            with st.spinner("准备启动 Prompt Engineer Crew..."):
-                prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
-                st.session_state.prompt_result_1 = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
-else:
-    st.warning("请先运行分析以获取优化方向")
-
-# 显示生成结果
-if st.session_state.get("prompt_result_1"):
-    st.success("✅ 生成的提示词结构")
-    st.write(st.session_state.prompt_result_1)
-
-
+    # 显示当前选择的优化方向
+    if st.session_state.direction_1:
+        st.info(f"""
+        **优化重点**: {st.session_state.direction_1.get('focus', '未指定')}
+        **相关性**: {st.session_state.direction_1.get('relevance', '未指定')}
+        **预期收益**: {st.session_state.direction_1.get('benefits', '未指定')}
+        **实施考虑**: {st.session_state.direction_1.get('implementation_considerations', '未指定')}
+        """)
+    else:
+        st.warning("请先运行分析以获取优化方向")
 
 # Main Content Area
 st.title("Prompt Generator")
@@ -1870,7 +1805,7 @@ st.markdown("""
         font-size: 14px !important;
     }
     
-    /* ��整指标值的样式 */
+    /* 调整指标值的样式 */
     .metric-value {
         font-size: 24px !important;
         line-height: 1.2;
