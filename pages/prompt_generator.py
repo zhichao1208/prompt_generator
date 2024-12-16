@@ -248,31 +248,31 @@ Order Number: ORD-2024-001''',
                             'context': context or 'not defined',
                             'sample_data': data_input or 'not defined',
                             'examples': str(examples) if examples else 'not defined',  # 包含原始输入
-                            "architect_results": architect_results  # 传递完整的架构分析
+                            "architect_direction": architect_results[0]  # 传递完整的架构分析
                         }
                         
                         # 运行 prompt engineer crew
                         status_container.info("Starting Prompt Optimization...")
                         with st.spinner('Generating Optimized Prompts...'):
-                            prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
-                            engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
+                            prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
+                            engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs)
                             
                             # 更新状态
                             status_container.success("✅ Prompt Generation Successful!")
                             
                             # 存储结果
-                            st.session_state.prompt_result = engineer_results
+                            st.session_state.prompt_result_1 = engineer_results_1
 
-                            st.session_state.overview_1 = engineer_results['explanation_of_optimization_choices']   
-                            st.session_state.role_1 = engineer_results['role']
-                            st.session_state.task_1 = engineer_results['task']
-                            st.session_state.rules_1 = engineer_results['rules_constraints']
-                            st.session_state.selected_reasoning_methods_1 = engineer_results['reasoning_method']
-                            st.session_state.selected_planning_methods_1 = engineer_results['planning_method']
-                            st.session_state.selected_output_format_1 = engineer_results['output_format']
+                            st.session_state.overview_1 = engineer_results_1['explanation_of_optimization_choices']   
+                            st.session_state.role_1 = engineer_results_1['role']
+                            st.session_state.task_1 = engineer_results_1['task']
+                            st.session_state.rules_1 = engineer_results_1['rules_constraints']
+                            st.session_state.selected_reasoning_methods_1 = engineer_results_1['reasoning_method']
+                            st.session_state.selected_planning_methods_1 = engineer_results_1['planning_method']
+                            st.session_state.selected_output_format_1 = engineer_results_1['output_format']
                             # 显示优化后的提示词
                             st.subheader("🎯 Optimized Prompt Structure")
-                            st.json(engineer_results)
+                            st.json(engineer_results_1)
                     else:
                         result_container.info("Generation complete, but no results returned.")
                         

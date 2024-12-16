@@ -26,7 +26,7 @@ analyze_requirements_task:
 
 optimize_prompt_direction_1:
   description: >
-    Based on the FIRST direction with assigned prompt engineer_1 from above {architect_results} from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the FIRST direction with assigned prompt engineer_1 from above {architect_direction} from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements
 

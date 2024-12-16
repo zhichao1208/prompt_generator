@@ -155,13 +155,34 @@ class PromptSolutionCrew:
             planning=True
         ) 
     @crew
-    def prompt_engineer_crew(self) -> Crew:
+    def prompt_engineer_crew_1(self) -> Crew:
         """Creates the prompt_engineer crew"""
         return Crew(
-            agents=[self.prompt_engineer_1(),self.prompt_engineer_2(),self.prompt_engineer_3()],
-            tasks=[self.optimize_prompt_direction_1(),self.optimize_prompt_direction_2(),self.optimize_prompt_direction_3()],
+            agents=[self.prompt_engineer_1()],
+            tasks=[self.optimize_prompt_direction_1()],
             process=Process.sequential,
             verbose=True,
             planning=True
         ) 
 
+    @crew
+    def prompt_engineer_crew_2(self) -> Crew:
+        """Creates the prompt_engineer crew"""
+        return Crew(
+            agents=[self.prompt_engineer_2()],
+            tasks=[self.optimize_prompt_direction_2()],
+            process=Process.sequential,
+            verbose=True,
+            planning=True
+        ) 
+
+    @crew
+    def prompt_engineer_crew_3(self) -> Crew:
+        """Creates the prompt_engineer crew"""
+        return Crew(
+            agents=[self.prompt_engineer_3()],
+            tasks=[self.optimize_prompt_direction_3()],
+            process=Process.sequential,
+            verbose=True,
+            planning=True
+        ) 
