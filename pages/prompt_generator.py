@@ -9,6 +9,41 @@ sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
 from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Strategy,StrategicApproaches
 
+# 存储和处理 crew 结果
+def process_crew_results(results):
+    try:
+        # 从原始结果中提取 JSON 字符串
+        import json
+        import re
+        
+        # 使用正则表达式提取 JSON 字符串
+        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
+        if json_match:
+            json_str = json_match.group(1)
+            # 解析 JSON
+            directions = json.loads(json_str)
+            return directions.get("optimization_directions", [])
+        return []
+    except Exception as e:
+        st.error(f"处理结果时出错: {str(e)}")
+        return []
+
+# 创建三个 session state 变量来存储方向
+if "direction_1" not in st.session_state:
+    st.session_state.direction_1 = None
+if "direction_2" not in st.session_state:
+    st.session_state.direction_2 = None
+if "direction_3" not in st.session_state:
+    st.session_state.direction_3 = None
+
+# 处理结果并存储到 session state
+def store_directions(results):
+    directions = process_crew_results(results)
+    if len(directions) >= 3:
+        st.session_state.direction_1 = directions[0]
+        st.session_state.direction_2 = directions[1]
+        st.session_state.direction_3 = directions[2]
+
 # Page Configuration
 st.set_page_config(
     page_title="Prompt Generator",
@@ -241,7 +276,7 @@ Order Number: ORD-2024-001''',
                                 st.session_state.prompt_result_1 = engineer_results
                                 
                                 # 显示优化后的提示词
-                                st.subheader("🎯 优化后的提示词结构")
+                                st.subheader("🎯 优化后���提示词结构")
                                 st.json(engineer_results)
                         else:
                             st.warning("架构分析未能生成足够的优化方向")
