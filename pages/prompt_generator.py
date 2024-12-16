@@ -264,12 +264,12 @@ Order Number: ORD-2024-001''',
                             st.session_state.prompt_result = engineer_results
 
                             st.session_state.overview_1 = engineer_results['explanation_of_optimization_choices']   
-                            st.session_state.role_1 = engineer_results['complete_prompt_structure']['role']
-                            st.session_state.task_1 = engineer_results['complete_prompt_structure']['task']
-                            st.session_state.rules_1 = engineer_results['complete_prompt_structure']['rules_constraints']
-                            st.session_state.selected_reasoning_methods_1 = engineer_results['selected_methods']['reasoning_method']
-                            st.session_state.selected_planning_methods_1 = engineer_results['selected_methods']['planning_method']
-                            st.session_state.selected_output_format_1 = engineer_results['selected_methods']['output_format']
+                            st.session_state.role_1 = engineer_results['role']
+                            st.session_state.task_1 = engineer_results['task']
+                            st.session_state.rules_1 = engineer_results['rules_constraints']
+                            st.session_state.selected_reasoning_methods_1 = engineer_results['reasoning_method']
+                            st.session_state.selected_planning_methods_1 = engineer_results['planning_method']
+                            st.session_state.selected_output_format_1 = engineer_results['output_format']
                             # 显示优化后的提示词
                             st.subheader("🎯 Optimized Prompt Structure")
                             st.json(engineer_results)
