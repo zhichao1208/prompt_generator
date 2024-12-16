@@ -28,8 +28,8 @@ optimize_prompt_direction_1:
     
     User Requirements: {user_setup}
 
-    Few-Shot Examples: {examples}
-
+    Few-Shot Examples: examples
+  
     Your task is to generate a complete prompt structure following these components:
 
     1. Role Component:
