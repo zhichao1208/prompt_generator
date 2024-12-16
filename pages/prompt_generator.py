@@ -363,7 +363,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
                 st.session_state.get('direction_3', 'Not Generated...')
             ),
-            height=200,
+            height=100,
             key=f"{version}_direction",
             label_visibility="collapsed"
         )
@@ -381,10 +381,16 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
 
         # 从 session_state 获取概述文本
-        intro_text = (
-            st.session_state.get('overview_1', 'Not Generated...') if version == "Solution A" else
-            st.session_state.get('overview_2', 'Not Generated...') if version == "Solution B" else
-            st.session_state.get('overview_3', 'Not Generated...')
+        intro_text = st.text_area(
+            "Overview",
+            value=(
+                st.session_state.get('overview_1', 'Not Generated...') if version == "Solution A" else
+                st.session_state.get('overview_2', 'Not Generated...') if version == "Solution B" else
+                st.session_state.get('overview_3', 'Not Generated...')
+            ),
+            height=100,
+            key=f"{version}_overview",
+            label_visibility="collapsed"
         )
         
         st.markdown(f"""
@@ -405,7 +411,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             "Define the role",
             value=default_role,
             key=f"{version}_role",
-            height=100,
+            height=200,
             label_visibility="collapsed"
         )
         
@@ -416,7 +422,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             "Define the task",
             value=default_task,
             key=f"{version}_task",
-            height=150,
+            height=200,
             label_visibility="collapsed"
         )
         
@@ -427,7 +433,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             "Define rules",
             value=default_rules,
             key=f"{version}_rules",
-            height=300,
+            height=200,
             label_visibility="collapsed"
         )
         
@@ -547,7 +553,7 @@ Performance Focus:
             "Define reasoning",
             value=default_reasoning_content,
             key=f"{version}_reasoning_area",
-            height=300,
+            height=150,
             label_visibility="collapsed"
         )
  
@@ -559,7 +565,7 @@ Performance Focus:
             "Define planning",
             value=default_planning_content,
             key=f"{version}_planning_area",
-            height=300,
+            height=150,
             label_visibility="collapsed"
         )
 
@@ -643,7 +649,7 @@ Performance Focus:
             "Define output format",
             value=default_output,
             key=f"{version}_output",
-            height=300,
+            height=100,
             label_visibility="collapsed"
         )
         
