@@ -40,36 +40,8 @@ class PromptSolutionCrew():
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
 		
-		# 初始化agents和tasks列表
-		self.agents = []
-		self.tasks = []
-		
 		# 存储分析任务的结果
 		self.analysis_task = None
-		
-		# 存储用户输入
-		self.user_inputs = {
-			'task_description': '',
-			'task_type': '',
-			'model_preference': '',
-			'tone': '',
-			'context': '',
-			'data_input': '',
-			'examples': ''
-		}
-
-	def set_user_inputs(self, task_description: str, task_type: str, model_preference: str,
-					 tone: str, context: str, data_input: str, examples: str):
-		"""设置用户输入参数"""
-		self.user_inputs = {
-			'task_description': task_description,
-			'task_type': task_type,
-			'model_preference': model_preference,
-			'tone': tone,
-			'context': context,
-			'data_input': data_input,
-			'examples': examples
-		}
 
 	@agent
 	def architect(self) -> Agent:
@@ -83,7 +55,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_1(self) -> Agent:
 		"""Create the first prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer_1'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
@@ -91,7 +63,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_2(self) -> Agent:
 		"""Create the second prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer_2'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
@@ -99,7 +71,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_3(self) -> Agent:
 		"""Create the third prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer_3'],
+			config=self.agents_config['prompt_engineer'],
 			verbose=True
 		)
 
@@ -107,8 +79,7 @@ class PromptSolutionCrew():
 	def analyze_requirements_task(self) -> Task:
 		"""Create an analyze requirements task."""
 		task = Task(
-			description=self.tasks_config['analyze_requirements_task']['description'].format(**self.user_inputs),
-			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
+			config=self.tasks_config['analyze_requirements_task'],
 			agent=self.architect()
 		)
 		self.analysis_task = task
@@ -118,8 +89,7 @@ class PromptSolutionCrew():
 	def optimize_prompt_direction_1(self) -> Task:
 		"""Create the first prompt optimization task."""
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_1']['description'].format(**self.user_inputs),
-			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
+			config=self.tasks_config['optimize_prompt_direction_1'],
 			agent=self.prompt_engineer_1(),
 			context=[self.analysis_task] if self.analysis_task else []
 		)
@@ -128,8 +98,7 @@ class PromptSolutionCrew():
 	def optimize_prompt_direction_2(self) -> Task:
 		"""Create the second prompt optimization task."""
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_2']['description'].format(**self.user_inputs),
-			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
+			config=self.tasks_config['optimize_prompt_direction_2'],
 			agent=self.prompt_engineer_2(),
 			context=[self.analysis_task] if self.analysis_task else []
 		)
@@ -138,43 +107,23 @@ class PromptSolutionCrew():
 	def optimize_prompt_direction_3(self) -> Task:
 		"""Create the third prompt optimization task."""
 		return Task(
-			description=self.tasks_config['optimize_prompt_direction_3']['description'].format(**self.user_inputs),
-			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
+			config=self.tasks_config['optimize_prompt_direction_3'],
 			agent=self.prompt_engineer_3(),
 			context=[self.analysis_task] if self.analysis_task else []
 		)
 
 	@crew
 	def crew(self) -> Crew:
-		"""Creates a basic crew with agents but no tasks"""
+		"""Creates the PromptSolutionCrew crew"""
 		return Crew(
 			agents=[self.architect(), self.prompt_engineer_1(), 
 					self.prompt_engineer_2(), self.prompt_engineer_3()],
-			tasks=[],
-			process=Process.sequential,
-			verbose=True
-		)
-
-	def create_crew_with_tasks(self, task_description: str, task_type: str, model_preference: str,
-				 tone: str, context: str, data_input: str, examples: str) -> Crew:
-		"""Creates and returns a new crew instance with the given parameters"""
-		# 设置用户输入
-		self.set_user_inputs(task_description, task_type, model_preference,
-						  tone, context, data_input, examples)
-		
-		# 创建任务
-		analysis_task = self.analyze_requirements_task()
-		tasks = [
-			analysis_task,
-			self.optimize_prompt_direction_1(),
-			self.optimize_prompt_direction_2(),
-			self.optimize_prompt_direction_3()
-		]
-		
-		return Crew(
-			agents=[self.architect(), self.prompt_engineer_1(), 
-					self.prompt_engineer_2(), self.prompt_engineer_3()],
-			tasks=tasks,
+			tasks=[
+				self.analyze_requirements_task(),
+				self.optimize_prompt_direction_1(),
+				self.optimize_prompt_direction_2(),
+				self.optimize_prompt_direction_3()
+			],
 			process=Process.sequential,
 			verbose=True
 		)
