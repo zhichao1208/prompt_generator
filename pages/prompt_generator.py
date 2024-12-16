@@ -253,6 +253,8 @@ Order Number: ORD-2024-001''',
                         
                         # 运行 prompt engineer crew
                         status_container.info("开始生成优化提示词...")
+                        st.code(prompt_inputs, language="text")
+
                         with st.spinner('正在生成优化提示词...'):
                             prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
                             engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
