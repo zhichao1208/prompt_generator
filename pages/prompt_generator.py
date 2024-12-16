@@ -185,16 +185,14 @@ Order Number: ORD-2024-001''',
                     })
 
             # 准备输入参数
-            user_setup = f"""Primary Goal: {task_description}
-Task Type: {task_type}
-Model Preference: {str(model_preference)}
-Tone: {tone}
-Context: {context or '用户未输入'}
-Sample Data: {data_input or '用户未输入'}
-Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
-
             inputs = {
-                'user_setup':user_setup
+                'task_description': task_description,
+                'task_type': task_type,
+                'model_preference': str(model_preference),
+                'tone': tone,
+                'context': context or 'not defined',
+                'sample_data': data_input or 'not defined',
+                'examples': str(examples) if examples else 'not defined'
             }
             
             # 更新状态
@@ -208,7 +206,7 @@ Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
                     architect_crew = PromptSolutionCrew().architect_crew()
-                    results = architect_crew.kickoff(inputs={"user_setup": user_setup})
+                    results = architect_crew.kickoff(inputs={"user_setup": inputs})
                     
                     # 更新状态
                     status_container.success("✅ 提示词生成成功!")
