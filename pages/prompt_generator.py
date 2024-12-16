@@ -350,7 +350,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
-        default_task = st.session_state.task_1 if version == "Solution A" else (st.session_state.task_2 if version == "Solution B" else st.session_state.task_3)
+        default_task = st.session_state.get('task_1', '等待生成...') if version == "Solution A" else (st.session_state.get('task_2', '等待生成...') if version == "Solution B" else st.session_state.get('task_3', '等待生成...'))
         st.text_area(
             "Define the task",
             value=default_task,
