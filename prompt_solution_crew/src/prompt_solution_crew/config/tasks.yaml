@@ -2,7 +2,6 @@ analyze_requirements_task:
   description: >
     Analyze the following user requirements for prompt engineering solution:
     
-    {user_setup}
 
     Review the user preferences and identify THREE most relevant and helpful optimization directions.
     For each direction, provide:
@@ -20,7 +19,7 @@ optimize_prompt_direction_1:
   description: >
     Based on the FIRST direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements: {user_setup}
+    User Requirements
 
     Your task is to generate a complete prompt structure following these components:
 
@@ -228,7 +227,7 @@ optimize_prompt_direction_2:
   description: >
     Based on the SECOND direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements: {user_setup}
+    User Requirements
 
     Your task is to generate a complete prompt structure following these components:
 
@@ -436,7 +435,7 @@ optimize_prompt_direction_3:
   description: >
     Based on the THIRD direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements: {user_setup}
+    User Requirements
 
     Your task is to generate a complete prompt structure following these components:
 
