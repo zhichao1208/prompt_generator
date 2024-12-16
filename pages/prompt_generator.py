@@ -1839,24 +1839,24 @@ with eval_tab2:
 
                 Optimized Prompt:
                 Role:
-                {st.session_state.get(f'role_{version[-1]}', 'Not Generated...')}
+                {st.session_state.get(f'role_1', 'Not Generated...')}
 
                 Task:
-                {task_description}
+                {st.session_state.get(f'task_1', 'Not Generated...')}
 
-                Communication Tone: {tone}
+                Communication Tone: {st.session_state.get(f'inputs', 'Not Generated...')}
 
                 Rules & Constraints:
-                {st.session_state.get(f'rules_{version[-1]}', 'Not Generated...')}
+                {st.session_state.get(f'rules_1', 'Not Generated...')}
 
                 Reasoning:
-                {st.session_state.get(f'selected_reasoning_methods_{version[-1]}', 'Not Generated...')}
+                {st.session_state.get(f'selected_reasoning_methods_1', 'Not Generated...')}
 
                 Planning:
-                {st.session_state.get(f'selected_planning_methods_{version[-1]}', 'Not Generated...')}
+                {st.session_state.get(f'selected_planning_methods_1', 'Not Generated...')}
 
                 Output Format:
-                {st.session_state.get(f'output_format_{version[-1]}', 'Not Generated...')}
+                {st.session_state.get(f'output_format_1', 'Not Generated...')}
 
 
                 """)                
