@@ -258,13 +258,13 @@ Order Number: ORD-2024-001''',
                                 # 存储结果
                                 st.session_state.prompt_result_1 = engineer_results_1
                                 st.session_state.direction_1 = architect_results["directions"][0]["focus"]
-                                st.session_state.overview_1 = engineer_results_1.get('explanation_of_optimization_choices', 'Not Generated...')
-                                st.session_state.role_1 = engineer_results_1.get('role', 'Not Generated...')
-                                st.session_state.task_1 = engineer_results_1.get('task', 'Not Generated...')
-                                st.session_state.rules_1 = engineer_results_1.get('rules_constraints', 'Not Generated...')
-                                st.session_state.selected_reasoning_methods_1 = engineer_results_1.get('reasoning_method', 'Not Generated...')
-                                st.session_state.selected_planning_methods_1 = engineer_results_1.get('planning_method', 'Not Generated...')
-                                st.session_state.selected_output_format_1 = engineer_results_1.get('output_format', 'Not Generated...')
+                                st.session_state.overview_1 = engineer_results_1['explanation_of_optimization_choices']
+                                st.session_state.role_1 = engineer_results_1['role']
+                                st.session_state.task_1 = engineer_results_1['task']
+                                st.session_state.rules_1 = engineer_results_1['rules_constraints']
+                                st.session_state.selected_reasoning_methods_1 = engineer_results_1['reasoning_method']
+                                st.session_state.selected_planning_methods_1 = engineer_results_1['planning_method']
+                                st.session_state.selected_output_format_1 = engineer_results_1['output_format']
                                 
                                 # 显示优化后的提示词
                                 st.subheader("🎯 Optimized Prompt 1 Structure")
