@@ -215,7 +215,7 @@ Order Number: ORD-2024-001''',
                 'examples': str(examples) if examples else 'not defined'
             }
             
-            # 更状态
+            # 更��态
             status_container.info("Starting Architecture Analysis...")
             
             # 显示用户输入的配置信息
@@ -317,6 +317,50 @@ Order Number: ORD-2024-001''',
                                         except Exception as e:
                                             st.error(f"Error during Prompt 2 generation: {str(e)}")
                                             st.exception(e)
+                                
+                                    # 检查是否有第三个方向
+                                    if len(architect_results["directions"]) >= 3:
+                                        # 准备 prompt engineer 3 的输入
+                                        prompt_inputs_3 = {
+                                            'task_description': task_description,
+                                            'task_type': task_type,
+                                            'model_preference': str(model_preference),
+                                            'tone': tone,
+                                            'context': context or 'not defined',
+                                            'sample_data': data_input or 'not defined',
+                                            'examples': str(examples) if examples else 'not defined',
+                                            "architect_direction": architect_results["directions"][2]
+                                        }
+                                        
+                                        # 运行 prompt engineer crew 3
+                                        status_container.info("Starting Prompt 3 Optimization...")
+                                        with st.spinner('Generating Optimized Prompt 3...'):
+                                            try:
+                                                prompt_engineer_crew_3 = PromptSolutionCrew().prompt_engineer_crew_3()
+                                                engineer_results_3 = prompt_engineer_crew_3.kickoff(inputs=prompt_inputs_3)
+                                                
+                                                # 更新状态
+                                                status_container.success("✅ Prompt 3 Generation Successful!")
+                                                
+                                                # 存储结果
+                                                st.session_state.prompt_result_3 = engineer_results_3
+                                                st.session_state.direction_3 = architect_results["directions"][2]["focus"] 
+                                                st.session_state.overview_3 = engineer_results_3['explanation_of_optimization_choices']   
+                                                st.session_state.role_3 = engineer_results_3['role']
+                                                st.session_state.task_3 = engineer_results_3['task']
+                                                st.session_state.rules_3 = engineer_results_3['rules_constraints']
+                                                st.session_state.selected_reasoning_methods_3 = engineer_results_3['reasoning_method']
+                                                st.session_state.selected_planning_methods_3 = engineer_results_3['planning_method']
+                                                st.session_state.selected_output_format_3 = engineer_results_3['output_format']
+                                                
+                                                # 显示优化后的提示词
+                                                st.subheader("🎯 Optimized Prompt 3 Structure")
+                                                st.json(engineer_results_3)
+                                            except Exception as e:
+                                                st.error(f"Error during Prompt 3 generation: {str(e)}")
+                                                st.exception(e)
+                                    else:
+                                        st.info("Only two directions available from architect analysis.")
                                 except Exception as e:
                                     st.error(f"Error during Prompt 1 generation: {str(e)}")
                                     st.exception(e)
