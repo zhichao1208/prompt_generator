@@ -7,7 +7,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
-from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Direction,DirectionsList,PromptTemplate
+from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Direction,DirectionsList,PromptTemplate_1,PromptTemplate_2,PromptTemplate_3
 
 # 存储和处理 crew 结果
 def process_crew_results(results):
@@ -263,8 +263,7 @@ Order Number: ORD-2024-001''',
                             status_container.success("✅ 提示词生成成功!")
                             
                             # 存储结果
-                            st.session_state.prompt_result_1 = engineer_results
-                            print(engineer_results)
+                            st.session_state.prompt_result = engineer_results
                             
                             # 显示优化后的提示词
                             st.subheader("🎯 优化后的提示词结构")
@@ -313,15 +312,14 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Solution Introduction
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
 
-        intro_text = """•Comprehensive Approach
-•Complete data validation and error handling
-•Resource Consumption: high""" if version == "Solution A" else (
-            """•Validation Focus
-•Strong error detection and correction
-•Resource Consumption: medium""" if version == "Solution B" else 
-            """•Lightweight Design
-•Fast processing speed
-•Resource Consumption: low""")
+        overview_1= st.session_state.prompt_result['explanation_of_optimization_choices']
+        overview_2= st.session_state.prompt_result['explanation_of_optimization_choices']
+        overview_3= st.session_state.prompt_result['explanation_of_optimization_choices']
+
+        intro_text = "{}" if version == "Solution A" else (
+            overview_1 if version == "Solution B" else 
+            overview_2 if version == "Solution C" else 
+            overview_3)
         
         st.markdown(f"""
             <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>

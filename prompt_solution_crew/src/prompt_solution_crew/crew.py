@@ -32,7 +32,86 @@ class DirectionsList(BaseModel):
     directions: List[Direction] = []
 
 
-class PromptTemplate(BaseModel):
+class PromptTemplate_1(BaseModel):
+    complete_prompt_structure: Dict[str, Any] = {
+        "role": {
+            "identity_expertise": str,
+            "core_competencies": str, 
+            "professional_context": str,
+            "primary_objective": str
+        },
+        "task": {
+            "objective_statement": str,
+            "input_specification": str,
+            "process_steps": List[str],
+            "output_requirements": str
+        },
+        "rules_constraints": {
+            "quality_standards": str,
+            "ethical_guidelines": str,
+            "format_requirements": str,
+            "process_constraints": str
+        }
+    }
+    
+    selected_methods: Dict[str, Any] = {
+        "reasoning_method": {
+            "method": str,
+            "justification": str
+        },
+        "planning_method": {
+            "method": str,
+            "justification": str  
+        },
+        "output_format": {
+            "format": str,
+            "justification": str
+        }
+    }
+    
+    explanation_of_optimization_choices: str
+    usage_guidelines: str
+class PromptTemplate_2(BaseModel):
+    complete_prompt_structure: Dict[str, Any] = {
+        "role": {
+            "identity_expertise": str,
+            "core_competencies": str, 
+            "professional_context": str,
+            "primary_objective": str
+        },
+        "task": {
+            "objective_statement": str,
+            "input_specification": str,
+            "process_steps": List[str],
+            "output_requirements": str
+        },
+        "rules_constraints": {
+            "quality_standards": str,
+            "ethical_guidelines": str,
+            "format_requirements": str,
+            "process_constraints": str
+        }
+    }
+    
+    selected_methods: Dict[str, Any] = {
+        "reasoning_method": {
+            "method": str,
+            "justification": str
+        },
+        "planning_method": {
+            "method": str,
+            "justification": str  
+        },
+        "output_format": {
+            "format": str,
+            "justification": str
+        }
+    }
+    
+    explanation_of_optimization_choices: str
+    usage_guidelines: str
+
+class PromptTemplate_3(BaseModel):
     complete_prompt_structure: Dict[str, Any] = {
         "role": {
             "identity_expertise": str,
@@ -134,7 +213,7 @@ class PromptSolutionCrew:
         return Task(
             config=self.tasks_config['optimize_prompt_direction_1'],
             agent=self.prompt_engineer_1(),
-            output_json=PromptTemplate
+            output_json=PromptTemplate_1
         )
 
     @task
@@ -143,7 +222,7 @@ class PromptSolutionCrew:
         return Task(
             config=self.tasks_config['optimize_prompt_direction_2'],
             agent=self.prompt_engineer_2(),
-            output_json=PromptTemplate
+            output_json=PromptTemplate_2
         )
 
     @task
@@ -152,7 +231,7 @@ class PromptSolutionCrew:
         return Task(
             config=self.tasks_config['optimize_prompt_direction_3'],
             agent=self.prompt_engineer_3(),
-            output_json=PromptTemplate
+            output_json=PromptTemplate_3
         )
 
 
