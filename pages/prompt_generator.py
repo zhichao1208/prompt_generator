@@ -1774,6 +1774,29 @@ with eval_tab2:
                 - Creativity: {creative_weight}
                 - Safety: {safety_weight}
                 """)
+
+            # 复制按钮
+            if st.button(f"Copy {solution_name} Prompt", key=f"copy_{solution_name}"):
+                # 版本号管理
+                if f'{solution_name}_version' not in st.session_state:
+                    st.session_state[f'{solution_name}_version'] = 1.0
+                else:
+                    st.session_state[f'{solution_name}_version'] += 0.1
+                
+                st.success(f"""
+                Prompt Copied successfully!
+                New version: {st.session_state[f'{solution_name}_version']:.1f}
+                
+                Weight Configuration:
+                - Accuracy: {accuracy_weight}
+                - Efficiency: {efficiency_weight}
+                - Logic: {logic_weight}
+                - Goal Achievement: {goal_weight}
+                - Stability: {stability_weight}
+                - Explainability: {explain_weight}
+                - Creativity: {creative_weight}
+                - Safety: {safety_weight}
+                """)                
     
     # 权重调整建议
     with st.expander("Weight Adjustment Tips"):
