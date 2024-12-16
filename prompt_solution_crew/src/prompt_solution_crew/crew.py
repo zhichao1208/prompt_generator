@@ -5,6 +5,7 @@ import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import json
+import asyncio
 
 class OptimizationDirection(BaseModel):
 	focus: str
@@ -156,22 +157,27 @@ class PromptEngineerCrew():
 			verbose=True
 		)
 
-def run_optimization_process(inputs: dict = None) -> List[PromptStructure]:
-	"""Run the complete optimization process with all crews."""
+async def run_optimization_process(inputs: dict = None) -> List[PromptStructure]:
+	"""Run the complete optimization process with all crews asynchronously."""
 	if inputs is None:
 		inputs = {}
 
 	# 1. Run architect crew to get optimization directions
 	architect_crew = ArchitectCrew()
-	architect_result = architect_crew.crew(inputs).kickoff()
+	architect_result = await architect_crew.crew(inputs).kickoff_async()
 	
 	# 2. Create prompt engineer crews for each direction
 	prompt_engineer_crews = []
 	results = []
 	
+	# 3. Create all async tasks
+	tasks = []
 	for direction in architect_result.optimization_directions:
 		crew = PromptEngineerCrew()
-		result = crew.crew(direction, inputs).kickoff()
-		results.append(result)
+		task = crew.crew(direction, inputs).kickoff_async()
+		tasks.append(task)
+	
+	# 4. Wait for all tasks to complete
+	results = await asyncio.gather(*tasks)
 	
 	return results
