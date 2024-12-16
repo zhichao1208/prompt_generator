@@ -246,7 +246,7 @@ optimize_prompt_direction_1:
 
 optimize_prompt_direction_2:
   description: >
-    Based on the SECOND direction with assigned prompt engineer_2 from above {architect_results} from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the SECOND direction with assigned prompt engineer_2 from above {architect_direction} from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements
 
@@ -467,7 +467,7 @@ optimize_prompt_direction_2:
 
 optimize_prompt_direction_3:
   description: >
-    Based on the THIRD direction with assigned prompt engineer_3 from above {architect_results} from the architect, create a complete prompt structure that implements this optimization direction.
+    Based on the THIRD direction with assigned prompt engineer_3 from above {architect_direction} from the architect, create a complete prompt structure that implements this optimization direction.
     
     User Requirements
 
