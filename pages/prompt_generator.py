@@ -544,96 +544,7 @@ Performance Focus:
             height=300,
             label_visibility="collapsed"
         )
-        # Reasoning Method Selection
-        default_reasoning_method = "Chain-of-Thought (CoT)" if version == "Solution A" else ("ReAct" if version == "Solution B" else "Tree-of-Thought (ToT)")
-        reasoning_method = st.selectbox(
-            "Select Reasoning Method",
-            options=[
-                "Chain-of-Thought (CoT)",
-                "Tree-of-Thought (ToT)",
-                "Buffer of Thoughts (BoT)",
-                "ReAct",
-                "Program-of-Thought"
-            ],
-            index=["Chain-of-Thought (CoT)", "Tree-of-Thought (ToT)", "Buffer of Thoughts (BoT)", "ReAct", "Program-of-Thought"].index(default_reasoning_method),
-            key=f"{version}_reasoning_method",
-            help="Select the reasoning method that best fits your task"
-        )
-        
-        # Reasoning Details based on selected method
-        reasoning_templates = {
-            "Chain-of-Thought (CoT)": """Implementation Details for Chain-of-Thought:
-
-1. Initial Data Scan
-   - Identify all potential data fields in email and attachments
-   - Mark ambiguous or duplicate information
-   
-2. Field Extraction
-   - Apply validation rules for each field type
-   - Handle special cases (dates, email addresses, product codes)
-   
-3. Data Normalization
-   - Convert dates to YYYY-MM-DD format
-   - Clean product codes by removing special characters
-   - Validate email format
-   
-4. Cross-validation
-   - Compare data between email body and attachments
-   - Resolve conflicts using priority rules
-   - Document reasoning for choices made""",
-            "ReAct": """Implementation Details for ReAct:
-
-1. Observation Phase
-   - Scan document for target fields
-   - Identify potential data locations
-   - Note any irregularities or patterns
-
-2. Thought Process
-   - Analyze document structure
-   - Consider possible data formats
-   - Plan extraction strategy
-
-3. Action Steps
-   - Extract target fields
-   - Apply validation rules
-   - Standardize formats
-
-4. Verification
-   - Check extraction results
-   - Validate against rules
-   - Document any issues""",
-            "Tree-of-Thought (ToT)": """Implementation Details for Tree-of-Thought:
-
-1. Root Analysis
-   - Identify document structure
-   - Map key information locations
-   - Define extraction paths
-
-2. Branch Development
-   - Create parallel extraction strategies
-   - Consider alternative data formats
-   - Establish validation branches
-
-3. Path Evaluation
-   - Compare extraction results
-   - Score path effectiveness
-   - Select optimal route
-
-4. Result Synthesis
-   - Combine successful paths
-   - Apply final validation
-   - Generate output"""
-        }
-        
-        default_reasoning = reasoning_templates.get(reasoning_method, "")
-        st.text_area(
-            "Define reasoning",
-            value=default_reasoning,
-            key=f"{version}_reasoning",
-            height=250,
-            label_visibility="collapsed"
-        )
-        
+ 
         # Planning Section
         st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
         
@@ -648,7 +559,7 @@ Performance Focus:
         # Planning Method Selection
         default_planning_method = "Least-to-Most Decomposition" if version == "Solution A" else ("Plan-and-Solve Strategy" if version == "Solution B" else "Progressive Task Refinement")
         planning_method = st.selectbox(
-            "Select Planning Method",
+            "Change Planning Method",
             options=[
                 "Least-to-Most Decomposition",
                 "Plan-and-Solve Strategy",
@@ -823,6 +734,97 @@ Performance Focus:
         
         # Enhancements Section
         with st.expander("Enhancements"):
+
+            # Reasoning Method Selection
+            default_reasoning_method = "Chain-of-Thought (CoT)" if version == "Solution A" else ("ReAct" if version == "Solution B" else "Tree-of-Thought (ToT)")
+            reasoning_method = st.selectbox(
+                "Change Reasoning Method",
+                options=[
+                    "Chain-of-Thought (CoT)",
+                "Tree-of-Thought (ToT)",
+                "Buffer of Thoughts (BoT)",
+                "ReAct",
+                "Program-of-Thought"
+            ],
+            index=["Chain-of-Thought (CoT)", "Tree-of-Thought (ToT)", "Buffer of Thoughts (BoT)", "ReAct", "Program-of-Thought"].index(default_reasoning_method),
+            key=f"{version}_reasoning_method",
+            help="Select the reasoning method that best fits your task"
+        )
+        
+        # Reasoning Details based on selected method
+        reasoning_templates = {
+            "Chain-of-Thought (CoT)": """Implementation Details for Chain-of-Thought:
+
+1. Initial Data Scan
+   - Identify all potential data fields in email and attachments
+   - Mark ambiguous or duplicate information
+   
+2. Field Extraction
+   - Apply validation rules for each field type
+   - Handle special cases (dates, email addresses, product codes)
+   
+3. Data Normalization
+   - Convert dates to YYYY-MM-DD format
+   - Clean product codes by removing special characters
+   - Validate email format
+   
+4. Cross-validation
+   - Compare data between email body and attachments
+   - Resolve conflicts using priority rules
+   - Document reasoning for choices made""",
+            "ReAct": """Implementation Details for ReAct:
+
+1. Observation Phase
+   - Scan document for target fields
+   - Identify potential data locations
+   - Note any irregularities or patterns
+
+2. Thought Process
+   - Analyze document structure
+   - Consider possible data formats
+   - Plan extraction strategy
+
+3. Action Steps
+   - Extract target fields
+   - Apply validation rules
+   - Standardize formats
+
+4. Verification
+   - Check extraction results
+   - Validate against rules
+   - Document any issues""",
+            "Tree-of-Thought (ToT)": """Implementation Details for Tree-of-Thought:
+
+1. Root Analysis
+   - Identify document structure
+   - Map key information locations
+   - Define extraction paths
+
+2. Branch Development
+   - Create parallel extraction strategies
+   - Consider alternative data formats
+   - Establish validation branches
+
+3. Path Evaluation
+   - Compare extraction results
+   - Score path effectiveness
+   - Select optimal route
+
+4. Result Synthesis
+   - Combine successful paths
+   - Apply final validation
+   - Generate output"""
+        }
+        
+        default_reasoning = reasoning_templates.get(reasoning_method, "")
+        st.text_area(
+            "Define reasoning",
+            value=default_reasoning,
+            key=f"{version}_reasoning",
+            height=250,
+            label_visibility="collapsed"
+        )
+  
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             
