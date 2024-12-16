@@ -556,98 +556,7 @@ Performance Focus:
             height=300,
             label_visibility="collapsed"
         )
-        # Planning Method Selection
-        default_planning_method = "Least-to-Most Decomposition" if version == "Solution A" else ("Plan-and-Solve Strategy" if version == "Solution B" else "Progressive Task Refinement")
-        planning_method = st.selectbox(
-            "Change Planning Method",
-            options=[
-                "Least-to-Most Decomposition",
-                "Plan-and-Solve Strategy",
-                "Progressive Task Refinement",
-                "Dependency-Based Planning",
-                "Hierarchical Task Planning"
-            ],
-            index=["Least-to-Most Decomposition", "Plan-and-Solve Strategy", "Progressive Task Refinement", "Dependency-Based Planning", "Hierarchical Task Planning"].index(default_planning_method),
-            key=f"{version}_planning_method",
-            help="Select the planning method that best fits your task complexity"
-        )
-        
-        # Planning Details based on selected method
-        planning_templates = {
-            "Least-to-Most Decomposition": """Implementation of Least-to-Most Decomposition:
 
-1. Field-level Tasks
-   - Identify required fields (order_number, dates, emails, etc.)
-   - Define validation rules for each field
-   - Create field-specific extraction functions
-
-2. Document-level Tasks
-   - Parse email body structure
-   - Extract attachment content
-   - Create document traversal strategy
-
-3. Integration Tasks
-   - Combine data from multiple sources
-   - Apply business rules and constraints
-   - Generate final output structure
-
-4. Validation Tasks
-   - Verify data completeness
-   - Check format compliance
-   - Validate business rules""",
-            "Plan-and-Solve Strategy": """Implementation of Plan-and-Solve Strategy:
-
-1. Analysis Phase
-   - Identify document type and structure
-   - Locate potential data regions
-   - Map validation requirements
-
-2. Extraction Strategy
-   - Define field extraction sequence
-   - Set up validation checkpoints
-   - Prepare error handlers
-
-3. Processing Steps
-   - Extract each target field
-   - Apply immediate validation
-   - Format standardization
-
-4. Quality Control
-   - Run validation suite
-   - Check completeness
-   - Generate quality report""",
-            "Progressive Task Refinement": """Implementation of Progressive Task Refinement:
-
-1. Initial Scan
-   - Quick document overview
-   - Identify key sections
-   - Mark target fields
-
-2. Refinement Steps
-   - Focus on each target field
-   - Apply specific extraction rules
-   - Validate as you go
-
-3. Optimization
-   - Refine extraction patterns
-   - Improve accuracy
-   - Minimize processing time
-
-4. Final Check
-   - Verify all fields
-   - Format consistency
-   - Output preparation"""
-        }
-        
-        default_planning = planning_templates.get(planning_method, "")
-        st.text_area(
-            "Define planning",
-            value=default_planning,
-            key=f"{version}_planning",
-            height=200,
-            label_visibility="collapsed"
-        )
-        
         # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
 
@@ -824,7 +733,97 @@ Performance Focus:
                 height=250,
                 label_visibility="collapsed"
             )
-  
+            # Planning Method Selection
+            default_planning_method = "Least-to-Most Decomposition" if version == "Solution A" else ("Plan-and-Solve Strategy" if version == "Solution B" else "Progressive Task Refinement")
+            planning_method = st.selectbox(
+                "Change Planning Method",
+                options=[
+                    "Least-to-Most Decomposition",
+                    "Plan-and-Solve Strategy", 
+                    "Progressive Task Refinement",
+                    "Dependency-Based Planning",
+                    "Hierarchical Task Planning"
+                ],
+                index=["Least-to-Most Decomposition", "Plan-and-Solve Strategy", "Progressive Task Refinement", "Dependency-Based Planning", "Hierarchical Task Planning"].index(default_planning_method),
+                key=f"{version}_planning_method",
+                help="Select the planning method that best fits your task complexity"
+            )
+            
+            # Planning Details based on selected method
+            planning_templates = {
+                "Least-to-Most Decomposition": """Implementation of Least-to-Most Decomposition:
+
+1. Field-level Tasks
+   - Identify required fields (order_number, dates, emails, etc.)
+   - Define validation rules for each field
+   - Create field-specific extraction functions
+
+2. Document-level Tasks
+   - Parse email body structure
+   - Extract attachment content
+   - Create document traversal strategy
+
+3. Integration Tasks
+   - Combine data from multiple sources
+   - Apply business rules and constraints
+   - Generate final output structure
+
+4. Validation Tasks
+   - Verify data completeness
+   - Check format compliance
+   - Validate business rules""",
+                "Plan-and-Solve Strategy": """Implementation of Plan-and-Solve Strategy:
+
+1. Analysis Phase
+   - Identify document type and structure
+   - Locate potential data regions
+   - Map validation requirements
+
+2. Extraction Strategy
+   - Define field extraction sequence
+   - Set up validation checkpoints
+   - Prepare error handlers
+
+3. Processing Steps
+   - Extract each target field
+   - Apply immediate validation
+   - Format standardization
+
+4. Quality Control
+   - Run validation suite
+   - Check completeness
+   - Generate quality report""",
+                "Progressive Task Refinement": """Implementation of Progressive Task Refinement:
+
+1. Initial Scan
+   - Quick document overview
+   - Identify key sections
+   - Mark target fields
+
+2. Refinement Steps
+   - Focus on each target field
+   - Apply specific extraction rules
+   - Validate as you go
+
+3. Optimization
+   - Refine extraction patterns
+   - Improve accuracy
+   - Minimize processing time
+
+4. Final Check
+   - Verify all fields
+   - Format consistency
+   - Output preparation"""
+            }
+            
+            default_planning = planning_templates.get(planning_method, "")
+            st.text_area(
+                "Define planning",
+                value=default_planning,
+                key=f"{version}_planning",
+                height=200,
+                label_visibility="collapsed"
+            )
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
             
