@@ -159,8 +159,8 @@ Order Number: ORD-2024-001''',
             # 收集Few-Shot Examples
             examples = []
             for i in range(st.session_state.num_examples):
-                example_input = st.session_state.get(f"example_input_{i}")
-                example_output = st.session_state.get(f"example_output_{i}")
+                example_input = st.session_state.get(f"example_input_{i}", "")
+                example_output = st.session_state.get(f"example_output_{i}", "")
                 if example_input and example_output:
                     examples.append({
                         "input": example_input,
@@ -171,11 +171,11 @@ Order Number: ORD-2024-001''',
             inputs = {
                 'task_description': task_description,
                 'task_type': task_type,
-                'model_preference': str(model_preference),  # 预处理为字符串
+                'model_preference': str(model_preference),
                 'tone': tone,
-                'context': context or '用户未输入',  # 预处理默认值
-                'data_input': data_input or '用户未输入',  # 预处理默认值
-                'examples': str(examples) if examples else '用户未输入'  # 预处理为字符串
+                'context': context if context else '用户未输入',
+                'data_input': data_input if data_input else '用户未输入',
+                'examples': str(examples) if examples else '用户未输入'
             }
             
             # 更新状态
