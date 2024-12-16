@@ -241,8 +241,14 @@ Order Number: ORD-2024-001''',
                         
                         # 准备 prompt engineer 的输入
                         prompt_inputs = {
-                            **inputs,  # 包含原始输入
-                            "architect_analysis": architect_results  # 传递完整的架构分析
+                            'task_description': task_description,
+                            'task_type': task_type,
+                            'model_preference': str(model_preference),
+                            'tone': tone,
+                            'context': context or 'not defined',
+                            'sample_data': data_input or 'not defined',
+                            'examples': str(examples) if examples else 'not defined',  # 包含原始输入
+                            "architect_results": architect_results  # 传递完整的架构分析
                         }
                         
                         # 运行 prompt engineer crew
