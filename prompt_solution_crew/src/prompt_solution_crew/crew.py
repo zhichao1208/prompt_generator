@@ -40,7 +40,7 @@ class PromptSolutionCrew():
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
 		
-		# 存储分析任务的结果
+		# 存储分析���务的结果
 		self.analysis_task = None
 
 	@agent
@@ -55,7 +55,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_1(self) -> Agent:
 		"""Create the first prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_1'],
 			verbose=True
 		)
 
@@ -63,7 +63,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_2(self) -> Agent:
 		"""Create the second prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_2'],
 			verbose=True
 		)
 
@@ -71,7 +71,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_3(self) -> Agent:
 		"""Create the third prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_3'],
 			verbose=True
 		)
 
