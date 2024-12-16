@@ -177,7 +177,7 @@ Sample Data: {data_input or '用户未输入'}
 Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
 
             inputs = {
-                'user_setup': user_setup
+                'user_setup':"test"
             }
             
             # 更新状态
