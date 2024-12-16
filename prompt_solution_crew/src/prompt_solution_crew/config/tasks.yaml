@@ -22,7 +22,7 @@ analyze_requirements_task:
   expected_output: >
     A JSON object containing three optimization directions, each with focus, relevance, benefits, implementation considerations and assigned prompt engineer.
   agent: architect
-  output_json=DirectionsList
+  output_json: DirectionsList
 
 optimize_prompt_direction_1:
   description: >
@@ -239,7 +239,7 @@ optimize_prompt_direction_1:
     A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
   agent: prompt_engineer_1
   context: [analyze_requirements_task]
-  output_json=PromptTemplate
+  output_json: PromptTemplate
 
 optimize_prompt_direction_2:
   description: >
@@ -456,7 +456,7 @@ optimize_prompt_direction_2:
     A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
   agent: prompt_engineer_2
   context: [analyze_requirements_task]
-  output_json=PromptTemplate
+  output_json: PromptTemplate
 
 
 optimize_prompt_direction_3:
@@ -674,5 +674,5 @@ optimize_prompt_direction_3:
     A JSON object containing the complete prompt structure, selected methods with justification, explanation, and guidelines.
   agent: prompt_engineer_3
   context: [analyze_requirements_task]
-  output_json=PromptTemplate
+  output_json: PromptTemplate
 
