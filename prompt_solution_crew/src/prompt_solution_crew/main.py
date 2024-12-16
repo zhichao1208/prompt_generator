@@ -10,6 +10,10 @@ def run(inputs):
     """
     Run the crew with the provided inputs.
     """
+    inputs = {
+        'user_setup': 'AI Agents'
+    }
+    
     return PromptSolutionCrew().crew().kickoff(inputs=inputs)
 
 def train(inputs, n_iterations, filename):
