@@ -265,10 +265,7 @@ Order Number: ORD-2024-001''',
                             # 存储结果
                             st.session_state.prompt_result = engineer_results
 
-                            overview_1= engineer_results['explanation_of_optimization_choices']
-                            overview_2= engineer_results['explanation_of_optimization_choices']
-                            overview_3= engineer_results['explanation_of_optimization_choices']
-                            
+                            st.session_state.overview_1 = engineer_results['explanation_of_optimization_choices']   
                             # 显示优化后的提示词
                             st.subheader("🎯 优化后的提示词结构")
                             st.json(engineer_results)
