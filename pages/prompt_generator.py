@@ -318,9 +318,8 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 
 
 
-        intro_text = "{}" if version == "Solution A" else (
-            overview_1 if version == "Solution B" else 
-            overview_2 if version == "Solution C" else 
+        intro_text = overview_1 if version == "Solution A" else (   
+            overview_2 if version == "Solution B" else 
             overview_3)
         
         st.markdown(f"""
