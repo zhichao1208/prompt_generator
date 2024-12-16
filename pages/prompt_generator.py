@@ -1833,6 +1833,32 @@ with eval_tab2:
                 - Explainability: {explain_weight}
                 - Creativity: {creative_weight}
                 - Safety: {safety_weight}
+
+                Original Prompt:
+                "Extract order date, buyer name and email address from my order pdf"
+
+                Optimized Prompt:
+                Role:
+                {st.session_state.get(f'role_{version[-1]}', 'Not Generated...')}
+
+                Task:
+                {task_description}
+
+                Communication Tone: {tone}
+
+                Rules & Constraints:
+                {st.session_state.get(f'rules_{version[-1]}', 'Not Generated...')}
+
+                Reasoning:
+                {st.session_state.get(f'selected_reasoning_methods_{version[-1]}', 'Not Generated...')}
+
+                Planning:
+                {st.session_state.get(f'selected_planning_methods_{version[-1]}', 'Not Generated...')}
+
+                Output Format:
+                {st.session_state.get(f'output_format_{version[-1]}', 'Not Generated...')}
+
+
                 """)                
     
     # 权重调整建议
