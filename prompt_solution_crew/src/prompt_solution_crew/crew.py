@@ -8,7 +8,7 @@ import os
 
 my_llm = LLM(
     api_key=os.getenv("OPENAI_API_KEY"),
-    model="gpt-o1-preview"
+    model="gpt-4o-mini"
 )
 
 class RequirementsAnalysis(BaseModel):
