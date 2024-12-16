@@ -206,7 +206,7 @@ Order Number: ORD-2024-001''',
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
                     architect_crew = PromptSolutionCrew().architect_crew()
-                    results = architect_crew.kickoff(inputs={"user_setup": inputs})
+                    results = architect_crew.kickoff(inputs=inputs)
                     
                     # 更新状态
                     status_container.success("✅ 提示词生成成功!")
