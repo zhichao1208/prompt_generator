@@ -3,28 +3,28 @@ import sys
 import os
 from pathlib import Path
 
-# 添加 prompt_solution_crew 到 Python 路径
+# Add Python path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
 from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Direction,DirectionsList,PromptTemplate_1,PromptTemplate_2,PromptTemplate_3
 
-# 存储和处理 crew 结果
+# Store and process crew results
 def process_crew_results(results):
     try:
-        # 直接返回完整的分析结果
+        # Return complete analysis results
         if isinstance(results, dict):
             return results
         return {}
     except Exception as e:
-        st.error(f"处理结果时出错: {str(e)}")
+        st.error(f"Error processing results: {str(e)}")
         return {}
 
-# 创建 session state 变量来存储架构师分析
+# Create session state variable to store architect analysis
 if "architect_analysis" not in st.session_state:
     st.session_state.architect_analysis = None
 
-# 处理结果并存储到 session state
+# Process results and store to session state
 def store_analysis(results):
     analysis = process_crew_results(results)
     if analysis:
@@ -42,10 +42,10 @@ st.set_page_config(
 
 with st.sidebar:
     st.header("Task Configuration")
-    # API 状态检查
-    st.subheader("API 状态")
+    # API Status Check
+    st.subheader("API Status")
     
-    # 安全地检查配置（同时检查 secrets 和环境变量）
+    # Safely check configuration (check both secrets and environment variables)
     def check_config(key):
         try:
             return bool(st.secrets.get(key)) or bool(os.getenv(key))
@@ -189,7 +189,7 @@ Order Number: ORD-2024-001''',
             result_container = st.empty()
             
             # 显示初始状态
-            status_container.info("正在初始化 PromptSolutionCrew...")
+            status_container.info("Initializing PromptSolutionCrew...")
             
             # 从Task Configuration收集用户设置
             
@@ -216,21 +216,21 @@ Order Number: ORD-2024-001''',
             }
             
             # 更新状态
-            status_container.info("开始生成架构...")
+            status_container.info("Starting Architecture Analysis...")
             
             # 显示用户输入的配置信息
-            st.subheader("用户配置信息")
+            st.subheader("User Configuration")
             st.code(inputs, language="text")
             
             # 使用 spinner 显示生成过程
-            with st.spinner('正在生成...'):
+            with st.spinner('Generating...'):
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
                     architect_crew = PromptSolutionCrew().architect_crew()
                     architect_results = architect_crew.kickoff(inputs=inputs)
                     
                     # 更新状态
-                    status_container.success("✅ 架构分析完成!")
+                    status_container.success("✅ Architecture Analysis Complete!")
                     
                     # 显示架构分析结果
                     if architect_results:
@@ -252,15 +252,13 @@ Order Number: ORD-2024-001''',
                         }
                         
                         # 运行 prompt engineer crew
-                        status_container.info("开始生成优化提示词...")
-                        st.code(prompt_inputs, language="text")
-
-                        with st.spinner('正在生成优化提示词...'):
+                        status_container.info("Starting Prompt Optimization...")
+                        with st.spinner('Generating Optimized Prompts...'):
                             prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
                             engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
                             
                             # 更新状态
-                            status_container.success("✅ 提示词生成成功!")
+                            status_container.success("✅ Prompt Generation Successful!")
                             
                             # 存储结果
                             st.session_state.prompt_result = engineer_results
@@ -273,21 +271,21 @@ Order Number: ORD-2024-001''',
                             st.session_state.selected_planning_methods_1 = engineer_results['selected_methods']['planning_method']
                             st.session_state.selected_output_format_1 = engineer_results['selected_methods']['output_format']
                             # 显示优化后的提示词
-                            st.subheader("🎯 优化后的提示词结构")
+                            st.subheader("🎯 Optimized Prompt Structure")
                             st.json(engineer_results)
                     else:
-                        result_container.info("生成完成，但未返回结果。")
+                        result_container.info("Generation complete, but no results returned.")
                         
                 except Exception as e:
-                    st.error(f"生成过程中出现错误: {str(e)}")
-                    st.error("详细错误信息:")
+                    st.error(f"Error during generation process: {str(e)}")
+                    st.error("Detailed error information:")
                     st.exception(e)
                     
         except Exception as e:
-            st.error(f"初始化过程中出现错误: {str(e)}")
-            st.error("详细错误信息:")
+            st.error(f"Error during initialization: {str(e)}")
+            st.error("Detailed error information:")
             st.exception(e)
-            st.error("请检查配置并重试")
+            st.error("Please check configuration and try again")
     
 # Main Content Area
 st.title("Prompt Generator")
@@ -1239,14 +1237,14 @@ eval_tab1, eval_tab2 = st.tabs(["Test & Results", "Evaluation Metrics"])
 with eval_tab1:
     st.subheader("Test Input")
     
-    # 显示用户输入的任务
+    # Display user input task
     st.markdown("**Task Description:**")
     st.info("Extract order date, buyer name and email address from my order pdf")
     
-    # 文件上传
+    # File upload
     uploaded_file = st.file_uploader("Upload PDF file for testing", type=['pdf'])
     
-    # Run Test 按钮
+    # Run Test button
     if st.button("Run Test", type="primary"):
         st.info("Running test with all three solutions...")
         
@@ -1792,7 +1790,7 @@ with eval_tab2:
 # 添加自定义CSS样式
 st.markdown("""
 <style>
-    /* 调整指标标题的样式 */
+    /* Adjust metric title styles */
     .metric-label {
         white-space: normal !important;
         height: auto !important;
@@ -1801,14 +1799,14 @@ st.markdown("""
         font-size: 14px !important;
     }
     
-    /* 调整指标的样式 */
+    /* Adjust metric value styles */
     .metric-value {
         font-size: 24px !important;
         line-height: 1.2;
         margin: 5px 0;
     }
     
-    /* 调整列间距 */
+    /* Adjust column spacing */
     .row-widget.stHorizontal > div {
         padding: 10px 5px;
     }
