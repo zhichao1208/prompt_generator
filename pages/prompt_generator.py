@@ -161,8 +161,8 @@ Order Number: ORD-2024-001''',
                 st.button("➖ Remove Example", on_click=remove_example)
     
     # Action Buttons
-    generate_button = st.button("Generate Prompt", type="primary")
-    if generate_button:
+    generate_button_1 = st.button("Generate Prompt", type="primary", key="generate_button_1")
+    if generate_button_1:
         try:
             # 创建状态容器
             status_container = st.empty()
@@ -201,7 +201,7 @@ Order Number: ORD-2024-001''',
             # 显示用户输入的配置信息
             st.subheader("用户配置信息")
             st.code(inputs, language="text")
-            # 使用 spinner 显示生成过程
+            # 使�� spinner 显示生成过程
             with st.spinner('正在生成...'):
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
@@ -229,8 +229,8 @@ Order Number: ORD-2024-001''',
             st.error("请检查配置并重试")
 
     # Action Buttons
-    generate_button = st.button("Generate Prompt", type="primary")
-    if generate_button:
+    generate_button_2 = st.button("Generate Prompt", type="primary", key="generate_button_2")
+    if generate_button_2:
         try:
             # 创建状态容器
             status_container = st.empty()
@@ -310,7 +310,7 @@ def process_crew_results(results):
         json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
         if json_match:
             json_str = json_match.group(1)
-            # 解��� JSON
+            # 解 JSON
             directions = json.loads(json_str)
             return directions.get("optimization_directions", [])
         return []
@@ -1546,7 +1546,7 @@ with eval_tab2:
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
         
-        # 核心维度（大数字对比区）
+        # 核心维度��大数字对比区）
         st.markdown("**Core Metrics**")
         
         # 第一行：准确性和目标达成度
@@ -1696,7 +1696,7 @@ with eval_tab2:
                 st.metric("Edge Case Handling", "93%", help="Handling of unusual scenarios")
                 st.metric("Learning Ability", "91%", help="Capability to learn from new cases")
             
-            # 安全��
+            # 安全性
             st.markdown("**Safety & Compliance**")
             saf_col1, saf_col2 = st.columns(2)
             with saf_col1:
