@@ -1753,7 +1753,7 @@ with eval_tab2:
                 )
             
             # 新生成按钮
-            if st.button(f"Regenerate {solution_name} Prompt" key=f"regenerate_{solution_name}"):
+            if st.button(f"Regenerate {solution_name} Prompt", key=f"regenerate_{solution_name}"):
                 # 版本号管理
                 if f'{solution_name}_version' not in st.session_state:
                     st.session_state[f'{solution_name}_version'] = 1.0
