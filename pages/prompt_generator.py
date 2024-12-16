@@ -139,7 +139,7 @@ Order Number: ORD-2024-001''',
         # Add/Remove example buttons
         col1, col2 = st.columns(2)
         with col1:
-            st.button("➕ Add Example", on_click=add_example)
+            st.button("�� Add Example", on_click=add_example)
         with col2:
             if st.session_state.num_examples > 1:
                 st.button("➖ Remove Example", on_click=remove_example)
@@ -183,8 +183,14 @@ Order Number: ORD-2024-001''',
             # 使用 spinner 显示生成过程
             with st.spinner('正在生成优化方案...'):
                 try:
+                    # 创建事件循环并运行异步函数
+                    import asyncio
+                    if not hasattr(st.session_state, 'loop'):
+                        st.session_state.loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(st.session_state.loop)
+                    
                     # 运行优化流程
-                    results = run_optimization_process(inputs)
+                    results = st.session_state.loop.run_until_complete(run_optimization_process(inputs))
                     
                     # 更新状态
                     status_container.success("✅ 提示词优化完成!")
