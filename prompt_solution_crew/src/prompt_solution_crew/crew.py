@@ -44,10 +44,7 @@ class PromptSolutionCrew():
 	def architect(self) -> Agent:
 		"""Create an architect agent."""
 		return Agent(
-			role=self.agents_config['architect']['role'],
-			goal=self.agents_config['architect']['goal'],
-			backstory=self.agents_config['architect']['backstory'],
-			llm=self.agents_config['architect']['llm'],
+			config=self.agents_config['architect'],
 			verbose=True
 		)
 
@@ -55,8 +52,7 @@ class PromptSolutionCrew():
 	def analyze_requirements_task(self) -> Task:
 		"""Create an analyze requirements task."""
 		return Task(
-			description=self.tasks_config['analyze_requirements_task']['description'],
-			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
+			config=self.tasks_config['analyze_requirements_task'],
 			agent=self.architect()
 		)
 
@@ -64,10 +60,8 @@ class PromptSolutionCrew():
 	def develop_strategies_task(self) -> Task:
 		"""Create a develop strategies task."""
 		return Task(
-			description=self.tasks_config['develop_strategies_task']['description'],
-			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
-			agent=self.architect(),
-			context=[self.analyze_requirements_task()]
+			 config=self.tasks_config['develop_strategies_task'],
+			 agent=self.architect()
 		)
 
 	@crew
