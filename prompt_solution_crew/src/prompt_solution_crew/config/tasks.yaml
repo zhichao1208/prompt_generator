@@ -1,14 +1,14 @@
 analyze_requirements_task:
   description: >
-    Analyze the following user requirements for prompt engineering solution:
+    Analyze the following user requirements {user_setup} for prompt engineering solution:
     
-    Primary Goal: {task_description}
-    Task Type: {task_type}
-    Model Preference: {model_preference}
-    Tone: {tone}
-    Context: {context}
-    Sample Data: {data_input}
-    Few-Shot Examples: {examples}
+    Primary Goal: task_description
+    Task Type: task_type
+    Model Preference: model_preference
+    Tone: tone
+    Context: context
+    Sample Data: data_input
+    Few-Shot Examples: examples
 
     Review the user preferences and identify THREE most relevant and helpful optimization directions.
     For each direction, provide:
