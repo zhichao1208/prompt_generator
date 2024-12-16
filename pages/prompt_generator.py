@@ -227,8 +227,158 @@ Order Number: ORD-2024-001''',
             st.error("详细错误信息:")
             st.exception(e)
             st.error("请检查配置并重试")
+
+    # Action Buttons
+    generate_button = st.button("Generate Prompt", type="primary")
+    if generate_button:
+        try:
+            # 创建状态容器
+            status_container = st.empty()
+            result_container = st.empty()
+            
+            # 显示初始状态
+            status_container.info("正在初始化 PromptSolutionCrew...")
+            
+            # 从Task Configuration收集用户设置
+            
+            # 收集Few-Shot Examples
+            examples = []
+            for i in range(st.session_state.num_examples):
+                example_input = st.session_state.get(f"example_input_{i}")
+                example_output = st.session_state.get(f"example_output_{i}")
+                if example_input and example_output:
+                    examples.append({
+                        "input": example_input,
+                        "output": example_output
+                    })
+
+            # 准备输入参数
+            inputs = {
+                'task_description': task_description,
+                'task_type': task_type,
+                'model_preference': str(model_preference),
+                'tone': tone,
+                'context': context or 'not defined',
+                'sample_data': data_input or 'not defined',
+                'examples': str(examples) if examples else 'not defined'
+            }
+            
+            # 更新状态
+            status_container.info("开始生成架构...")
+            
+            # 显示用户输入的配置信息
+            st.subheader("用户配置信息")
+            st.code(inputs, language="text")
+            # 使用 spinner 显示生成过程
+            with st.spinner('正在生成...'):
+                try:
+                    # 创建 PromptSolutionCrew 实例并运行
+                    architect_crew = PromptSolutionCrew().architect_crew()
+                    results = architect_crew.kickoff(inputs=inputs)
+                    
+                    # 更新状态
+                    status_container.success("✅ 架构生成成功!")
+                    
+                    # 显示结果
+                    if results:
+                        result_container.json(results)
+                    else:
+                        result_container.info("生成完成，请查看上方结果。")
+                        
+                except Exception as e:
+                    st.error(f"生成过程中出现错误: {str(e)}")
+                    st.error("详细错误信息:")
+                    st.exception(e)
+                    
+        except Exception as e:
+            st.error(f"初始化过程中出现错误: {str(e)}")
+            st.error("详细错误信息:")
+            st.exception(e)
+            st.error("请检查配置并重试")
+
+
 st.subheader("⚙️ 配置")
     
+# 存储和处理 crew 结果
+def process_crew_results(results):
+    try:
+        # 从原始结果中提取 JSON 字符串
+        import json
+        import re
+        
+        # 使用正则表达式提取 JSON 字符串
+        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
+        if json_match:
+            json_str = json_match.group(1)
+            # 解析 JSON
+            directions = json.loads(json_str)
+            return directions.get("optimization_directions", [])
+        return []
+    except Exception as e:
+        st.error(f"处理结果时出错: {str(e)}")
+        return []
+
+# 创建三个 session state 变量来存储方向
+if "direction_1" not in st.session_state:
+    st.session_state.direction_1 = None
+if "direction_2" not in st.session_state:
+    st.session_state.direction_2 = None
+if "direction_3" not in st.session_state:
+    st.session_state.direction_3 = None
+
+# 处理结果并存储到 session state
+def store_directions(results):
+    directions = process_crew_results(results)
+    if len(directions) >= 3:
+        st.session_state.direction_1 = directions[0]
+        st.session_state.direction_2 = directions[1]
+        st.session_state.direction_3 = directions[2]
+
+# 为 Prompt Engineer Crew 创建一个区域
+st.subheader("🔄 优化方向一")
+
+# 显示当前选择的优化方向
+if st.session_state.direction_1:
+    st.info(f"""
+    **优化重点**: {st.session_state.direction_1.get('focus', '未指定')}
+    
+    **相关性**: {st.session_state.direction_1.get('relevance', '未指定')}
+    
+    **预期收益**: {st.session_state.direction_1.get('benefits', '未指定')}
+    
+    **实施考虑**: {st.session_state.direction_1.get('implementation_considerations', '未指定')}
+    """)
+
+    # 准备输入数据
+    prompt_inputs = {
+        "task_description": st.session_state.get("task_description", ""),
+        "task_type": st.session_state.get("task_type", ""),
+        "model_preference": st.session_state.get("model_preference", ""),
+        "tone": st.session_state.get("tone", ""),
+        "context": st.session_state.get("context", ""),
+        "sample_data": st.session_state.get("sample_data", ""),
+        "examples": st.session_state.get("examples", ""),
+        "direction_1": st.session_state.direction_1
+    }
+    
+    # 添加启动按钮
+    if st.button("🚀 基于方向一生成优化提示词", key="generate_prompt_1"):
+        st.info("准备启动 Prompt Engineer Crew...")
+        # 创建 PromptSolutionCrew 实例并运行
+        prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
+        prompt_result_1 = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
+else:
+    st.warning("请先运行分析以获取优化方向")
+
+# 添加一个空间用于显示生成结果
+if "prompt_result_1" not in st.session_state:
+    st.session_state.prompt_result_1 = None
+
+if st.session_state.prompt_result_1:
+    st.success("生成的提示词结构")
+    st.write(st.session_state.prompt_result_1)
+
+
 
 # Main Content Area
 st.title("Prompt Generator")
