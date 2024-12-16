@@ -747,12 +747,12 @@ Performance Focus:
                 "Program-of-Thought"
             ],
             index=["Chain-of-Thought (CoT)", "Tree-of-Thought (ToT)", "Buffer of Thoughts (BoT)", "ReAct", "Program-of-Thought"].index(default_reasoning_method),
-            key=f"{version}_reasoning_method",
-            help="Select the reasoning method that best fits your task"
-        )
+                key=f"{version}_reasoning_method",
+                help="Select the reasoning method that best fits your task"
+            )
         
         # Reasoning Details based on selected method
-        reasoning_templates = {
+            reasoning_templates = {
             "Chain-of-Thought (CoT)": """Implementation Details for Chain-of-Thought:
 
 1. Initial Data Scan
@@ -816,14 +816,14 @@ Performance Focus:
    - Generate output"""
         }
         
-        default_reasoning = reasoning_templates.get(reasoning_method, "")
-        st.text_area(
-            "Define reasoning",
-            value=default_reasoning,
-            key=f"{version}_reasoning",
-            height=250,
-            label_visibility="collapsed"
-        )
+            default_reasoning = reasoning_templates.get(reasoning_method, "")
+            st.text_area(
+                "Define reasoning",
+                value=default_reasoning,
+                key=f"{version}_reasoning",
+                height=250,
+                label_visibility="collapsed"
+            )
   
             # Multi-Model Evaluation
             st.markdown("<div class='section-label'>Multi-Model Evaluation</div>", unsafe_allow_html=True)
