@@ -339,7 +339,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        default_role = st.session_state.role_1 if version == "Solution A" else (st.session_state.role_2 if version == "Solution B" else st.session_state.role_3)
+        default_role = st.session_state.get('role_1', '等待生成...') if version == "Solution A" else (st.session_state.get('role_2', '等待生成...') if version == "Solution B" else st.session_state.get('role_3', '等待生成...'))
         st.text_area(
             "Define the role",
             value=default_role,
