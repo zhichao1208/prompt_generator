@@ -1,9 +1,15 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task,LLM
 from crewai.project import CrewBase, agent, crew, task
 from pathlib import Path
 import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
+import os
+
+my_llm = LLM(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    model=os.getenv("OPENAI_MODEL_NAME"),
+)
 
 class RequirementsAnalysis(BaseModel):
 	summary: str
@@ -41,6 +47,7 @@ class PromptSolutionCrew:
             config=self.agents_config["architect"],
             allow_delegation=False,
             verbose=True,
+            llm=my_llm
         )
 
     @agent
@@ -49,6 +56,7 @@ class PromptSolutionCrew:
             config=self.agents_config["prompt_engineer_1"],
             allow_delegation=False,
             verbose=True,
+            llm=my_llm
         )
 
     @agent
@@ -57,6 +65,7 @@ class PromptSolutionCrew:
             config=self.agents_config["prompt_engineer_2"],
             allow_delegation=False,
             verbose=True,
+            llm=my_llm
         )
 
     @agent
@@ -65,6 +74,7 @@ class PromptSolutionCrew:
             config=self.agents_config["prompt_engineer_3"],
             allow_delegation=False,
             verbose=True,
+            llm=my_llm
         )
 
     @task
