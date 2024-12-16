@@ -276,6 +276,11 @@ Order Number: ORD-2024-001''',
                                 # 存储结果
                                 st.session_state.prompt_result_1 = engineer_results_1
                                 st.session_state.direction_1 = architect_results['directions'][0]['focus']
+                                st.session_state.name_1 = architect_results['directions'][0]['name']
+                                st.session_state.codename_1 = architect_results['directions'][0]['codename']
+
+
+
                                 st.session_state.overview_1 = engineer_results_1['explanation_of_optimization_choices']
                                 st.session_state.role_1 = engineer_results_1['role']
                                 st.session_state.task_1 = engineer_results_1['task']
@@ -286,6 +291,8 @@ Order Number: ORD-2024-001''',
                                   # 存储结果
                                 st.session_state.prompt_result_2 = engineer_results_2
                                 st.session_state.direction_2 = architect_results['directions'][1]['focus']
+                                st.session_state.name_2 = architect_results['directions'][1]['name']
+                                st.session_state.codename_2 = architect_results['directions'][1]['codename']
                                 st.session_state.overview_2 = engineer_results_2['explanation_of_optimization_choices']
                                 st.session_state.role_2 = engineer_results_2['role']
                                 st.session_state.task_2 = engineer_results_2['task']
@@ -296,6 +303,8 @@ Order Number: ORD-2024-001''',
                                   # 存储结果
                                 st.session_state.prompt_result_3 = engineer_results_3
                                 st.session_state.direction_3 = architect_results['directions'][2]['focus']
+                                st.session_state.name_3 = architect_results['directions'][2]['name']
+                                st.session_state.codename_3 = architect_results['directions'][2]['codename']
                                 st.session_state.overview_3 = engineer_results_3['explanation_of_optimization_choices']
                                 st.session_state.role_3 = engineer_results_3['role']
                                 st.session_state.task_3 = engineer_results_3['task']
@@ -342,15 +351,19 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
     with col:
         # Header section with title and buttons
         st.markdown(f"""
-            <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>
-                <h3 style='margin: 0;'>{
-                    "JARVIS" if version == "Solution A" else 
-                    "SHERLOCK" if version == "Solution B" else 
-                    "FLASH"}</h3>
-                <div style='display: flex; gap: 8px;'>
+            <div style='display: flex; flex-direction: column; margin-bottom: 20px;'>
+                <h2 style='margin: 0; font-size: 1.5em; font-weight: bold;'>{
+                    st.session_state.get('codename_1', 'Not Generated...') if version == "Solution A" else 
+                    st.session_state.get('codename_2', 'Not Generated...') if version == "Solution B" else 
+                    st.session_state.get('codename_3', 'Not Generated...')}</h2>
+                <h4 style='margin: 5px 0; color: #666; font-size: 1em;'>{
+                    st.session_state.get('name_1', 'Not Generated...') if version == "Solution A" else
+                    st.session_state.get('name_2', 'Not Generated...') if version == "Solution B" else
+                    st.session_state.get('name_3', 'Not Generated...')}</h4>
+                <div style='display: flex; gap: 8px; margin-top: 5px;'>
                     <div id='favorite_{version}' class='icon-button favorite'>⭐</div>
-                    <div class='icon-button'>📥 </div>
-                    <div class='icon-button'>🔍 </div>
+                    <div class='icon-button'>📥</div>
+                    <div class='icon-button'>🔍</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
