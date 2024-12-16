@@ -83,7 +83,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_1(self) -> Agent:
 		"""Create the first prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_1'],
 			verbose=True
 		)
 
@@ -91,7 +91,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_2(self) -> Agent:
 		"""Create the second prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_2'],
 			verbose=True
 		)
 
@@ -99,7 +99,7 @@ class PromptSolutionCrew():
 	def prompt_engineer_3(self) -> Agent:
 		"""Create the third prompt engineer agent."""
 		return Agent(
-			config=self.agents_config['prompt_engineer'],
+			config=self.agents_config['prompt_engineer_3'],
 			verbose=True
 		)
 
