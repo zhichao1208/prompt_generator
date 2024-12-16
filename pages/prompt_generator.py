@@ -1842,6 +1842,7 @@ with eval_tab2:
 
                 Direction:
                 {st.session_state.get(f'name_1', 'Not Generated...')}
+                
                 Optimized Prompt:
                 Role:
                 {st.session_state.get(f'role_1', 'Not Generated...')}
