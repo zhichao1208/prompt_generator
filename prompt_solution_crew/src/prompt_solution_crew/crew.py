@@ -28,11 +28,12 @@ class StrategicApproaches(BaseModel):
 
 
 @CrewBase
-class PromptSolutionCrew():
-	"""PromptSolutionCrew crew"""
-      
-    agents_config = "config/agents.yaml"
-	tasks_config = "config/tasks.yaml"
+class PromptSolutionCrew:
+    """PromptSolutionCrew"""
+
+    agents_config = "config/aipaper_agents.yaml"
+    tasks_config = "config/aipaper_tasks.yaml"
+
 
     @agent
     def architect(self) -> Agent:
