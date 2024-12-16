@@ -266,6 +266,12 @@ Order Number: ORD-2024-001''',
                             st.session_state.prompt_result = engineer_results
 
                             st.session_state.overview_1 = engineer_results['explanation_of_optimization_choices']   
+                            st.session_state.role_1 = engineer_results['complete_prompt_structure']['role']
+                            st.session_state.task_1 = engineer_results['complete_prompt_structure']['task']
+                            st.session_state.rules_1 = engineer_results['complete_prompt_structure']['rules_constraints']
+                            st.session_state.selected_reasoning_methods_1 = engineer_results['selected_methods']['reasoning_method']
+                            st.session_state.selected_planning_methods_1 = engineer_results['selected_methods']['planning_method']
+                            st.session_state.selected_output_format_1 = engineer_results['selected_methods']['output_format']
                             # 显示优化后的提示词
                             st.subheader("🎯 优化后的提示词结构")
                             st.json(engineer_results)
@@ -333,7 +339,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        default_role = """You are a highly skilled Data Extraction Specialist, adept at analyzing unstructured data like emails and attachments to extract accurate and relevant information. Your role involves ensuring all required fields are captured with precision, adhering to strict rules, and providing reasoning for any ambiguities encountered during extraction.""" if version == "Solution A" else ("""You are a Data Validation Expert specializing in PDF document analysis and structured information extraction. Your focus is on maintaining data accuracy, implementing robust validation rules, and ensuring data consistency across different document formats. You excel at pattern recognition and data standardization.""" if version == "Solution B" else """You are a Focused Data Parser with expertise in minimal, targeted information extraction. Your specialty lies in quickly identifying and extracting specific data points from documents while maintaining high accuracy. You excel at efficient processing and streamlined output generation.""")
+        default_role = st.session_state.role_1 if version == "Solution A" else (st.session_state.role_2 if version == "Solution B" else st.session_state.role_3)
         st.text_area(
             "Define the role",
             value=default_role,
@@ -344,25 +350,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
-        default_task = """Your task is to extract order-related information from an email and its attachments. The email was sent by a customer to the seller. You will process this data for TechHeroes to fulfill the order accurately.""" if version == "Solution A" else ("""Your primary task is to extract and validate three key pieces of information from PDF documents:
-1. Order date - Must be in a valid date format
-2. Buyer name - Full name of the customer
-3. Email address - Must be a valid individual email address
-
-You will:
-- Scan the PDF for these specific data points
-- Apply validation rules to each field
-- Standardize the format of extracted information
-- Report any validation issues or missing data""" if version == "Solution B" else """Your task is to perform targeted extraction of three essential fields from PDF documents:
-1. Order date
-2. Buyer name
-3. Email address
-
-Focus Areas:
-- Direct field extraction without additional validation
-- Quick identification of target information
-- Simple format standardization
-- Minimal processing overhead""")
+        default_task = st.session_state.task_1 if version == "Solution A" else (st.session_state.task_2 if version == "Solution B" else st.session_state.task_3)
         st.text_area(
             "Define the task",
             value=default_task,
