@@ -202,7 +202,6 @@ optimize_prompt_direction_1:
     - Purpose: Structured, machine-readable data
     - Best for: Data that needs to be processed or parsed
     - Structure: Nested key-value pairs
-    - Example: {"key": "value", "nested": {"key": "value"}}
 
     b) Email
     - Purpose: Professional communication format
@@ -419,7 +418,6 @@ optimize_prompt_direction_2:
     - Purpose: Structured, machine-readable data
     - Best for: Data that needs to be processed or parsed
     - Structure: Nested key-value pairs
-    - Example: {"key": "value", "nested": {"key": "value"}}
 
     b) Email
     - Purpose: Professional communication format
@@ -636,7 +634,6 @@ optimize_prompt_direction_3:
     - Purpose: Structured, machine-readable data
     - Best for: Data that needs to be processed or parsed
     - Structure: Nested key-value pairs
-    - Example: {"key": "value", "nested": {"key": "value"}}
 
     b) Email
     - Purpose: Professional communication format
