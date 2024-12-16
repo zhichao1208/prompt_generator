@@ -159,6 +159,41 @@ Order Number: ORD-2024-001''',
         with col2:
             if st.session_state.num_examples > 1:
                 st.button("➖ Remove Example", on_click=remove_example)
+# 存储和处理 crew 结果
+def process_crew_results(results):
+    try:
+        # 从原始结果中提取 JSON 字符串
+        import json
+        import re
+        
+        # 使用正则表达式提取 JSON 字符串
+        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
+        if json_match:
+            json_str = json_match.group(1)
+            # 解 JSON
+            directions = json.loads(json_str)
+            return directions.get("optimization_directions", [])
+        return []
+    except Exception as e:
+        st.error(f"处理结果时出错: {str(e)}")
+        return []
+
+# 创建三个 session state 变量来存储方向
+if "direction_1" not in st.session_state:
+    st.session_state.direction_1 = None
+if "direction_2" not in st.session_state:
+    st.session_state.direction_2 = None
+if "direction_3" not in st.session_state:
+    st.session_state.direction_3 = None
+
+# 处理结果并存储到 session state
+def store_directions(results):
+    directions = process_crew_results(results)
+    if len(directions) >= 3:
+        st.session_state.direction_1 = directions[0]
+        st.session_state.direction_2 = directions[1]
+        st.session_state.direction_3 = directions[2]
+
 
     # Action Buttons
     generate_button_2 = st.button("Generate Prompt", type="primary", key="generate_button_2")
@@ -262,42 +297,6 @@ Order Number: ORD-2024-001''',
 
 st.subheader("⚙️ 配置")
     
-# 存储和处理 crew 结果
-def process_crew_results(results):
-    try:
-        # 从原始结果中提取 JSON 字符串
-        import json
-        import re
-        
-        # 使用正则表达式提取 JSON 字符串
-        json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
-        if json_match:
-            json_str = json_match.group(1)
-            # 解 JSON
-            directions = json.loads(json_str)
-            return directions.get("optimization_directions", [])
-        return []
-    except Exception as e:
-        st.error(f"处理结果时出错: {str(e)}")
-        return []
-
-# 创建三个 session state 变量来存储方向
-if "direction_1" not in st.session_state:
-    st.session_state.direction_1 = None
-if "direction_2" not in st.session_state:
-    st.session_state.direction_2 = None
-if "direction_3" not in st.session_state:
-    st.session_state.direction_3 = None
-
-# 处理结果并存储到 session state
-def store_directions(results):
-    directions = process_crew_results(results)
-    if len(directions) >= 3:
-        st.session_state.direction_1 = directions[0]
-        st.session_state.direction_2 = directions[1]
-        st.session_state.direction_3 = directions[2]
-
-
 # 优化方向区域 - 确保这部分在主要内容区域内
 st.markdown("---")  # 添加分隔线提高可见性
 st.subheader("🔄 优化方向一")
