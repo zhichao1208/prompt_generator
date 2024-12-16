@@ -356,10 +356,15 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<h4 style='margin-top: 20px;'>Direction</h4>", unsafe_allow_html=True)
 
         # 从 session_state 获取概述文本
-        intro_text = (
-            st.session_state.get('direction_1', 'Not Generated...') if version == "Solution A" else
-            st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
-            st.session_state.get('direction_3', 'Not Generated...')
+        intro_text = st.text_area(
+            "Direction",
+            value=(
+                st.session_state.get('direction_1', 'Not Generated...') if version == "Solution A" else
+                st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
+                st.session_state.get('direction_3', 'Not Generated...')
+            ),
+            height=200,
+            label_visibility="collapsed"
         )
         
         st.markdown(f"""
@@ -1781,11 +1786,11 @@ with eval_tab2:
                 if f'{solution_name}_version' not in st.session_state:
                     st.session_state[f'{solution_name}_version'] = 1.0
                 else:
-                    st.session_state[f'{solution_name}_version'] += 0.1
+                    st.session_state[f'{solution_name}_version']
                 
                 st.success(f"""
                 Prompt Copied successfully!
-                New version: {st.session_state[f'{solution_name}_version']:.1f}
+                Version: {st.session_state[f'{solution_name}_version']:.1f}
                 
                 Weight Configuration:
                 - Accuracy: {accuracy_weight}
