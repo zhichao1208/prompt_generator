@@ -316,11 +316,12 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Solution Introduction
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
 
-
-
-        intro_text = overview_1 if version == "Solution A" else (   
-            overview_2 if version == "Solution B" else 
-            overview_3)
+        # 从 session_state 获取概述文本
+        intro_text = (
+            st.session_state.get('overview_1', '等待生成...') if version == "Solution A" else
+            st.session_state.get('overview_2', '等待生成...') if version == "Solution B" else
+            st.session_state.get('overview_3', '等待生成...')
+        )
         
         st.markdown(f"""
             <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
@@ -1424,7 +1425,7 @@ with eval_tab2:
     
     for solution in metrics_data:
         values = list(metrics_data[solution].values())
-        # 添��首个值到末尾以闭合图形
+        # 添加首个值到末尾以闭合图形
         values.append(values[0])
         
         fig.add_trace(go.Scatterpolar(
@@ -1492,7 +1493,7 @@ with eval_tab2:
         with col4:
             st.metric("Logic Score", "97%", help="Quality of reasoning process")
         
-        # 高级维度（展���区）
+        # 高级维度（展开区）
         with st.expander("Advanced Dimensions"):
             # 稳定性分析
             st.markdown("**Stability Analysis**")
@@ -1815,7 +1816,7 @@ st.markdown("""
         font-size: 14px !important;
     }
     
-    /* 调整指标��的样式 */
+    /* 调整指标的样式 */
     .metric-value {
         font-size: 24px !important;
         line-height: 1.2;
