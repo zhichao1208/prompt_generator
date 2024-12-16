@@ -5,6 +5,8 @@ import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import os
+import json
+
 
 my_llm = LLM(
     api_key=os.getenv("OPENAI_API_KEY"),
@@ -18,19 +20,59 @@ class RequirementsAnalysis(BaseModel):
 	risks: List[Dict[str, str]]
 	context: Dict[str, str]
 
-class Strategy(BaseModel):
-	name: str
-	core_focus: str
-	priorities: List[str]
-	implementation: Dict[str, Any]
-	benefits: List[str]
-	trade_offs: List[str]
-	resources: Dict[str, Any]
-	risk_mitigation: List[str]
-	success_metrics: List[str]
+class Direction(BaseModel):
+    name: str 
+    focus: str
+    relevance: str
+    benefits: List[str]
+    implementation_considerations: Dict[str, Any]
+    assigned_prompt_engineer: str
 
-class StrategicApproaches(BaseModel):
-	strategies: List[Strategy]
+class DirectionsList(BaseModel):
+    directions: List[Direction] = []
+
+
+class PromptTemplate(BaseModel):
+    complete_prompt_structure: Dict[str, Any] = {
+        "role": {
+            "identity_expertise": str,
+            "core_competencies": str, 
+            "professional_context": str,
+            "primary_objective": str
+        },
+        "task": {
+            "objective_statement": str,
+            "input_specification": str,
+            "process_steps": List[str],
+            "output_requirements": str
+        },
+        "rules_constraints": {
+            "quality_standards": str,
+            "ethical_guidelines": str,
+            "format_requirements": str,
+            "process_constraints": str
+        }
+    }
+    
+    selected_methods: Dict[str, Any] = {
+        "reasoning_method": {
+            "method": str,
+            "justification": str
+        },
+        "planning_method": {
+            "method": str,
+            "justification": str  
+        },
+        "output_format": {
+            "format": str,
+            "justification": str
+        }
+    }
+    
+    explanation_of_optimization_choices: str
+    usage_guidelines: str
+
+
 
 
 @CrewBase
