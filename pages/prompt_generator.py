@@ -310,7 +310,7 @@ def process_crew_results(results):
         json_match = re.search(r'```json\n(.*?)\n```', results["raw"], re.DOTALL)
         if json_match:
             json_str = json_match.group(1)
-            # 解析 JSON
+            # 解��� JSON
             directions = json.loads(json_str)
             return directions.get("optimization_directions", [])
         return []
@@ -334,18 +334,19 @@ def store_directions(results):
         st.session_state.direction_2 = directions[1]
         st.session_state.direction_3 = directions[2]
 
-# 为 Prompt Engineer Crew 创建一个区域
+# Main Content Area
+st.title("Prompt Generator")
+
+# 优化方向区域 - 确保这部分在主要内容区域内
+st.markdown("---")  # 添加分隔线提高可见性
 st.subheader("🔄 优化方向一")
 
 # 显示当前选择的优化方向
 if st.session_state.direction_1:
     st.info(f"""
     **优化重点**: {st.session_state.direction_1.get('focus', '未指定')}
-    
     **相关性**: {st.session_state.direction_1.get('relevance', '未指定')}
-    
     **预期收益**: {st.session_state.direction_1.get('benefits', '未指定')}
-    
     **实施考虑**: {st.session_state.direction_1.get('implementation_considerations', '未指定')}
     """)
 
@@ -361,27 +362,22 @@ if st.session_state.direction_1:
         "direction_1": st.session_state.direction_1
     }
     
-    # 添加启动按钮
-    if st.button("🚀 基于方向一生成优化提示词", key="generate_prompt_1"):
-        st.info("准备启动 Prompt Engineer Crew...")
-        # 创建 PromptSolutionCrew 实例并运行
-        prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
-        prompt_result_1 = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
+    # 添加启动按钮 - 使用列布局使按钮更显眼
+    col1, col2 = st.columns([2, 1])
+    with col2:
+        if st.button("🚀 生成优化提示词", key="generate_prompt_1", type="primary"):
+            with st.spinner("准备启动 Prompt Engineer Crew..."):
+                prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
+                st.session_state.prompt_result_1 = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
 else:
     st.warning("请先运行分析以获取优化方向")
 
-# 添加一个空间用于显示生成结果
-if "prompt_result_1" not in st.session_state:
-    st.session_state.prompt_result_1 = None
-
-if st.session_state.prompt_result_1:
-    st.success("生成的提示词结构")
+# 显示生成结果
+if st.session_state.get("prompt_result_1"):
+    st.success("✅ 生成的提示词结构")
     st.write(st.session_state.prompt_result_1)
 
 
-
-# Main Content Area
-st.title("Prompt Generator")
 
 # Top Section: Prompt Comparison
 
@@ -1553,7 +1549,7 @@ with eval_tab2:
         # 核心维度（大数字对比区）
         st.markdown("**Core Metrics**")
         
-        # 第一行：准���性和目标达成度
+        # 第一行：准确性和目标达成度
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", "98%", help="Match rate between expected and actual outputs")
@@ -1700,7 +1696,7 @@ with eval_tab2:
                 st.metric("Edge Case Handling", "93%", help="Handling of unusual scenarios")
                 st.metric("Learning Ability", "91%", help="Capability to learn from new cases")
             
-            # 安全性
+            # 安全��
             st.markdown("**Safety & Compliance**")
             saf_col1, saf_col2 = st.columns(2)
             with saf_col1:
