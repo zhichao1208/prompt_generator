@@ -215,7 +215,7 @@ Order Number: ORD-2024-001''',
                 'examples': str(examples) if examples else 'not defined'
             }
             
-            # 更态
+            # 更��
             status_container.info("Starting Architecture Analysis...")
             
             # 显示用户输入的配置信息
@@ -240,110 +240,116 @@ Order Number: ORD-2024-001''',
                         store_analysis(architect_results)
                         
                         # 检查 directions 是否存在且至少有两个元素
-                        if "directions" in architect_results and len(architect_results["directions"]) >= 2:
-                            # 准备 prompt engineer 1 的输入
-                            prompt_inputs_1 = {
-                                **inputs,  # 包含原始输入
-                                "architect_direction": architect_results["directions"][0]  # 传递第一个方向
-                            }
-                            
-                            # 运行 prompt engineer crew 1
-                            status_container.info("Starting Prompt 1 Optimization...")
-                            with st.spinner('Generating Optimized Prompt 1...'):
-                                try:
-                                    prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
-                                    engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
-                                    
-                                    # 更新状态
-                                    status_container.success("✅ Prompt 1 Generation Successful!")
-                                    
-                                    # 存储结果
-                                    st.session_state.prompt_result_1 = engineer_results_1
-                                    st.session_state.direction_1 = architect_results["directions"][0]["focus"]
-                                    st.session_state.overview_1 = engineer_results_1.get('explanation_of_optimization_choices', 'Not Generated...')
-                                    st.session_state.role_1 = engineer_results_1.get('role', 'Not Generated...')
-                                    st.session_state.task_1 = engineer_results_1.get('task', 'Not Generated...')
-                                    st.session_state.rules_1 = engineer_results_1.get('rules_constraints', 'Not Generated...')
-                                    st.session_state.selected_reasoning_methods_1 = engineer_results_1.get('reasoning_method', 'Not Generated...')
-                                    st.session_state.selected_planning_methods_1 = engineer_results_1.get('planning_method', 'Not Generated...')
-                                    st.session_state.selected_output_format_1 = engineer_results_1.get('output_format', 'Not Generated...')
-                                    
-                                    # 显示优化后的提示词
-                                    st.subheader("🎯 Optimized Prompt 1 Structure")
-                                    st.json(engineer_results_1)
+                        if isinstance(architect_results, dict) and "directions" in architect_results:
+                            directions = architect_results["directions"]
+                            if isinstance(directions, list) and len(directions) >= 1:
+                                # 准备 prompt engineer 1 的输入
+                                prompt_inputs_1 = {
+                                    **inputs,  # 包含原始输入
+                                    "architect_direction": directions[0]  # 传递第一个方向
+                                }
+                                
+                                # 运行 prompt engineer crew 1
+                                status_container.info("Starting Prompt 1 Optimization...")
+                                with st.spinner('Generating Optimized Prompt 1...'):
+                                    try:
+                                        prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
+                                        engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
+                                        
+                                        # 更新状态
+                                        status_container.success("✅ Prompt 1 Generation Successful!")
+                                        
+                                        # 存储结果
+                                        st.session_state.prompt_result_1 = engineer_results_1
+                                        st.session_state.direction_1 = directions[0]["focus"]
+                                        st.session_state.overview_1 = engineer_results_1.get('explanation_of_optimization_choices', 'Not Generated...')
+                                        st.session_state.role_1 = engineer_results_1.get('role', 'Not Generated...')
+                                        st.session_state.task_1 = engineer_results_1.get('task', 'Not Generated...')
+                                        st.session_state.rules_1 = engineer_results_1.get('rules_constraints', 'Not Generated...')
+                                        st.session_state.selected_reasoning_methods_1 = engineer_results_1.get('reasoning_method', 'Not Generated...')
+                                        st.session_state.selected_planning_methods_1 = engineer_results_1.get('planning_method', 'Not Generated...')
+                                        st.session_state.selected_output_format_1 = engineer_results_1.get('output_format', 'Not Generated...')
+                                        
+                                        # 显示优化后的提示词
+                                        st.subheader("🎯 Optimized Prompt 1 Structure")
+                                        st.json(engineer_results_1)
 
-                                    # 准备 prompt engineer 2 的输入
-                                    prompt_inputs_2 = {
-                                        **inputs,  # 包含原始输入
-                                        "architect_direction": architect_results["directions"][1]  # 传递第二个方向
-                                    }
-                                    
-                                    # 运行 prompt engineer crew 2
-                                    status_container.info("Starting Prompt 2 Optimization...")
-                                    with st.spinner('Generating Optimized Prompt 2...'):
-                                        try:
-                                            prompt_engineer_crew_2 = PromptSolutionCrew().prompt_engineer_crew_2()
-                                            engineer_results_2 = prompt_engineer_crew_2.kickoff(inputs=prompt_inputs_2)
-                                            
-                                            # 更新状态
-                                            status_container.success("✅ Prompt 2 Generation Successful!")
-                                            
-                                            # 存储结果
-                                            st.session_state.prompt_result_2 = engineer_results_2
-                                            st.session_state.direction_2 = architect_results["directions"][1]["focus"]
-                                            st.session_state.overview_2 = engineer_results_2.get('explanation_of_optimization_choices', 'Not Generated...')
-                                            st.session_state.role_2 = engineer_results_2.get('role', 'Not Generated...')
-                                            st.session_state.task_2 = engineer_results_2.get('task', 'Not Generated...')
-                                            st.session_state.rules_2 = engineer_results_2.get('rules_constraints', 'Not Generated...')
-                                            st.session_state.selected_reasoning_methods_2 = engineer_results_2.get('reasoning_method', 'Not Generated...')
-                                            st.session_state.selected_planning_methods_2 = engineer_results_2.get('planning_method', 'Not Generated...')
-                                            st.session_state.selected_output_format_2 = engineer_results_2.get('output_format', 'Not Generated...')
-                                            
-                                            # 显示优化后的提示词
-                                            st.subheader("🎯 Optimized Prompt 2 Structure")
-                                            st.json(engineer_results_2)
-
-                                            # 准备 prompt engineer 3 的输入
-                                            prompt_inputs_3 = {
+                                        if len(directions) >= 2:
+                                            # 准备 prompt engineer 2 的输入
+                                            prompt_inputs_2 = {
                                                 **inputs,  # 包含原始输入
-                                                "architect_direction": architect_results["directions"][2]  # 传递第三个方向
+                                                "architect_direction": directions[1]  # 传递第二个方向
                                             }
                                             
-                                            # 运行 prompt engineer crew 3
-                                            status_container.info("Starting Prompt 3 Optimization...")
-                                            with st.spinner('Generating Optimized Prompt 3...'):
+                                            # 运行 prompt engineer crew 2
+                                            status_container.info("Starting Prompt 2 Optimization...")
+                                            with st.spinner('Generating Optimized Prompt 2...'):
                                                 try:
-                                                    prompt_engineer_crew_3 = PromptSolutionCrew().prompt_engineer_crew_3()
-                                                    engineer_results_3 = prompt_engineer_crew_3.kickoff(inputs=prompt_inputs_3)
+                                                    prompt_engineer_crew_2 = PromptSolutionCrew().prompt_engineer_crew_2()
+                                                    engineer_results_2 = prompt_engineer_crew_2.kickoff(inputs=prompt_inputs_2)
                                                     
                                                     # 更新状态
-                                                    status_container.success("✅ Prompt 3 Generation Successful!")
+                                                    status_container.success("✅ Prompt 2 Generation Successful!")
                                                     
                                                     # 存储结果
-                                                    st.session_state.prompt_result_3 = engineer_results_3
-                                                    st.session_state.direction_3 = architect_results["directions"][2]["focus"]
-                                                    st.session_state.overview_3 = engineer_results_3.get('explanation_of_optimization_choices', 'Not Generated...')
-                                                    st.session_state.role_3 = engineer_results_3.get('role', 'Not Generated...')
-                                                    st.session_state.task_3 = engineer_results_3.get('task', 'Not Generated...')
-                                                    st.session_state.rules_3 = engineer_results_3.get('rules_constraints', 'Not Generated...')
-                                                    st.session_state.selected_reasoning_methods_3 = engineer_results_3.get('reasoning_method', 'Not Generated...')
-                                                    st.session_state.selected_planning_methods_3 = engineer_results_3.get('planning_method', 'Not Generated...')
-                                                    st.session_state.selected_output_format_3 = engineer_results_3.get('output_format', 'Not Generated...')
+                                                    st.session_state.prompt_result_2 = engineer_results_2
+                                                    st.session_state.direction_2 = directions[1]["focus"]
+                                                    st.session_state.overview_2 = engineer_results_2.get('explanation_of_optimization_choices', 'Not Generated...')
+                                                    st.session_state.role_2 = engineer_results_2.get('role', 'Not Generated...')
+                                                    st.session_state.task_2 = engineer_results_2.get('task', 'Not Generated...')
+                                                    st.session_state.rules_2 = engineer_results_2.get('rules_constraints', 'Not Generated...')
+                                                    st.session_state.selected_reasoning_methods_2 = engineer_results_2.get('reasoning_method', 'Not Generated...')
+                                                    st.session_state.selected_planning_methods_2 = engineer_results_2.get('planning_method', 'Not Generated...')
+                                                    st.session_state.selected_output_format_2 = engineer_results_2.get('output_format', 'Not Generated...')
                                                     
                                                     # 显示优化后的提示词
-                                                    st.subheader("🎯 Optimized Prompt 3 Structure")
-                                                    st.json(engineer_results_3)
+                                                    st.subheader("🎯 Optimized Prompt 2 Structure")
+                                                    st.json(engineer_results_2)
+
+                                                    if len(directions) >= 3:
+                                                        # 准备 prompt engineer 3 的输入
+                                                        prompt_inputs_3 = {
+                                                            **inputs,  # 包含原始输入
+                                                            "architect_direction": directions[2]  # 传递第三个方向
+                                                        }
+                                                        
+                                                        # 运行 prompt engineer crew 3
+                                                        status_container.info("Starting Prompt 3 Optimization...")
+                                                        with st.spinner('Generating Optimized Prompt 3...'):
+                                                            try:
+                                                                prompt_engineer_crew_3 = PromptSolutionCrew().prompt_engineer_crew_3()
+                                                                engineer_results_3 = prompt_engineer_crew_3.kickoff(inputs=prompt_inputs_3)
+                                                                
+                                                                # 更新状态
+                                                                status_container.success("✅ Prompt 3 Generation Successful!")
+                                                                
+                                                                # 存储结果
+                                                                st.session_state.prompt_result_3 = engineer_results_3
+                                                                st.session_state.direction_3 = directions[2]["focus"]
+                                                                st.session_state.overview_3 = engineer_results_3.get('explanation_of_optimization_choices', 'Not Generated...')
+                                                                st.session_state.role_3 = engineer_results_3.get('role', 'Not Generated...')
+                                                                st.session_state.task_3 = engineer_results_3.get('task', 'Not Generated...')
+                                                                st.session_state.rules_3 = engineer_results_3.get('rules_constraints', 'Not Generated...')
+                                                                st.session_state.selected_reasoning_methods_3 = engineer_results_3.get('reasoning_method', 'Not Generated...')
+                                                                st.session_state.selected_planning_methods_3 = engineer_results_3.get('planning_method', 'Not Generated...')
+                                                                st.session_state.selected_output_format_3 = engineer_results_3.get('output_format', 'Not Generated...')
+                                                                
+                                                                # 显示优化后的提示词
+                                                                st.subheader("🎯 Optimized Prompt 3 Structure")
+                                                                st.json(engineer_results_3)
+                                                            except Exception as e:
+                                                                st.error(f"Error during Prompt 3 generation: {str(e)}")
+                                                                st.exception(e)
                                                 except Exception as e:
-                                                    st.error(f"Error during Prompt 3 generation: {str(e)}")
+                                                    st.error(f"Error during Prompt 2 generation: {str(e)}")
                                                     st.exception(e)
-                                        except Exception as e:
-                                            st.error(f"Error during Prompt 2 generation: {str(e)}")
-                                            st.exception(e)
-                                except Exception as e:
-                                    st.error(f"Error during Prompt 1 generation: {str(e)}")
-                                    st.exception(e)
+                                    except Exception as e:
+                                        st.error(f"Error during Prompt 1 generation: {str(e)}")
+                                        st.exception(e)
+                            else:
+                                st.error("Architect results do not contain any valid directions.")
                         else:
-                            st.error("Architect results do not contain enough directions. Expected at least 2 directions.")
+                            st.error("Architect results do not contain the expected 'directions' field.")
                     else:
                         result_container.info("Generation complete, but no results returned.")
                         
@@ -1751,7 +1757,7 @@ with eval_tab2:
             solution_name = ["JARVIS", "SHERLOCK", "FLASH"][idx]
             st.markdown(f"#### {solution_name} Dimension Weights")
             
-            # 核心维度
+            # 核心���度
             st.markdown("**Core Dimensions**")
             core_col1, core_col2 = st.columns(2)
             with core_col1:
