@@ -215,7 +215,7 @@ Order Number: ORD-2024-001''',
                 'examples': str(examples) if examples else 'not defined'
             }
             
-            # 更新状态
+            # 更��状态
             status_container.info("Starting Architecture Analysis...")
             
             # 显示用户输入的配置信息
@@ -356,20 +356,23 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<h4 style='margin-top: 20px;'>Direction</h4>", unsafe_allow_html=True)
 
         # 从 session_state 获取概述文本
-        intro_text = st.text_area(
-            "Direction",
-            value=(
-                st.session_state.get('direction_1', 'Not Generated...') if version == "Solution A" else
-                st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
-                st.session_state.get('direction_3', 'Not Generated...')
-            ),
-            height=100,
-            key=f"{version}_direction",
-            label_visibility="collapsed"
+        intro_text = (
+            st.session_state.get('direction_1', 'Not Generated...') if version == "Solution A" else
+            st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
+            st.session_state.get('direction_3', 'Not Generated...')
         )
         
         st.markdown(f"""
-            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
+            <div style='
+                background-color: #f8f9fa; 
+                padding: 12px; 
+                border-radius: 4px; 
+                margin-top: 8px; 
+                margin-bottom: 12px; 
+                border: 1px solid #e9ecef;
+                height: 200px;           /* 固定高度 */
+                overflow-y: auto;        /* 内容超出时显示滚动条 */
+            '>
                 <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
                     {intro_text}
                 </div>
@@ -381,20 +384,23 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
 
         # 从 session_state 获取概述文本
-        intro_text = st.text_area(
-            "Overview",
-            value=(
-                st.session_state.get('overview_1', 'Not Generated...') if version == "Solution A" else
-                st.session_state.get('overview_2', 'Not Generated...') if version == "Solution B" else
-                st.session_state.get('overview_3', 'Not Generated...')
-            ),
-            height=100,
-            key=f"{version}_overview",
-            label_visibility="collapsed"
+        intro_text = (
+            st.session_state.get('overview_1', 'Not Generated...') if version == "Solution A" else
+            st.session_state.get('overview_2', 'Not Generated...') if version == "Solution B" else
+            st.session_state.get('overview_3', 'Not Generated...')
         )
         
         st.markdown(f"""
-            <div style='background-color: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #e9ecef;'>
+            <div style='
+                background-color: #f8f9fa; 
+                padding: 12px; 
+                border-radius: 4px; 
+                margin-top: 8px; 
+                margin-bottom: 12px; 
+                border: 1px solid #e9ecef;
+                height: 200px;           /* 固定高度 */
+                overflow-y: auto;        /* 内容超出时显示滚动条 */
+            '>
                 <div style='font-size: 0.9em; color: #444; line-height: 1.5; white-space: pre-line;'>
                     {intro_text}
                 </div>
