@@ -5,7 +5,7 @@ import yaml
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import os
-import json
+import json	
 
 
 my_llm = LLM(
@@ -124,7 +124,8 @@ class PromptSolutionCrew:
         """Create an analyze requirements task."""
         return Task(
             config=self.tasks_config["analyze_requirements_task"],
-            agent=self.architect()
+            agent=self.architect(),
+            output_json=DirectionsList
         )
 
     @task
@@ -132,7 +133,8 @@ class PromptSolutionCrew:
         """Create a develop strategies task."""
         return Task(
             config=self.tasks_config['optimize_prompt_direction_1'],
-            agent=self.prompt_engineer_1()
+            agent=self.prompt_engineer_1(),
+            output_json=PromptTemplate
         )
 
     @task
@@ -140,7 +142,8 @@ class PromptSolutionCrew:
         """Create a develop strategies task."""
         return Task(
             config=self.tasks_config['optimize_prompt_direction_2'],
-            agent=self.prompt_engineer_2()
+            agent=self.prompt_engineer_2(),
+            output_json=PromptTemplate
         )
 
     @task
@@ -148,7 +151,8 @@ class PromptSolutionCrew:
         """Create a develop strategies task."""
         return Task(
             config=self.tasks_config['optimize_prompt_direction_3'],
-            agent=self.prompt_engineer_3()
+            agent=self.prompt_engineer_3(),
+            output_json=PromptTemplate
         )
 
 
