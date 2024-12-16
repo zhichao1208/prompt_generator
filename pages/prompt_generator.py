@@ -239,47 +239,39 @@ Order Number: ORD-2024-001''',
                         # 存储架构分析结果
                         store_analysis(architect_results)
                         
-                        # 检查 directions 是否存在且至少有一个元素
-                        if isinstance(architect_results, dict) and "directions" in architect_results:
-                            directions = architect_results["directions"]
-                            if isinstance(directions, list) and len(directions) >= 1:
-                                # 准备 prompt engineer 1 的输入
-                                prompt_inputs_1 = {
-                                    **inputs,  # 包含原始输入
-                                    "architect_direction": directions[0]  # 传递第一个方向
-                                }
+                        # 准备 prompt engineer 1 的输入
+                        prompt_inputs_1 = {
+                            **inputs,  # 包含原始输入
+                            "architect_direction": architect_results["directions"][0]  # 传递第一个方向
+                        }
+                        
+                        # 运行 prompt engineer crew 1
+                        status_container.info("Starting Prompt 1 Optimization...")
+                        with st.spinner('Generating Optimized Prompt 1...'):
+                            try:
+                                prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
+                                engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
                                 
-                                # 运行 prompt engineer crew 1
-                                status_container.info("Starting Prompt 1 Optimization...")
-                                with st.spinner('Generating Optimized Prompt 1...'):
-                                    try:
-                                        prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
-                                        engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
-                                        
-                                        # 更新状态
-                                        status_container.success("✅ Prompt 1 Generation Successful!")
-                                        
-                                        # 存储结果
-                                        st.session_state.prompt_result_1 = engineer_results_1
-                                        st.session_state.direction_1 = directions[0]["focus"]
-                                        st.session_state.overview_1 = engineer_results_1.get('explanation_of_optimization_choices', 'Not Generated...')
-                                        st.session_state.role_1 = engineer_results_1.get('role', 'Not Generated...')
-                                        st.session_state.task_1 = engineer_results_1.get('task', 'Not Generated...')
-                                        st.session_state.rules_1 = engineer_results_1.get('rules_constraints', 'Not Generated...')
-                                        st.session_state.selected_reasoning_methods_1 = engineer_results_1.get('reasoning_method', 'Not Generated...')
-                                        st.session_state.selected_planning_methods_1 = engineer_results_1.get('planning_method', 'Not Generated...')
-                                        st.session_state.selected_output_format_1 = engineer_results_1.get('output_format', 'Not Generated...')
-                                        
-                                        # 显示优化后的提示词
-                                        st.subheader("🎯 Optimized Prompt 1 Structure")
-                                        st.json(engineer_results_1)
-                                    except Exception as e:
-                                        st.error(f"Error during Prompt 1 generation: {str(e)}")
-                                        st.exception(e)
-                            else:
-                                st.error("Architect results do not contain any valid directions.")
-                        else:
-                            st.error("Architect results do not contain the expected 'directions' field.")
+                                # 更新状态
+                                status_container.success("✅ Prompt 1 Generation Successful!")
+                                
+                                # 存储结果
+                                st.session_state.prompt_result_1 = engineer_results_1
+                                st.session_state.direction_1 = architect_results["directions"][0]["focus"]
+                                st.session_state.overview_1 = engineer_results_1.get('explanation_of_optimization_choices', 'Not Generated...')
+                                st.session_state.role_1 = engineer_results_1.get('role', 'Not Generated...')
+                                st.session_state.task_1 = engineer_results_1.get('task', 'Not Generated...')
+                                st.session_state.rules_1 = engineer_results_1.get('rules_constraints', 'Not Generated...')
+                                st.session_state.selected_reasoning_methods_1 = engineer_results_1.get('reasoning_method', 'Not Generated...')
+                                st.session_state.selected_planning_methods_1 = engineer_results_1.get('planning_method', 'Not Generated...')
+                                st.session_state.selected_output_format_1 = engineer_results_1.get('output_format', 'Not Generated...')
+                                
+                                # 显示优化后的提示词
+                                st.subheader("🎯 Optimized Prompt 1 Structure")
+                                st.json(engineer_results_1)
+                            except Exception as e:
+                                st.error(f"Error during Prompt 1 generation: {str(e)}")
+                                st.exception(e)
                     else:
                         result_container.info("Generation complete, but no results returned.")
                         
@@ -824,7 +816,7 @@ Performance Focus:
                         break
             
             if not selected_model:
-                selected_model = "gpt-4-turbo"  # 默认模型
+                selected_model = "gpt-4-turbo"  # 默��模型
             
             # Display selected model status
             st.markdown("##### Model Status")
