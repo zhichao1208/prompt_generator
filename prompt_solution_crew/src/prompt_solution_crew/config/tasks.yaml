@@ -26,13 +26,8 @@ optimize_prompt_direction_1:
   description: >
     Based on the FIRST direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements:
-    Task Description: {task_description}
-    Task Type: {task_type}
-    Model Preference: {model_preference}
-    Tone: {tone}
-    Context: {context}
-    Sample Data: {data_input}
+    User Requirements: {user_setup}
+
     Few-Shot Examples: {examples}
 
     Your task is to generate a complete prompt structure following these components:
@@ -241,14 +236,8 @@ optimize_prompt_direction_2:
   description: >
     Based on the SECOND direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements:
-    Task Description: {task_description}
-    Task Type: {task_type}
-    Model Preference: {model_preference}
-    Tone: {tone}
-    Context: {context}
-    Sample Data: {data_input}
-    Few-Shot Examples: {examples}
+    User Requirements: {user_setup}
+
 
     Your task is to generate a complete prompt structure following these components:
 
@@ -456,14 +445,7 @@ optimize_prompt_direction_3:
   description: >
     Based on the THIRD direction from above analysis from the architect, create a complete prompt structure that implements this optimization direction.
     
-    User Requirements:
-    Task Description: {task_description}
-    Task Type: {task_type}
-    Model Preference: {model_preference}
-    Tone: {tone}
-    Context: {context}
-    Sample Data: {data_input}
-    Few-Shot Examples: {examples}
+    User Requirements: {user_setup}
 
     Your task is to generate a complete prompt structure following these components:
 
