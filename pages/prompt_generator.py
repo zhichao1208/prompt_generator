@@ -240,7 +240,7 @@ Order Number: ORD-2024-001''',
                         store_analysis(architect_results)
                         
                         # 准备 prompt engineer 的输入
-                        prompt_inputs = {
+                        prompt_inputs_1 = {
                             'task_description': task_description,
                             'task_type': task_type,
                             'model_preference': str(model_preference),
@@ -255,7 +255,7 @@ Order Number: ORD-2024-001''',
                         status_container.info("Starting Prompt Optimization...")
                         with st.spinner('Generating Optimized Prompts...'):
                             prompt_engineer_crew_1 = PromptSolutionCrew().prompt_engineer_crew_1()
-                            engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs)
+                            engineer_results_1 = prompt_engineer_crew_1.kickoff(inputs=prompt_inputs_1)
                             
                             # 更新状态
                             status_container.success("✅ Prompt Generation Successful!")
@@ -274,6 +274,43 @@ Order Number: ORD-2024-001''',
                             # 显示优化后的提示词
                             st.subheader("🎯 Optimized Prompt Structure")
                             st.json(engineer_results_1)
+
+                        
+                        # 准备 prompt engineer 2 的输入
+                        prompt_inputs_2 = {
+                            'task_description': task_description,
+                            'task_type': task_type,
+                            'model_preference': str(model_preference),
+                            'tone': tone,
+                            'context': context or 'not defined',
+                            'sample_data': data_input or 'not defined',
+                            'examples': str(examples) if examples else 'not defined',  # 包含原始输入
+                            "architect_direction": architect_results["directions"][1]  # 传递完整的架构分析
+                        }
+                        
+                        # 运行 prompt engineer crew
+                        status_container.info("Starting Prompt Optimization...")
+                        with st.spinner('Generating Optimized Prompts...'):
+                            prompt_engineer_crew_2 = PromptSolutionCrew().prompt_engineer_crew_2()
+                            engineer_results_2 = prompt_engineer_crew_2.kickoff(inputs=prompt_inputs_2)
+                            
+                            # 更新状态
+                            status_container.success("✅ Prompt Generation Successful!")
+                            
+                            # 存储结果
+                            st.session_state.prompt_result_2 = engineer_results_2
+
+                            st.session_state.direction_2 = architect_results["directions"][1]["focus"] 
+                            st.session_state.overview_2 = engineer_results_2['explanation_of_optimization_choices']   
+                            st.session_state.role_2 = engineer_results_2['role']
+                            st.session_state.task_2 = engineer_results_2['task']
+                            st.session_state.rules_2 = engineer_results_2['rules_constraints']
+                            st.session_state.selected_reasoning_methods_2 = engineer_results_2['reasoning_method']
+                            st.session_state.selected_planning_methods_2 = engineer_results_2['planning_method']
+                            st.session_state.selected_output_format_2 = engineer_results_2['output_format']
+                            # 显示优化后的提示词
+                            st.subheader("🎯 Optimized Prompt Structure")
+                            st.json(engineer_results_2)
                     else:
                         result_container.info("Generation complete, but no results returned.")
                         
@@ -320,9 +357,9 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 
         # 从 session_state 获取概述文本
         intro_text = (
-            st.session_state.get('overview_1', '等待生成...') if version == "Solution A" else
-            st.session_state.get('overview_2', '等待生成...') if version == "Solution B" else
-            st.session_state.get('overview_3', '等待生成...')
+            st.session_state.get('direction_1', 'Not Generated...') if version == "Solution A" else
+            st.session_state.get('direction_2', 'Not Generated...') if version == "Solution B" else
+            st.session_state.get('direction_3', 'Not Generated...')
         )
         
         st.markdown(f"""
@@ -339,9 +376,9 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
 
         # 从 session_state 获取概述文本
         intro_text = (
-            st.session_state.get('overview_1', '等待生成...') if version == "Solution A" else
-            st.session_state.get('overview_2', '等待生成...') if version == "Solution B" else
-            st.session_state.get('overview_3', '等待生成...')
+            st.session_state.get('overview_1', 'Not Generated...') if version == "Solution A" else
+            st.session_state.get('overview_2', 'Not Generated...') if version == "Solution B" else
+            st.session_state.get('overview_3', 'Not Generated...')
         )
         
         st.markdown(f"""
@@ -357,7 +394,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Role Section
         st.markdown("<div class='section-label'>Role</div>", unsafe_allow_html=True)
-        default_role = st.session_state.get('role_1', '等待生成...') if version == "Solution A" else (st.session_state.get('role_2', '等待生成...') if version == "Solution B" else st.session_state.get('role_3', '等待生成...'))
+        default_role =  st.session_state.get('role_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('role_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('role_3', 'Not Generated...'))
         st.text_area(
             "Define the role",
             value=default_role,
@@ -368,7 +405,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Task Section
         st.markdown("<div class='section-label'>Task</div>", unsafe_allow_html=True)
-        default_task = st.session_state.get('task_1', '等待生成...') if version == "Solution A" else (st.session_state.get('task_2', '等待生成...') if version == "Solution B" else st.session_state.get('task_3', '等待生成...'))
+        default_task = st.session_state.get('task_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('task_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('task_3', 'Not Generated...'))
         st.text_area(
             "Define the task",
             value=default_task,
@@ -379,81 +416,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         
         # Rules Section
         st.markdown("<div class='section-label'>Rules & Constraints</div>", unsafe_allow_html=True)
-        default_rules = """General Rules
-Accuracy First:
-- Extract only explicitly stated information.
-- Do not infer or generate information that is not directly present in the email or attachments.
-
-Missing Data Handling:
-- For missing fields, use "unknown" as the value.
-
-Email Address Validation:
-- The buyer_email_address must belong to an individual (e.g., john.doe@example.com) and not a generic address (e.g., info@ or order@).
-
-Article Code Processing:
-- Extract only the seller's (TechHeroes) product_n_article_code.
-- Remove any special characters (., -, ) and output as a continuous alphanumeric string.
-- If multiple product codes exist, ensure they are presented as a comma-separated list.
-
-Output Format Consistency:
-- Follow the predefined JSON structure for outputs without deviation.
-
-Advanced Constraints
-Reasoning for Ambiguities:
-- If multiple possible values exist for a field, justify the selected value in the Reasoning section.
-
-Contextual Priority:
-- Prioritize data found in the email body over data in attachments.
-- If duplicate information exists, retain the most recent and complete entry.
-
-Time Zone Standardization:
-- Normalize all dates to the YYYY-MM-DD format.
-
-Error Logging:
-- Log any unprocessable fields or ambiguities for manual review.""" if version == "Solution A" else ("""Data Quality Rules:
-1. Field Validation
-   - Order Date: Must be a valid date within the last 30 days
-   - Buyer Name: Must contain both first and last name
-   - Email: Must be individual email (not generic/group address)
-
-2. Format Requirements
-   - Dates: Convert all formats to YYYY-MM-DD
-   - Names: Capitalize first letter of each word
-   - Email: Convert to lowercase, verify format
-
-3. Data Completeness
-   - All three fields are mandatory
-   - No partial extractions allowed
-   - Missing data must be flagged
-
-4. Validation Process
-   - Apply regex patterns for email validation
-   - Check date format and validity
-   - Verify name format and completeness
-
-5. Error Handling
-   - Log all validation failures
-   - Provide specific error messages
-   - Suggest possible corrections""" if version == "Solution B" else """Essential Rules:
-1. Extraction Focus
-   - Extract only the three required fields
-   - Skip all other information
-   - No complex validation required
-
-2. Basic Formatting
-   - Date: Convert to YYYY-MM-DD
-   - Name: Keep original format
-   - Email: Convert to lowercase
-
-3. Processing Rules
-   - Single-pass extraction only
-   - No cross-validation required
-   - Skip ambiguous data
-
-4. Output Requirements
-   - Minimal JSON structure
-   - No additional metadata
-   - Empty string for missing fields""")
+        default_rules = st.session_state.get('rules_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('rules_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('rules_3', 'Not Generated...'))
         st.text_area(
             "Define rules",
             value=default_rules,
@@ -572,7 +535,15 @@ Performance Focus:
         
         # Reasoning Section
         st.markdown("<div class='section-label'>Reasoning</div>", unsafe_allow_html=True)
-        
+
+        default_reasoning_content = st.session_state.get('reasoning_method_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('reasoning_method_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('reasoning_method_3', 'Not Generated...'))
+        st.text_area(
+            "Define reasoning",
+            value=default_reasoning_content,
+            key=f"{version}_reasoning",
+            height=300,
+            label_visibility="collapsed"
+        )
         # Reasoning Method Selection
         default_reasoning_method = "Chain-of-Thought (CoT)" if version == "Solution A" else ("ReAct" if version == "Solution B" else "Tree-of-Thought (ToT)")
         reasoning_method = st.selectbox(
@@ -666,6 +637,14 @@ Performance Focus:
         # Planning Section
         st.markdown("<div class='section-label'>Planning</div>", unsafe_allow_html=True)
         
+        default_planning_content = st.session_state.get('planning_method_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('planning_method_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('planning_method_3', 'Not Generated...'))
+        st.text_area(
+            "Define planning",
+            value=default_planning_content,
+            key=f"{version}_planning",
+            height=300,
+            label_visibility="collapsed"
+        )
         # Planning Method Selection
         default_planning_method = "Least-to-Most Decomposition" if version == "Solution A" else ("Plan-and-Solve Strategy" if version == "Solution B" else "Progressive Task Refinement")
         planning_method = st.selectbox(
@@ -760,6 +739,15 @@ Performance Focus:
         
         # Output Format Section
         st.markdown("<div class='section-label'>Output Format</div>", unsafe_allow_html=True)
+
+        default_output_content = st.session_state.get('output_format_1', 'Not Generated...') if version == "Solution A" else (st.session_state.get('output_format_2', 'Not Generated...') if version == "Solution B" else st.session_state.get('output_format_3', 'Not Generated...'))
+        st.text_area(
+            "Define output format",
+            value=default_output_content,
+            key=f"{version}_output",
+            height=300,
+            label_visibility="collapsed"
+        )
         
         # Add format selection
         output_format = st.selectbox(
