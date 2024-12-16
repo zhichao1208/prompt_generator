@@ -40,88 +40,27 @@ class PromptTemplate_1(BaseModel):
     output_format: str
     explanation_of_optimization_choices: str
     usage_guidelines: str
+
+
 class PromptTemplate_2(BaseModel):
-    complete_prompt_structure: Dict[str, Any] = {
-        "role": {
-            "identity_expertise": str,
-            "core_competencies": str, 
-            "professional_context": str,
-            "primary_objective": str
-        },
-        "task": {
-            "objective_statement": str,
-            "input_specification": str,
-            "process_steps": List[str],
-            "output_requirements": str
-        },
-        "rules_constraints": {
-            "quality_standards": str,
-            "ethical_guidelines": str,
-            "format_requirements": str,
-            "process_constraints": str
-        }
-    }
-    
-    selected_methods: Dict[str, Any] = {
-        "reasoning_method": {
-            "method": str,
-            "justification": str
-        },
-        "planning_method": {
-            "method": str,
-            "justification": str  
-        },
-        "output_format": {
-            "format": str,
-            "justification": str
-        }
-    }
-    
+    role: str
+    task: str
+    rules_constraints: str
+    reasoning_method: str
+    planning_method: str
+    output_format: str
     explanation_of_optimization_choices: str
     usage_guidelines: str
 
 class PromptTemplate_3(BaseModel):
-    complete_prompt_structure: Dict[str, Any] = {
-        "role": {
-            "identity_expertise": str,
-            "core_competencies": str, 
-            "professional_context": str,
-            "primary_objective": str
-        },
-        "task": {
-            "objective_statement": str,
-            "input_specification": str,
-            "process_steps": List[str],
-            "output_requirements": str
-        },
-        "rules_constraints": {
-            "quality_standards": str,
-            "ethical_guidelines": str,
-            "format_requirements": str,
-            "process_constraints": str
-        }
-    }
-    
-    selected_methods: Dict[str, Any] = {
-        "reasoning_method": {
-            "method": str,
-            "justification": str
-        },
-        "planning_method": {
-            "method": str,
-            "justification": str  
-        },
-        "output_format": {
-            "format": str,
-            "justification": str
-        }
-    }
-    
+    role: str
+    task: str
+    rules_constraints: str
+    reasoning_method: str
+    planning_method: str
+    output_format: str
     explanation_of_optimization_choices: str
     usage_guidelines: str
-
-
-
 
 @CrewBase
 class PromptSolutionCrew:

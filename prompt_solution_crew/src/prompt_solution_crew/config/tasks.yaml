@@ -230,7 +230,8 @@ optimize_prompt_direction_1:
     - Structure: As specified by requirements
     - Example: Based on specific needs
 
-    Remember: Your goal is to provide an optimized prompt structure, not to solve the user's problem directly.
+    Remember: Your goal is to provide an optimized prompt based on architect direction and user requirements,
+    in order to help users to use your prompt in their automated process, not to solve the user's problem directly.
 
     Provide the output in JSON format including:
     1. Complete prompt structure (role, task, rules)
@@ -449,7 +450,8 @@ optimize_prompt_direction_2:
     - Structure: As specified by requirements
     - Example: Based on specific needs
 
-    Remember: Your goal is to provide an optimized prompt structure, not to solve the user's problem directly.
+    Remember: Your goal is to provide an optimized prompt based on architect direction and user requirements,
+    in order to help users to use your prompt in their automated process, not to solve the user's problem directly.
 
     Provide the output in JSON format including:
     1. Complete prompt structure (role, task, rules)
