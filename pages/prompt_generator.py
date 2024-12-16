@@ -364,6 +364,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
                 st.session_state.get('direction_3', 'Not Generated...')
             ),
             height=200,
+            key=f"{version}_direction",
             label_visibility="collapsed"
         )
         
