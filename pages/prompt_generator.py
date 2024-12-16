@@ -200,6 +200,9 @@ Few-Shot Examples: {str(examples) if examples else '用户未输入'}"""
             # 更新状态
             status_container.info("开始生成提示词...")
             
+            # 显示用户输入的配置信息
+            st.subheader("用户配置信息")
+            st.code(inputs, language="text")
             # 使用 spinner 显示生成过程
             with st.spinner('正在生成...'):
                 try:
