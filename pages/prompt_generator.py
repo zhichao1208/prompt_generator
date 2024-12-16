@@ -275,7 +275,7 @@ Order Number: ORD-2024-001''',
                                 
                                 # 存储结果
                                 st.session_state.prompt_result_1 = engineer_results_1
-                                st.session_state.direction_1 = architect_results["directions"][0]["focus"]
+                                st.session_state.direction_1 = f"{architect_results["directions"][0]["name"]} :  "{architect_results["directions"][0]["focus"]}"
                                 st.session_state.overview_1 = engineer_results_1['explanation_of_optimization_choices']
                                 st.session_state.role_1 = engineer_results_1['role']
                                 st.session_state.task_1 = engineer_results_1['task']
@@ -285,7 +285,7 @@ Order Number: ORD-2024-001''',
                                 st.session_state.output_format_1 = engineer_results_1['output_format']
                                   # 存储结果
                                 st.session_state.prompt_result_2 = engineer_results_2
-                                st.session_state.direction_2 = architect_results["directions"][1]["focus"]
+                                st.session_state.direction_2 = f"{architect_results["directions"][1]["name"]} :  {architect_results["directions"][1]["focus"]}"
                                 st.session_state.overview_2 = engineer_results_2['explanation_of_optimization_choices']
                                 st.session_state.role_2 = engineer_results_2['role']
                                 st.session_state.task_2 = engineer_results_2['task']
@@ -295,7 +295,7 @@ Order Number: ORD-2024-001''',
                                 st.session_state.output_format_2 = engineer_results_2['output_format']
                                   # 存储结果
                                 st.session_state.prompt_result_3 = engineer_results_3
-                                st.session_state.direction_3 = architect_results["directions"][2]["focus"]
+                                st.session_state.direction_3 = f"{architect_results["directions"][2]["name"]} :  {architect_results["directions"][2]["focus"]}"
                                 st.session_state.overview_3 = engineer_results_3['explanation_of_optimization_choices']
                                 st.session_state.role_3 = engineer_results_3['role']
                                 st.session_state.task_3 = engineer_results_3['task']
