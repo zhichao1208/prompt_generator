@@ -540,7 +540,7 @@ Performance Focus:
         st.text_area(
             "Define reasoning",
             value=default_reasoning_content,
-            key=f"{version}_reasoning",
+            key=f"{version}_reasoning_area",
             height=300,
             label_visibility="collapsed"
         )
@@ -641,7 +641,7 @@ Performance Focus:
         st.text_area(
             "Define planning",
             value=default_planning_content,
-            key=f"{version}_planning",
+            key=f"{version}_planning_area",
             height=300,
             label_visibility="collapsed"
         )
@@ -744,7 +744,7 @@ Performance Focus:
         st.text_area(
             "Define output format",
             value=default_output_content,
-            key=f"{version}_output",
+            key=f"{version}_output_area",
             height=300,
             label_visibility="collapsed"
         )
