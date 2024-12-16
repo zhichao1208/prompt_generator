@@ -159,74 +159,6 @@ Order Number: ORD-2024-001''',
         with col2:
             if st.session_state.num_examples > 1:
                 st.button("➖ Remove Example", on_click=remove_example)
-    
-    # Action Buttons
-    generate_button_1 = st.button("Generate Prompt", type="primary", key="generate_button_1")
-    if generate_button_1:
-        try:
-            # 创建状态容器
-            status_container = st.empty()
-            result_container = st.empty()
-            
-            # 显示初始状态
-            status_container.info("正在初始化 PromptSolutionCrew...")
-            
-            # 从Task Configuration收集用户设置
-            
-            # 收集Few-Shot Examples
-            examples = []
-            for i in range(st.session_state.num_examples):
-                example_input = st.session_state.get(f"example_input_{i}")
-                example_output = st.session_state.get(f"example_output_{i}")
-                if example_input and example_output:
-                    examples.append({
-                        "input": example_input,
-                        "output": example_output
-                    })
-
-            # 准备输入参数
-            inputs = {
-                'task_description': task_description,
-                'task_type': task_type,
-                'model_preference': str(model_preference),
-                'tone': tone,
-                'context': context or 'not defined',
-                'sample_data': data_input or 'not defined',
-                'examples': str(examples) if examples else 'not defined'
-            }
-            
-            # 更新状态
-            status_container.info("开始生成提示词...")
-            
-            # 显示用户输入的配置信息
-            st.subheader("用户配置信息")
-            st.code(inputs, language="text")
-            # 使�� spinner 显示生成过程
-            with st.spinner('正在生成...'):
-                try:
-                    # 创建 PromptSolutionCrew 实例并运行
-                    architect_crew = PromptSolutionCrew().architect_crew()
-                    results = architect_crew.kickoff(inputs=inputs)
-                    
-                    # 更新状态
-                    status_container.success("✅ 提示词生成成功!")
-                    
-                    # 显示结果
-                    if results:
-                        result_container.json(results)
-                    else:
-                        result_container.info("生成完成，请查看上方结果。")
-                        
-                except Exception as e:
-                    st.error(f"生成过程中出现错误: {str(e)}")
-                    st.error("详细错误信息:")
-                    st.exception(e)
-                    
-        except Exception as e:
-            st.error(f"初始化过程中出现错误: {str(e)}")
-            st.error("详细错误信息:")
-            st.exception(e)
-            st.error("请检查配置并重试")
 
     # Action Buttons
     generate_button_2 = st.button("Generate Prompt", type="primary", key="generate_button_2")
@@ -274,16 +206,47 @@ Order Number: ORD-2024-001''',
                 try:
                     # 创建 PromptSolutionCrew 实例并运行
                     architect_crew = PromptSolutionCrew().architect_crew()
-                    results = architect_crew.kickoff(inputs=inputs)
+                    architect_results = architect_crew.kickoff(inputs=inputs)
                     
                     # 更新状态
                     status_container.success("✅ 架构生成成功!")
                     
-                    # 显示结果
-                    if results:
-                        result_container.json(results)
+                    # 显示架构分析结果
+                    if architect_results:
+                        result_container.json(architect_results)
+                        
+                        # 处理架构分析结果
+                        directions = process_crew_results(architect_results)
+                        if len(directions) >= 3:
+                            store_directions(architect_results)
+                            
+                            # 准备 prompt engineer 的输入
+                            prompt_inputs = {
+                                **inputs,  # 包含原始输入
+                                "direction_1": directions[0],
+                                "direction_2": directions[1],
+                                "direction_3": directions[2]
+                            }
+                            
+                            # 运行 prompt engineer crew
+                            status_container.info("开始生成优化提示词...")
+                            with st.spinner('正在生成优化提示词...'):
+                                prompt_engineer_crew = PromptSolutionCrew().prompt_engineer_crew()
+                                engineer_results = prompt_engineer_crew.kickoff(inputs=prompt_inputs)
+                                
+                                # 更新状态
+                                status_container.success("✅ 提示词生成成功!")
+                                
+                                # 存储结果
+                                st.session_state.prompt_result_1 = engineer_results
+                                
+                                # 显示优化后的提示词
+                                st.subheader("🎯 优化后的提示词结构")
+                                st.json(engineer_results)
+                        else:
+                            st.warning("架构分析未能生成足够的优化方向")
                     else:
-                        result_container.info("生成完成，请查看上方结果。")
+                        result_container.info("生成完成，但未返回结果。")
                         
                 except Exception as e:
                     st.error(f"生成过程中出现错误: {str(e)}")
@@ -334,8 +297,6 @@ def store_directions(results):
         st.session_state.direction_2 = directions[1]
         st.session_state.direction_3 = directions[2]
 
-# Main Content Area
-st.title("Prompt Generator")
 
 # 优化方向区域 - 确保这部分在主要内容区域内
 st.markdown("---")  # 添加分隔线提高可见性
@@ -376,6 +337,11 @@ else:
 if st.session_state.get("prompt_result_1"):
     st.success("✅ 生成的提示词结构")
     st.write(st.session_state.prompt_result_1)
+
+
+
+# Main Content Area
+st.title("Prompt Generator")
 
 
 
@@ -1546,7 +1512,7 @@ with eval_tab2:
     with metric_col1:
         st.markdown("#### JARVIS Analysis")
         
-        # 核心维度��大数字对比区）
+        # 核心维度
         st.markdown("**Core Metrics**")
         
         # 第一行：准确性和目标达成度
@@ -1906,7 +1872,7 @@ st.markdown("""
         font-size: 14px !important;
     }
     
-    /* 调整指标值的样式 */
+    /* ��整指标值的样式 */
     .metric-value {
         font-size: 24px !important;
         line-height: 1.2;
