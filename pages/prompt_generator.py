@@ -264,6 +264,10 @@ Order Number: ORD-2024-001''',
                             
                             # 存储结果
                             st.session_state.prompt_result = engineer_results
+
+                            overview_1= engineer_results['explanation_of_optimization_choices']
+                            overview_2= engineer_results['explanation_of_optimization_choices']
+                            overview_3= engineer_results['explanation_of_optimization_choices']
                             
                             # 显示优化后的提示词
                             st.subheader("🎯 优化后的提示词结构")
@@ -312,9 +316,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
         # Solution Introduction
         st.markdown("<h4 style='margin-top: 20px;'>Overview</h4>", unsafe_allow_html=True)
 
-        overview_1= st.session_state.prompt_result['explanation_of_optimization_choices']
-        overview_2= st.session_state.prompt_result['explanation_of_optimization_choices']
-        overview_3= st.session_state.prompt_result['explanation_of_optimization_choices']
+
 
         intro_text = "{}" if version == "Solution A" else (
             overview_1 if version == "Solution B" else 
