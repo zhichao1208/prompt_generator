@@ -39,6 +39,10 @@ class PromptSolutionCrew():
 			self.agents_config = yaml.safe_load(f)
 		with open(self.config_dir / 'tasks.yaml', 'r') as f:
 			self.tasks_config = yaml.safe_load(f)
+		
+		# 初始化agents和tasks列表
+		self.agents = []
+		self.tasks = []
 
 	@agent
 	def architect(self) -> Agent:
@@ -47,35 +51,139 @@ class PromptSolutionCrew():
 			role=self.agents_config['architect']['role'],
 			goal=self.agents_config['architect']['goal'],
 			backstory=self.agents_config['architect']['backstory'],
-			llm=self.agents_config['architect']['llm'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_1(self) -> Agent:
+		"""Create the first prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer']['role'],
+			goal=self.agents_config['prompt_engineer']['goal'],
+			backstory=self.agents_config['prompt_engineer']['backstory'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_2(self) -> Agent:
+		"""Create the second prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer']['role'],
+			goal=self.agents_config['prompt_engineer']['goal'],
+			backstory=self.agents_config['prompt_engineer']['backstory'],
+			verbose=True
+		)
+
+	@agent
+	def prompt_engineer_3(self) -> Agent:
+		"""Create the third prompt engineer agent."""
+		return Agent(
+			role=self.agents_config['prompt_engineer']['role'],
+			goal=self.agents_config['prompt_engineer']['goal'],
+			backstory=self.agents_config['prompt_engineer']['backstory'],
 			verbose=True
 		)
 
 	@task
-	def analyze_requirements_task(self) -> Task:
+	def analyze_requirements_task(self, task_description: str, task_type: str, model_preference: str, 
+							  tone: str, context: str, data_input: str, examples: str) -> Task:
 		"""Create an analyze requirements task."""
 		return Task(
-			description=self.tasks_config['analyze_requirements_task']['description'],
+			description=self.tasks_config['analyze_requirements_task']['description'].format(
+				task_description=task_description,
+				task_type=task_type,
+				model_preference=model_preference,
+				tone=tone,
+				context=context,
+				data_input=data_input,
+				examples=examples
+			),
 			expected_output=self.tasks_config['analyze_requirements_task']['expected_output'],
 			agent=self.architect()
 		)
 
 	@task
-	def develop_strategies_task(self) -> Task:
-		"""Create a develop strategies task."""
+	def optimize_prompt_direction_1(self, task_description: str, task_type: str, model_preference: str,
+								tone: str, context: str, data_input: str, examples: str) -> Task:
+		"""Create the first prompt optimization task."""
 		return Task(
-			description=self.tasks_config['develop_strategies_task']['description'],
-			expected_output=self.tasks_config['develop_strategies_task']['expected_output'],
-			agent=self.architect(),
-			context=[self.analyze_requirements_task()]
+			description=self.tasks_config['optimize_prompt_direction_1']['description'].format(
+				task_description=task_description,
+				task_type=task_type,
+				model_preference=model_preference,
+				tone=tone,
+				context=context,
+				data_input=data_input,
+				examples=examples
+			),
+			expected_output=self.tasks_config['optimize_prompt_direction_1']['expected_output'],
+			agent=self.prompt_engineer_1(),
+			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
+												tone, context, data_input, examples)]
+		)
+
+	@task
+	def optimize_prompt_direction_2(self, task_description: str, task_type: str, model_preference: str,
+								tone: str, context: str, data_input: str, examples: str) -> Task:
+		"""Create the second prompt optimization task."""
+		return Task(
+			description=self.tasks_config['optimize_prompt_direction_2']['description'].format(
+				task_description=task_description,
+				task_type=task_type,
+				model_preference=model_preference,
+				tone=tone,
+				context=context,
+				data_input=data_input,
+				examples=examples
+			),
+			expected_output=self.tasks_config['optimize_prompt_direction_2']['expected_output'],
+			agent=self.prompt_engineer_2(),
+			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
+												tone, context, data_input, examples)]
+		)
+
+	@task
+	def optimize_prompt_direction_3(self, task_description: str, task_type: str, model_preference: str,
+								tone: str, context: str, data_input: str, examples: str) -> Task:
+		"""Create the third prompt optimization task."""
+		return Task(
+			description=self.tasks_config['optimize_prompt_direction_3']['description'].format(
+				task_description=task_description,
+				task_type=task_type,
+				model_preference=model_preference,
+				tone=tone,
+				context=context,
+				data_input=data_input,
+				examples=examples
+			),
+			expected_output=self.tasks_config['optimize_prompt_direction_3']['expected_output'],
+			agent=self.prompt_engineer_3(),
+			context=[self.analyze_requirements_task(task_description, task_type, model_preference,
+												tone, context, data_input, examples)]
 		)
 
 	@crew
-	def crew(self) -> Crew:
-		"""Creates the PromptSolutionCrew crew"""
+	def get_crew(self, task_description: str, task_type: str, model_preference: str,
+			   tone: str, context: str, data_input: str, examples: str) -> Crew:
+		"""Creates the PromptSolutionCrew crew with all tasks"""
+		tasks = [
+			self.analyze_requirements_task(task_description, task_type, model_preference,
+										tone, context, data_input, examples),
+			self.optimize_prompt_direction_1(task_description, task_type, model_preference,
+										 tone, context, data_input, examples),
+			self.optimize_prompt_direction_2(task_description, task_type, model_preference,
+										 tone, context, data_input, examples),
+			self.optimize_prompt_direction_3(task_description, task_type, model_preference,
+										 tone, context, data_input, examples)
+		]
+		
 		return Crew(
-			agents=self.agents,
-			tasks=self.tasks,
+			agents=[self.architect(), self.prompt_engineer_1(), 
+					self.prompt_engineer_2(), self.prompt_engineer_3()],
+			tasks=tasks,
 			process=Process.sequential,
 			verbose=True
 		)
+
+# Export the PromptSolutionCrew class
+__all__ = ['PromptSolutionCrew']
