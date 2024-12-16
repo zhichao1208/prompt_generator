@@ -1837,14 +1837,17 @@ with eval_tab2:
                 Original Prompt:
                 "Extract order date, buyer name and email address from my order pdf"
 
+                User Setup:
+                {st.session_state.get(f'user_setup_1', 'Not Defined...')}
+
+                Direction:
+                {st.session_state.get(f'name_1', 'Not Generated...')}
                 Optimized Prompt:
                 Role:
                 {st.session_state.get(f'role_1', 'Not Generated...')}
 
                 Task:
                 {st.session_state.get(f'task_1', 'Not Generated...')}
-
-                Communication Tone: {st.session_state.get(f'inputs', 'Not Generated...')}
 
                 Rules & Constraints:
                 {st.session_state.get(f'rules_1', 'Not Generated...')}
