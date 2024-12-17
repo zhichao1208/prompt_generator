@@ -533,13 +533,13 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             "Define output format",
             value=default_output_content,
             key=f"{version}_output_area",
-            height=300,
+            height=150,
             label_visibility="collapsed"
         )
         
 
         # Enhancements Section
-        with st.expander("Enhancements"):
+        with st.expander("Enhancements(TODO)"):
 
             # Reasoning Method Selection
             default_reasoning_method = "Chain-of-Thought (CoT)" if version == "Solution A" else ("ReAct" if version == "Solution B" else "Tree-of-Thought (ToT)")
@@ -1291,7 +1291,7 @@ render_prompt_card(col3, "Solution C")
 
 # Bottom Section: Evaluation & Analysis
 st.header("Evaluation & Analysis")
-eval_tab1, eval_tab2 = st.tabs(["Test & Results", "Evaluation Metrics"])
+eval_tab1, eval_tab2 = st.tabs(["Test & Results(TODO)", "Evaluation Metrics(Copy Optimized Prompt)"])
 
 with eval_tab1:
     st.subheader("Test Input")
