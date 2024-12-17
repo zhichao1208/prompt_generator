@@ -1011,7 +1011,77 @@ Contact: Mark Wilson (mark.w@customer.com)""",
 }"""
                 }
             ]
-            
+            # Add format selection
+            output_format = st.selectbox(
+                "Select Output Format",
+                options=["JSON", "Email", "Markdown", "Text", "Other"],
+                key=f"{version}_output_format",
+                help="Select the desired output format for the response"
+            )
+        
+            default_output = """{
+  "Reasoning": [
+    "Reasoning statements documenting decision-making processes and resolving ambiguities."
+  ],
+  "Buyer": {
+    "buyer_company_name": "string",
+    "buyer_person_name": "string",
+    "buyer_email_address": "string"
+  },
+  "Order": {
+    "order_number": "string",
+    "order_date": "YYYY-MM-DD",
+    "delivery_address_street": "string",
+    "delivery_address_city": "string",
+    "delivery_address_postal_code": "string",
+    "delivery_address_country": "string",
+    "delivery_additional_details": "string"
+  },
+  "Product": [
+    {
+      "product_1_position": 1,
+      "product_1_article_code": "string",
+      "product_1_quantity": "integer"
+    },
+    {
+      "product_n_position": "integer",
+      "product_n_article_code": "string",
+      "product_n_quantity": "integer"
+    }
+  ]
+}""" if version == "Solution A" else ("""{
+  "status": "success|error",
+  "extracted_data": {
+    "order_date": "YYYY-MM-DD",
+    "buyer_name": "First Last",
+    "email": "user@domain.com"
+  },
+  "validation_results": {
+    "date_valid": true|false,
+    "name_valid": true|false,
+    "email_valid": true|false
+  },
+  "errors": [
+    {
+      "field": "field_name",
+      "error": "error_description",
+      "suggestion": "correction_suggestion"
+    }
+  ]
+}""" if version == "Solution B" else """{
+  "extracted_data": {
+    "date": "YYYY-MM-DD",
+    "name": "string",
+    "email": "string"
+  }
+}""")
+            st.text_area(
+                "Define output format",
+                value=default_output,
+                key=f"{version}_output",
+                height=100,
+                label_visibility="collapsed"
+            )            
             # Function to add new example
             def add_example(version):
                 st.session_state[f'{version}_num_examples'] += 1
@@ -1150,77 +1220,7 @@ Expected: 1st May 2024""",
                     st.button("➖ Remove Edge Case", key=f"{version}_remove_edge_case",
                              on_click=remove_edge_case, args=(version,))
                     
-        # Add format selection
-        output_format = st.selectbox(
-            "Select Output Format",
-            options=["JSON", "Email", "Markdown", "Text", "Other"],
-            key=f"{version}_output_format",
-            help="Select the desired output format for the response"
-        )
-        
-        default_output = """{
-  "Reasoning": [
-    "Reasoning statements documenting decision-making processes and resolving ambiguities."
-  ],
-  "Buyer": {
-    "buyer_company_name": "string",
-    "buyer_person_name": "string",
-    "buyer_email_address": "string"
-  },
-  "Order": {
-    "order_number": "string",
-    "order_date": "YYYY-MM-DD",
-    "delivery_address_street": "string",
-    "delivery_address_city": "string",
-    "delivery_address_postal_code": "string",
-    "delivery_address_country": "string",
-    "delivery_additional_details": "string"
-  },
-  "Product": [
-    {
-      "product_1_position": 1,
-      "product_1_article_code": "string",
-      "product_1_quantity": "integer"
-    },
-    {
-      "product_n_position": "integer",
-      "product_n_article_code": "string",
-      "product_n_quantity": "integer"
-    }
-  ]
-}""" if version == "Solution A" else ("""{
-  "status": "success|error",
-  "extracted_data": {
-    "order_date": "YYYY-MM-DD",
-    "buyer_name": "First Last",
-    "email": "user@domain.com"
-  },
-  "validation_results": {
-    "date_valid": true|false,
-    "name_valid": true|false,
-    "email_valid": true|false
-  },
-  "errors": [
-    {
-      "field": "field_name",
-      "error": "error_description",
-      "suggestion": "correction_suggestion"
-    }
-  ]
-}""" if version == "Solution B" else """{
-  "extracted_data": {
-    "date": "YYYY-MM-DD",
-    "name": "string",
-    "email": "string"
-  }
-}""")
-        st.text_area(
-            "Define output format",
-            value=default_output,
-            key=f"{version}_output",
-            height=100,
-            label_visibility="collapsed"
-        )
+
                             
 
 # Add custom CSS
