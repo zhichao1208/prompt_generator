@@ -204,7 +204,7 @@ Order Number: ORD-2024-001''',
                         "output": example_output
                     })
 
-            # 准备输入参数
+            # 准备输入��数
             inputs = {
                 'task_description': task_description,
                 'task_type': task_type,
@@ -462,84 +462,7 @@ def render_prompt_card(col, version, model_name="claude-3-opus"):
             label_visibility="collapsed"
         )
         
-        # Context Section
-        st.markdown("""
-            <div style='display: flex; align-items: center; gap: 8px;'>
-                <div class='section-label'>Context</div>
-                <div class='icon-button show-original' title='Show Original Context'>📄</div>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        # Get user input from sidebar
-        user_context = context if 'context' in locals() else ""
-        
-        # Default context when no user input
-        default_context = """Background:
-- TechHeroes is an e-commerce company specializing in tech products
-- They receive orders through email and various document formats
-- The system needs to process both direct customer emails and forwarded messages
 
-Current Process:
-- Customer service receives order emails
-- Manual data extraction is time-consuming and error-prone
-- Need automated solution for accurate data extraction
-
-Technical Environment:
-- Email server supports IMAP/POP3 protocols
-- Document processing system handles PDF, DOC, and image formats
-- Integration with order management system required
-
-Business Requirements:
-- 24/7 order processing capability
-- Real-time data extraction and validation
-- Compliance with data protection regulations""" if version == "Solution A" else ("""Processing Environment:
-- PDF processing system with OCR capabilities
-- Regular document structure updates
-- High volume of daily orders
-
-Current Workflow:
-- Documents received through multiple channels
-- Automated initial scanning
-- Manual verification for exceptions
-
-Technical Setup:
-- OCR engine for text extraction
-- Pattern matching algorithms
-- Validation rule engine
-
-Quality Requirements:
-- 99.9% accuracy target
-- Real-time validation
-- Automated error reporting""" if version == "Solution B" else """Processing Setup:
-- Basic PDF text extraction
-- Single-thread processing
-- Minimal memory usage
-
-Current Workflow:
-- Direct field extraction
-- No preprocessing required
-- Simple output generation
-
-Technical Environment:
-- Basic text parser
-- Minimal dependencies
-- Lightweight processing
-
-Performance Focus:
-- Speed over complexity
-- Resource efficiency
-- Minimal overhead""")
-
-        # Display context with user input override
-        display_context = user_context if user_context else default_context
-        st.text_area(
-            "Define context",
-            value=display_context,
-            key=f"{version}_context",
-            height=200,
-            label_visibility="collapsed"
-        )
-        
         # Add JavaScript for showing original context
         st.markdown("""
         <script>
@@ -606,78 +529,7 @@ Performance Focus:
             label_visibility="collapsed"
         )
         
-        # Add format selection
-        output_format = st.selectbox(
-            "Select Output Format",
-            options=["JSON", "Email", "Markdown", "Text", "Other"],
-            key=f"{version}_output_format",
-            help="Select the desired output format for the response"
-        )
-        
-        default_output = """{
-  "Reasoning": [
-    "Reasoning statements documenting decision-making processes and resolving ambiguities."
-  ],
-  "Buyer": {
-    "buyer_company_name": "string",
-    "buyer_person_name": "string",
-    "buyer_email_address": "string"
-  },
-  "Order": {
-    "order_number": "string",
-    "order_date": "YYYY-MM-DD",
-    "delivery_address_street": "string",
-    "delivery_address_city": "string",
-    "delivery_address_postal_code": "string",
-    "delivery_address_country": "string",
-    "delivery_additional_details": "string"
-  },
-  "Product": [
-    {
-      "product_1_position": 1,
-      "product_1_article_code": "string",
-      "product_1_quantity": "integer"
-    },
-    {
-      "product_n_position": "integer",
-      "product_n_article_code": "string",
-      "product_n_quantity": "integer"
-    }
-  ]
-}""" if version == "Solution A" else ("""{
-  "status": "success|error",
-  "extracted_data": {
-    "order_date": "YYYY-MM-DD",
-    "buyer_name": "First Last",
-    "email": "user@domain.com"
-  },
-  "validation_results": {
-    "date_valid": true|false,
-    "name_valid": true|false,
-    "email_valid": true|false
-  },
-  "errors": [
-    {
-      "field": "field_name",
-      "error": "error_description",
-      "suggestion": "correction_suggestion"
-    }
-  ]
-}""" if version == "Solution B" else """{
-  "extracted_data": {
-    "date": "YYYY-MM-DD",
-    "name": "string",
-    "email": "string"
-  }
-}""")
-        st.text_area(
-            "Define output format",
-            value=default_output,
-            key=f"{version}_output",
-            height=100,
-            label_visibility="collapsed"
-        )
-        
+
         # Enhancements Section
         with st.expander("Enhancements"):
 
@@ -1004,6 +856,86 @@ Performance Focus:
             # State for tracking number of examples
             if f'{version}_num_examples' not in st.session_state:
                 st.session_state[f'{version}_num_examples'] = 3  # Default 3 examples
+
+
+            # Context Section
+            st.markdown("""
+                <div style='display: flex; align-items: center; gap: 8px;'>
+                    <div class='section-label'>Context</div>
+                    <div class='icon-button show-original' title='Show Original Context'>📄</div>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            # Get user input from sidebar
+            user_context = context if 'context' in locals() else ""
+            
+            # Default context when no user input
+            default_context = """Background:
+- TechHeroes is an e-commerce company specializing in tech products
+- They receive orders through email and various document formats
+- The system needs to process both direct customer emails and forwarded messages
+
+Current Process:
+- Customer service receives order emails
+- Manual data extraction is time-consuming and error-prone
+- Need automated solution for accurate data extraction
+
+Technical Environment:
+- Email server supports IMAP/POP3 protocols
+- Document processing system handles PDF, DOC, and image formats
+- Integration with order management system required
+
+Business Requirements:
+- 24/7 order processing capability
+- Real-time data extraction and validation
+- Compliance with data protection regulations""" if version == "Solution A" else ("""Processing Environment:
+- PDF processing system with OCR capabilities
+- Regular document structure updates
+- High volume of daily orders
+
+Current Workflow:
+- Documents received through multiple channels
+- Automated initial scanning
+- Manual verification for exceptions
+
+Technical Setup:
+- OCR engine for text extraction
+- Pattern matching algorithms
+- Validation rule engine
+
+Quality Requirements:
+- 99.9% accuracy target
+- Real-time validation
+- Automated error reporting""" if version == "Solution B" else """Processing Setup:
+- Basic PDF text extraction
+- Single-thread processing
+- Minimal memory usage
+
+Current Workflow:
+- Direct field extraction
+- No preprocessing required
+- Simple output generation
+
+Technical Environment:
+- Basic text parser
+- Minimal dependencies
+- Lightweight processing
+
+Performance Focus:
+- Speed over complexity
+- Resource efficiency
+- Minimal overhead""")
+
+            # Display context with user input override
+            display_context = user_context if user_context else default_context
+            st.text_area(
+                "Define context",
+                value=display_context,
+                key=f"{version}_context",
+                height=200,
+                label_visibility="collapsed"
+        )
+                        
             
             # Default examples data
             default_examples = [
@@ -1209,6 +1141,79 @@ Expected: 1st May 2024""",
                 if st.session_state[f'{version}_num_edge_cases'] > 1:
                     st.button("➖ Remove Edge Case", key=f"{version}_remove_edge_case",
                              on_click=remove_edge_case, args=(version,))
+                    
+        # Add format selection
+        output_format = st.selectbox(
+            "Select Output Format",
+            options=["JSON", "Email", "Markdown", "Text", "Other"],
+            key=f"{version}_output_format",
+            help="Select the desired output format for the response"
+        )
+        
+        default_output = """{
+  "Reasoning": [
+    "Reasoning statements documenting decision-making processes and resolving ambiguities."
+  ],
+  "Buyer": {
+    "buyer_company_name": "string",
+    "buyer_person_name": "string",
+    "buyer_email_address": "string"
+  },
+  "Order": {
+    "order_number": "string",
+    "order_date": "YYYY-MM-DD",
+    "delivery_address_street": "string",
+    "delivery_address_city": "string",
+    "delivery_address_postal_code": "string",
+    "delivery_address_country": "string",
+    "delivery_additional_details": "string"
+  },
+  "Product": [
+    {
+      "product_1_position": 1,
+      "product_1_article_code": "string",
+      "product_1_quantity": "integer"
+    },
+    {
+      "product_n_position": "integer",
+      "product_n_article_code": "string",
+      "product_n_quantity": "integer"
+    }
+  ]
+}""" if version == "Solution A" else ("""{
+  "status": "success|error",
+  "extracted_data": {
+    "order_date": "YYYY-MM-DD",
+    "buyer_name": "First Last",
+    "email": "user@domain.com"
+  },
+  "validation_results": {
+    "date_valid": true|false,
+    "name_valid": true|false,
+    "email_valid": true|false
+  },
+  "errors": [
+    {
+      "field": "field_name",
+      "error": "error_description",
+      "suggestion": "correction_suggestion"
+    }
+  ]
+}""" if version == "Solution B" else """{
+  "extracted_data": {
+    "date": "YYYY-MM-DD",
+    "name": "string",
+    "email": "string"
+  }
+}""")
+        st.text_area(
+            "Define output format",
+            value=default_output,
+            key=f"{version}_output",
+            height=100,
+            label_visibility="collapsed"
+        )
+                            
 
 # Add custom CSS
 st.markdown("""
@@ -1404,7 +1409,7 @@ with eval_tab1:
 4. Found email: john.smith@example.com
 5. Basic validation passed""")
             
-            # Output 部分
+            # Output ���分
             st.markdown("**Output:**")
             st.json({
                 "date": "2024-03-20",
@@ -1716,7 +1721,7 @@ with eval_tab2:
                 st.metric("Edge Case Handling", "87%", help="Handling of unusual scenarios")
                 st.metric("Learning Ability", "86%", help="Capability to learn from new cases")
             
-            # 安全性
+            # 安全���
             st.markdown("**Safety & Compliance**")
             saf_col1, saf_col2 = st.columns(2)
             with saf_col1:
@@ -1789,7 +1794,7 @@ with eval_tab2:
                     key=f"{solution_name}_safety"
                 )
             
-            # 新生��按钮
+            # 新生按钮
             if st.button(f"Regenerate {solution_name} Prompt", key=f"regenerate_{solution_name}"):
                 # 版本号管理
                 if f'{solution_name}_version' not in st.session_state:
@@ -1814,56 +1819,41 @@ with eval_tab2:
 
             # 复制按钮
             if st.button(f"Copy {solution_name} Prompt", type="primary", key=f"copy_{solution_name}"):
-                # 版本号管理
-                if f'{solution_name}_version' not in st.session_state:
-                    st.session_state[f'{solution_name}_version'] = 1.0
-                else:
-                    st.session_state[f'{solution_name}_version']
+                # 获取方案索引
+                solution_idx = get_solution_index(solution_name)
                 
-                st.success(f"""
-                Prompt Copied successfully!
-                Version: {st.session_state[f'{solution_name}_version']:.1f}
-                
-                Weight Configuration:
-                - Accuracy: {accuracy_weight}
-                - Efficiency: {efficiency_weight}
-                - Logic: {logic_weight}
-                - Goal Achievement: {goal_weight}
-                - Stability: {stability_weight}
-                - Explainability: {explain_weight}
-                - Creativity: {creative_weight}
-                - Safety: {safety_weight}
+                # 准备要复制的文本
+                prompt_text = f"""Role:
+{st.session_state.get(f'role_{solution_idx}', 'Not Generated...')}
 
-                Original Prompt:
-                "Extract order date, buyer name and email address from my order pdf"
+Task:
+{st.session_state.get(f'task_{solution_idx}', 'Not Generated...')}
 
-                User Setup:
-                {st.session_state.get(f'user_setup_1', 'Not Defined...')}
+Rules & Constraints:
+{st.session_state.get(f'rules_{solution_idx}', 'Not Generated...')}
 
-                Direction:
-                {st.session_state.get(f'name_1', 'Not Generated...')}
-                
-                Optimized Prompt:
-                Role:
-                {st.session_state.get(f'role_1', 'Not Generated...')}
+Reasoning:
+{st.session_state.get(f'selected_reasoning_methods_{solution_idx}', 'Not Generated...')}
 
-                Task:
-                {st.session_state.get(f'task_1', 'Not Generated...')}
+Planning:
+{st.session_state.get(f'selected_planning_methods_{solution_idx}', 'Not Generated...')}
 
-                Rules & Constraints:
-                {st.session_state.get(f'rules_1', 'Not Generated...')}
+Output Format:
+{st.session_state.get(f'output_format_{solution_idx}', 'Not Generated...')}"""
 
-                Reasoning:
-                {st.session_state.get(f'selected_reasoning_methods_1', 'Not Generated...')}
-
-                Planning:
-                {st.session_state.get(f'selected_planning_methods_1', 'Not Generated...')}
-
-                Output Format:
-                {st.session_state.get(f'output_format_1', 'Not Generated...')}
-
-
-                """)                
+                # 使用 pyperclip 复制到剪贴板
+                try:
+                    import pyperclip
+                    pyperclip.copy(prompt_text)
+                    
+                    # 显示成功消息
+                    st.success(f"""
+                    ✅ Prompt copied to clipboard successfully!
+                    Solution: {solution_name}
+                    Version: {st.session_state.get(f'{solution_name}_version', 1.0):.1f}
+                    """)
+                except Exception as e:
+                    st.error(f"Failed to copy to clipboard: {str(e)}")
     
     # 权重调整建议
     with st.expander("Weight Adjustment Tips"):
@@ -1911,3 +1901,11 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+def get_solution_index(solution_name):
+    if solution_name == "JARVIS":
+        return "1"
+    elif solution_name == "SHERLOCK": 
+        return "2"
+    else:  # FLASH
+        return "3"
