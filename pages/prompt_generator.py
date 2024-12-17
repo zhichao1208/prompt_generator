@@ -7,6 +7,14 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "prompt_solution_crew" / "src"))
 
+def get_solution_index(solution_name):
+    if solution_name == "JARVIS":
+        return "1"
+    elif solution_name == "SHERLOCK": 
+        return "2"
+    else:  # FLASH
+        return "3"
+
 from prompt_solution_crew.crew import PromptSolutionCrew,RequirementsAnalysis,Direction,DirectionsList,PromptTemplate_1,PromptTemplate_2,PromptTemplate_3
 
 # Store and process crew results
@@ -204,7 +212,7 @@ Order Number: ORD-2024-001''',
                         "output": example_output
                     })
 
-            # 准备输入��数
+            # 准备输入数
             inputs = {
                 'task_description': task_description,
                 'task_type': task_type,
@@ -1902,10 +1910,3 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def get_solution_index(solution_name):
-    if solution_name == "JARVIS":
-        return "1"
-    elif solution_name == "SHERLOCK": 
-        return "2"
-    else:  # FLASH
-        return "3"
