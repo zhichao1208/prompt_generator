@@ -323,7 +323,7 @@ Order Number: ORD-2024-001''',
                                 
 
                                 # 显示优化后的提示词
-                                st.subheader("🎯 Optimized Prompt 1 Structure")
+                                st.subheader("��� Optimized Prompt 1 Structure")
                                 st.json(engineer_results_1)
                                 
                                 st.subheader("🎯 Optimized Prompt 2 Structure")
@@ -1417,7 +1417,7 @@ with eval_tab1:
 4. Found email: john.smith@example.com
 5. Basic validation passed""")
             
-            # Output ���分
+            # Output 部分
             st.markdown("**Output:**")
             st.json({
                 "date": "2024-03-20",
@@ -1729,7 +1729,7 @@ with eval_tab2:
                 st.metric("Edge Case Handling", "87%", help="Handling of unusual scenarios")
                 st.metric("Learning Ability", "86%", help="Capability to learn from new cases")
             
-            # 安全���
+            # 安全性
             st.markdown("**Safety & Compliance**")
             saf_col1, saf_col2 = st.columns(2)
             with saf_col1:
@@ -1825,12 +1825,12 @@ with eval_tab2:
                 - Safety: {safety_weight}
                 """)
 
-            # 复制按钮
+            # Copy button
             if st.button(f"Copy {solution_name} Prompt", type="primary", key=f"copy_{solution_name}"):
-                # 获取方案索引
+                # Get solution index
                 solution_idx = get_solution_index(solution_name)
                 
-                # 准备要复制的文本
+                # Prepare text to copy
                 prompt_text = f"""Role:
 {st.session_state.get(f'role_{solution_idx}', 'Not Generated...')}
 
@@ -1849,19 +1849,20 @@ Planning:
 Output Format:
 {st.session_state.get(f'output_format_{solution_idx}', 'Not Generated...')}"""
 
-                # 使用 pyperclip 复制到剪贴板
                 try:
+                    # Try using pyperclip first
                     import pyperclip
                     pyperclip.copy(prompt_text)
-                    
-                    # 显示成功消息
                     st.success(f"""
                     ✅ Prompt copied to clipboard successfully!
                     Solution: {solution_name}
                     Version: {st.session_state.get(f'{solution_name}_version', 1.0):.1f}
                     """)
                 except Exception as e:
-                    st.error(f"Failed to copy to clipboard: {str(e)}")
+                    # Fallback: Show the text in a code block for manual copying
+                    st.warning("Clipboard access not available. Please manually copy the text below:")
+                    st.code(prompt_text, language="text")
+                    st.info("Tip: Click the copy button in the top-right corner of the code block to copy the text.")
     
     # 权重调整建议
     with st.expander("Weight Adjustment Tips"):
